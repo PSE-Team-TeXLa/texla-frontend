@@ -1,11 +1,11 @@
-<script>
-    export let text;
+<script lang="ts">
+    export let text: string;
 
-    export let showLeaves;
+    export let isNavColumn: boolean;
 </script>
 
-{#if showLeaves}
-<div class="pl-2">
+{#if !isNavColumn}
+<div class="pl-4">
     <span>TEXT {text}</span>
 </div>
 

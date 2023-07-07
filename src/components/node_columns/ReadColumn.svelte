@@ -6,5 +6,5 @@
 </script>
 
 <StandardColumn --bgcolor="cyan" --c-width={width} >
-    <StandardTreeContainer showLeaves={false} />
+    <StandardTreeContainer isNavColumn={false} />
 </StandardColumn>
