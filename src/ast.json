@@ -1,0 +1,370 @@
+{
+  "component": {
+    "name": "DocumentNode",
+    "children": [
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Preamble",
+        "children": [
+          {
+            "component": {
+              "name": "TextNode",
+              "text": "Das ist ein ganz lange Text $x = \\textbf{N}$ !"
+            }
+          },
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Eerster Teil",
+              "children": []
+            }
+          },
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Zweiter Teil",
+              "children": [{
+                "component": {
+                  "name": "SegmentNode",
+                  "heading": "Eerster Teil",
+                  "children": []
+                }
+              },
+                {
+                  "component": {
+                    "name": "SegmentNode",
+                    "heading": "Zweiter Teil",
+                    "children": [{
+                      "component": {
+                        "name": "SegmentNode",
+                        "heading": "Eerster Teil",
+                        "children": []
+                      }
+                    },
+                      {
+                        "component": {
+                          "name": "SegmentNode",
+                          "heading": "Zweiter Teil",
+                          "children": [{
+                            "component": {
+                              "name": "SegmentNode",
+                              "heading": "Eerster Teil",
+                              "children": [{
+                                "component": {
+                                  "name": "TextNode",
+                                  "text": "Das ist ein ganz lange Text $x = \\textbf{N}$ !"
+                                }}]
+                            }
+                          },
+                            {
+                              "component": {
+                                "name": "SegmentNode",
+                                "heading": "Zweiter Teil",
+                                "children": [{
+                                  "component": {
+                                    "name": "SegmentNode",
+                                    "heading": "Eerster Teil",
+                                    "children": []
+                                  }
+                                },
+                                  {
+                                    "component": {
+                                      "name": "SegmentNode",
+                                      "heading": "Zweiter Teil",
+                                      "children": [{
+                                        "component": {
+                                          "name": "TextNode",
+                                          
+                                          "text": "Das ist ein ganz lange Text $x = \\textbf{N}$ !"
+                                        }}]
+                                    }
+                                  }]
+                              }
+                            }]
+                        }
+                      }]
+                  }
+                }]
+            }
+          }]
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Preamble",
+        "children": [
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Erster Teil",
+              "children": []
+            }
+          },
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Zweiter Teil",
+              "children": [
+                {
+                  "component": {
+                    "name": "TextNode",
+                    "text": "Das ist Text"
+                  }
+                },
+                {
+                  "component": {
+                    "name": "SegmentNode",
+                    "heading": "Erster Teil",
+                    "children": []
+                  }
+                },
+                {
+                  "component": {
+                    "name": "SegmentNode",
+                    "heading": "Zweiter Teil",
+                    "children": [
+                      {
+                        "component": {
+                          "name": "SegmentNode",
+                          "heading": "Erster Teil",
+                          "children": []
+                        }
+                      },
+                      {
+                        "component": {
+                          "name": "SegmentNode",
+                          "heading": "Zweiter Teil",
+                          "children": [
+                            {
+                              "component": {
+                                "name": "SegmentNode",
+                                "heading": "Eerster Teil",
+                                "children": []
+                              }
+                            },
+                            {
+                              "component": {
+                                "name": "SegmentNode",
+                                "heading": "Zweiter Teil",
+                                "children": [
+                                  {
+                                    "component": {
+                                      "name": "SegmentNode",
+                                      "heading": "Eerster Teil",
+                                      "children": []
+                                    }
+                                  },
+                                  {
+                                    "component": {
+                                      "name": "SegmentNode",
+                                      "heading": "Zweiter Teil",
+                                      "children": []
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Einführung",
+        "children": []
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Diffgeo",
+        "children": []
+      }
+      },{"component": {
+        "name": "SegmentNode",
+        "heading": "Einführung",
+        "children": []
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Diffgeo",
+        "children": []
+      }
+      },{"component": {
+        "name": "SegmentNode",
+        "heading": "Einführung",
+        "children": []
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Preamble",
+        "children": [
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Eerster Teil",
+              "children": []
+            }
+          },
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Zweiter Teil",
+              "children": [{
+                "component": {
+                  "name": "SegmentNode",
+                  "heading": "Eerster Teil",
+                  "children": []
+                }
+              },
+                {
+                  "component": {
+                    "name": "SegmentNode",
+                    "heading": "Zweiter Teil",
+                    "children": [{
+                      "component": {
+                        "name": "SegmentNode",
+                        "heading": "Eerster Teil",
+                        "children": []
+                      }
+                    },
+                      {
+                        "component": {
+                          "name": "SegmentNode",
+                          "heading": "Zweiter Teil",
+                          "children": [{
+                            "component": {
+                              "name": "SegmentNode",
+                              "heading": "Eerster Teil",
+                              "children": []
+                            }
+                          },
+                            {
+                              "component": {
+                                "name": "SegmentNode",
+                                "heading": "Zweiter Teil",
+                                "children": [{
+                                  "component": {
+                                    "name": "SegmentNode",
+                                    "heading": "Eerster Teil",
+                                    "children": []
+                                  }
+                                },
+                                  {
+                                    "component": {
+                                      "name": "SegmentNode",
+                                      "heading": "Zweiter Teil",
+                                      "children": []
+                                    }
+                                  }]
+                              }
+                            }]
+                        }
+                      }]
+                  }
+                }]
+            }
+          }]
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Diffgeo",
+        "children": []
+      }
+      },{"component": {
+        "name": "SegmentNode",
+        "heading": "Einführung",
+        "children": []
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Preamble",
+        "children": [
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Eerster Teil",
+              "children": []
+            }
+          },
+          {
+            "component": {
+              "name": "SegmentNode",
+              "heading": "Zweiter Teil",
+              "children": [{
+                "component": {
+                  "name": "SegmentNode",
+                  "heading": "Eerster Teil",
+                  "children": []
+                }
+              },
+                {
+                  "component": {
+                    "name": "SegmentNode",
+                    "heading": "Zweiter Teil",
+                    "children": [{
+                      "component": {
+                        "name": "SegmentNode",
+                        "heading": "hjhfh",
+                        "children": []
+                      }
+                    },
+                      {
+                        "component": {
+                          "name": "SegmentNode",
+                          "heading": "Zweiter Teil",
+                          "children": [{
+                            "component": {
+                              "name": "SegmentNode",
+                              "heading": "Eerster Teil",
+                              "children": []
+                            }
+                          },
+                            {
+                              "component": {
+                                "name": "SegmentNode",
+                                "heading": "Zweiter Teil",
+                                "children": [{
+                                  "component": {
+                                    "name": "SegmentNode",
+                                    "heading": "Eerster Teil",
+                                    "children": []
+                                  }
+                                },
+                                  {
+                                    "component": {
+                                      "name": "SegmentNode",
+                                      "heading": "Zweiter Teil",
+                                      "children": []
+                                    }
+                                  }]
+                              }
+                            }]
+                        }
+                      }]
+                  }
+                }]
+            }
+          }]
+      }
+      },
+      {"component": {
+        "name": "SegmentNode",
+        "heading": "Diffgeo",
+        "children": []
+      }
+      }
+    ]
+  }
+}

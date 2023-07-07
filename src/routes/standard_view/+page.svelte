@@ -8,7 +8,7 @@
 
 </script>
 
-<div class="flex flex-row w-full">
+<div class="flex flex-row w-full h-full">
     <NavigationColumn width={`${navColumnSize}%`} />
     <ReadColumn width="{`${100-navColumnSize}%`}" />
 </div>

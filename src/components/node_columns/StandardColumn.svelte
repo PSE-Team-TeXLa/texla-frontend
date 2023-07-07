@@ -2,7 +2,7 @@
 
 </script>
 
-<div class="h-full" >
+<div class="flex flex-col" >
     <slot />
 </div>
 
@@ -12,3 +12,4 @@
         background-color: var(--bgcolor);
     }
 </style>
+

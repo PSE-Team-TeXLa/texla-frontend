@@ -1,9 +1,9 @@
 <script>
-    import { currentNavLayer } from "../../globals/Variables.ts";
+    import { currentLayer } from "../../globals/Variables.ts";
 
     function upLayer() {
-        if ($currentNavLayer > 0)
-            currentNavLayer.update((n) => n - 1)
+        if ($currentLayer > 0)
+            currentLayer.update((n) => n - 1)
     }
 </script>
 

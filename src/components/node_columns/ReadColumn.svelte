@@ -1,10 +1,10 @@
 <script>
     import StandardColumn from "./StandardColumn.svelte";
-    import StandardDocumentNode from "./TreeContainer.svelte";
+    import StandardTreeContainer from "./StandardTreeContainer.svelte";
 
     export let width;
 </script>
 
 <StandardColumn --bgcolor="cyan" --c-width={width} >
-    <StandardDocumentNode buttonsOnly={false} />
+    <StandardTreeContainer showLeaves={false} />
 </StandardColumn>
