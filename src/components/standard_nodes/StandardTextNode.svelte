@@ -1,12 +1,16 @@
-<script lang="ts">
-    export let text: string;
+<script>
+    export let text;
 
-    export let isNavColumn: boolean;
+    export let isNavColumn;
+
+
 </script>
 
 {#if !isNavColumn}
-<div class="pl-4">
+<div id="text-box" class="pl-4">
     <span>TEXT {text}</span>
 </div>
 
     {/if}
+
+
