@@ -1,6 +1,7 @@
 import StandardDocumentNode from "../components/standard_nodes/StandardDocumentNode.svelte";
 import StandardTextNode from "../components/standard_nodes/StandardTextNode.svelte";
 import StandardSegmentNode from "../components/standard_nodes/StandardSegmentNode.svelte";
+import StandardImageNode from "../components/standard_nodes/StandardImageNode.svelte";
 
 export const ast = {
     component: {
@@ -15,6 +16,12 @@ export const ast = {
                             component: {
                                 name: StandardTextNode,
                                 text: "Das ist ein ganz lange Text $x = \\textbf{N}$ !",
+                            },
+                        },{
+                            component: {
+                                name: StandardImageNode,
+                                url: "/img/surfaces2.png",
+                                imageTitle: "surface.png"
                             },
                         },
                         {

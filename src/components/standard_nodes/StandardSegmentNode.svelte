@@ -4,9 +4,7 @@
 
     export let children;
     export let heading;
-
     export let isNavColumn;
-
     export let layerShown: number;
 
     let color = `#${layerShown*2}5${layerShown*2}555`
