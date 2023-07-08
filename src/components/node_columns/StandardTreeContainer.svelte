@@ -11,7 +11,7 @@
 
 </script>
 
-<div class="w-full p-10 overflow-scroll">
+<div class="snap-proximity snap-y w-full p-10 overflow-scroll">
 
 {#if isNavColumn}
     NAVSPALTE {$currentLayer}

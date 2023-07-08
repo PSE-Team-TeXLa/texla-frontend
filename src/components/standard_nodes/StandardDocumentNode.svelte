@@ -7,7 +7,7 @@
     export let layerShown;
 </script>
 
-<div class="flex flex-col my-4">
+<div class="flex flex-col my-4 snap-y snap-proximity snap-start">
     DOCUMENTNODE {filename}
     {#each children as node}
         <svelte:component this={node.component.name} {...{...node.component, layerShown: layerShown + 1, isNavColumn}} />

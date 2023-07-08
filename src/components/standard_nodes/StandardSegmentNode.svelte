@@ -22,7 +22,7 @@
     {/if}
 </div>
 {:else}
-    <div class="flex flex-col ml-4 my-2 py-2" style="background-color: {color}">
+    <div class="snap-y snap-proximity snap-start flex flex-col ml-4 my-2 py-2" style="background-color: {color}">
     {#if layerShown < $currentLayer+1}
         <h1 class="text-2xl pl-4">{heading}</h1>
         {#each children as node}
