@@ -10,9 +10,11 @@
         dispatcher('click', {});
     }
 </script>
+<div class="w-fit">
 
 <Button>
     <div on:click={enterEdit} class="border-4 color border-red-500 w-8 h-8 flex justify-center items-center text-red-500 font-bold">
         <slot/>
     </div>
 </Button>
+</div>

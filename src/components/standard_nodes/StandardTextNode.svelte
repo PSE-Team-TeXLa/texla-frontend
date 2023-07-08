@@ -22,6 +22,14 @@
 
         console.log(newText);
     }
+
+    let isHovered = false;
+    function mouseEnter() {
+        isHovered = true;
+    }
+    function mouseLeave() {
+        isHovered = false;
+    }
 </script>
 
 {#if !isNavColumn}
@@ -39,17 +47,25 @@
             </div>
 
         {:else}
+            <div id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col">
             <div class="">
-                <span>TEXT {text}</span>
+                <span>TEXT {newText}</span>
             </div>
-            <div>
-                <EditButton on:click={enterEditMode}>
-                    E
-                </EditButton>
+                {#if isHovered}
+                    <EditButton on:click={enterEditMode}>
+                        E
+                    </EditButton>
+                {/if}
             </div>
         {/if}
     </div>
 
 {/if}
 
-
+<style>
+    #text-container:hover {
+        border-style: dashed;
+        border-color: red;
+        border-width: 2px;
+    }
+</style>

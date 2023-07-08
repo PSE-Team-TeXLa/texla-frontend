@@ -11,7 +11,7 @@
 </script>
 
 <Button>
-<div on:click={setCurrentLayer} style="background-color: {color}" class="flex justify-start items-center p-2 pl-8">
+<div on:click={setCurrentLayer} style="background-color: {color}" class="flex justify-start items-center p-2 pl-8 w-full">
     <slot />
 </div>
 
