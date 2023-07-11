@@ -2,8 +2,11 @@
     import EditButton from "../buttons/EditButton.svelte";
     import {isEditorActive} from "../../globals/Variables.ts"
     import EditConfirmButton from "../buttons/EditConfirmButton.svelte";
+    import {editNode} from "../../globals/Api";
 
     export let text: string;
+
+    export let uuid: bigint;
 
     let newText = text;
 
@@ -20,7 +23,7 @@
         isEditorActive.set(false);
         isTextEditorActive = false;
 
-        console.log(newText);
+        editNode(uuid, text);
     }
 
     let isHovered = false;
