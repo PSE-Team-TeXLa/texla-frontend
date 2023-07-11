@@ -2,7 +2,7 @@
 
 </script>
 
-<div class="flex flex-col min-h-screen" >
+<div class="container flex flex-col min-h-screen" >
     <slot />
 </div>
 
@@ -10,6 +10,9 @@
     div {
         width: var(--c-width);
         background-color: var(--bgcolor);
+        transition: width;
+        transition-duration: 0.08s;
+        transition-timing-function: ease-out;
     }
 </style>
 
