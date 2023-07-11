@@ -1,10 +1,9 @@
 <script lang="ts">
-    import MiniEditor from "./MiniEditor.svelte";
-    import StandardNode from "./StandardNode.svelte";
+    import StandardLeafNode from "./StandardLeafNode.svelte";
 
     export let imageTitle: string;
 
-    export let url:string;
+    export let url: string;
 
     export let isNavColumn: boolean;
 
@@ -13,13 +12,14 @@
 
 {#if !isNavColumn}
     <div class="flex flex-col cursor-default bg-amber-300">
-        {#if isEditorOpen}
-            <MiniEditor bind:isEditorOpen bind:raw_latex={url} />
-        {:else}
-                <StandardNode bind:isEditorOpen>
-                    <img alt={imageTitle} src={url} class="w-3/4"> IMAGE {imageTitle}
-                </StandardNode>
-        {/if}
+        <StandardLeafNode bind:isEditorOpen bind:raw_latex={url}>
+            <div class="my-4 flex flex-col items-center">
+                <img alt={imageTitle} src={url} class="w-3/4"/>
+                <div class="p-2 mt-1">
+                    <span class="text-2xl font-bold">{imageTitle}</span>
+                </div>
+            </div>
+        </StandardLeafNode>
     </div>
 
 {/if}

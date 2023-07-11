@@ -1,2 +1,2 @@
-<div class="w-20 h-full bg-green-800 flex items-center justify-center">
+<div class="w-20 h-full bg-darkpurple flex items-center justify-center">
 </div>

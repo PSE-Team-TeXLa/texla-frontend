@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {currentLayer} from "../../globals/Variables.ts";
     import {ast} from "../../globals/Ast.ts";
     import {onMount} from "svelte";
     import StandardDocumentNode from "../standard_nodes/StandardDocumentNode.svelte";
@@ -20,14 +19,10 @@
 <div class="snap-proximity snap-y h-full w-full p-10 overflow-scroll overflow-x-hidden">
 
     {#if isNavColumn}
-        NAVSPALTE {$currentLayer}
-            <!--<svelte:component this={ast.component.name} {...{...ast.component, layerShown, isNavColumn}}/>-->
             <StandardDocumentNode heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
     {:else}
-        LESESPALTE {$currentLayer}
         <div bind:this={container}>
-
-        <svelte:component this={ast.component.name} {...{...ast.component, layerShown, isNavColumn}}/>
+            <StandardDocumentNode heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
         </div>
     {/if}
 </div>

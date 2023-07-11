@@ -2,9 +2,9 @@
     import Button from "./Button.svelte";
     import {currentLayer} from "../../globals/Variables.ts";
 
-    export let color;
-
+    export let isShort: boolean;
     export let isOnLayer: number;
+
     function setCurrentLayer() {
         if (isOnLayer > $currentLayer)
             currentLayer.set(isOnLayer);
@@ -12,8 +12,16 @@
 </script>
 
 <Button>
-<div on:click={setCurrentLayer} style="background-color: {color}" class="flex justify-start items-center p-2 pl-8 w-full">
-    <slot />
-</div>
+    {#if isShort}
+        <div on:click={setCurrentLayer}
+             class="flex justify-start items-center ml-12 p-2 pl-8 w-3/4 bg-darkcyan">
+            <slot/>
+        </div>
+    {:else}
+        <div on:click={setCurrentLayer}
+             class="flex justify-start items-center p-2 pl-8 w-full bg-darkcyan">
+            <slot/>
+        </div>
+    {/if}
 
 </Button>

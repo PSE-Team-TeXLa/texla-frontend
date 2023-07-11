@@ -5,6 +5,6 @@
     export let width;
 </script>
 
-<StandardColumn --bgcolor="cyan" --c-width={width} >
+<StandardColumn --c-width={width} >
     <StandardTreeContainer isNavColumn={false} />
 </StandardColumn>

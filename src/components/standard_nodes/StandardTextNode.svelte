@@ -1,6 +1,6 @@
 <script lang="ts">
-    import MiniEditor from "./MiniEditor.svelte";
-    import StandardNode from "./StandardNode.svelte";
+
+    import StandardLeafNode from "./StandardLeafNode.svelte";
 
     export let text: string;
 
@@ -16,15 +16,11 @@
 
 {#if !isNavColumn}
     <div id="text-box" class="flex flex-col cursor-default bg-green-800">
-        {#if isEditorOpen}
-            <MiniEditor bind:isEditorOpen bind:raw_latex={newText}/>
-        {:else}
-            <StandardNode bind:isEditorOpen>
-                <div class="">
-                    <span>TEXT {newText}</span>
-                </div>
-            </StandardNode>
-        {/if}
+        <StandardLeafNode bind:isEditorOpen bind:raw_latex={newText}>
+            <div class="my-4">
+                <span class="text-lg">{newText}</span>
+            </div>
+        </StandardLeafNode>
     </div>
 
 {/if}

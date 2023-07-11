@@ -7,8 +7,8 @@
 </script>
 
 
-<StandardColumn --bgcolor="green" --c-width={width}>
-    <div class="h-16 flex p-4 pl-10 justify-start items-center bg-amber-500">
+<StandardColumn --c-width={width}>
+    <div class="h-16 flex p-4 pl-10 justify-start items-center bg-lightpurple shadow-blue-400 drop-shadow-sm">
         <UpButton />
     </div>
     <StandardTreeContainer isNavColumn={true}/>

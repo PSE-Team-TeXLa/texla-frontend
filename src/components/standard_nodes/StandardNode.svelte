@@ -28,7 +28,7 @@
 
 <div id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative">
     <slot/>
-    <div class="absolute left-[-40px]">
+    <div class="absolute left-[-40px] top-[-4px]">
         {#if isHovered}
             <div class="w-[60px] h-[60px]">
                 <EditButton on:click={enterEditMode}>
@@ -41,7 +41,7 @@
 
 <style>
     #text-container:hover {
-        outline: 2px dashed red;
-        outline-offset: -2px;
+        outline: 3px dashed theme('colors.red');
+        outline-offset: 2px;
     }
 </style>
