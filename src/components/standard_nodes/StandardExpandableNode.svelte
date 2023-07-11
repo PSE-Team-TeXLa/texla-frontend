@@ -33,10 +33,12 @@
             <StandardNode bind:isEditorOpen>
                 <slot />
             </StandardNode>
+            <div class="mb-4">
             {#each children as node}
                 <svelte:component this={node.component.name}
                                   {...{...node.component, layerShown: layerShown + 1, isNavColumn}}/>
             {/each}
+            </div>
         {:else if layerShown === $currentLayer }
             <NavSegmentButton isShort={true} isOnLayer={layerShown + 1 }>{heading}</NavSegmentButton>
         {/if}

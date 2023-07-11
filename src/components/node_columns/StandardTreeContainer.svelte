@@ -5,6 +5,7 @@
 
     export let isNavColumn: boolean;
 
+
     let layerShown = 0;
 
     let container;
