@@ -6,9 +6,10 @@ import StandardImageNode from "../components/standard_nodes/StandardImageNode.sv
 export const ast = {
     component: {
         name: StandardDocumentNode,
-        filename: "main.tex",
+        heading: "main.tex",
         children: [
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Preamble",
                     children: [
@@ -17,7 +18,7 @@ export const ast = {
                                 name: StandardTextNode,
                                 text: "Das ist ein ganz lange Text $x = \\textbf{N}$ !",
                             },
-                        },{
+                        }, {
                             component: {
                                 name: StandardImageNode,
                                 url: "/img/surfaces2.png",
@@ -27,18 +28,18 @@ export const ast = {
                         {
                             component: {
                                 name: StandardSegmentNode,
-                                heading: "Eerster Teil",
+                                heading: "Bitch Teil",
                                 children: [],
                             },
                         },
                         {
                             component: {
                                 name: StandardSegmentNode,
-                                heading: "Zweiter Teil",
+                                heading: "Yusuf Teil",
                                 children: [{
                                     component: {
                                         name: StandardSegmentNode,
-                                        heading: "Eerster Teil",
+                                        heading: "Dietmar Teil",
                                         children: [],
                                     },
                                 },
@@ -56,7 +57,7 @@ export const ast = {
                                                 {
                                                     component: {
                                                         name: StandardSegmentNode,
-                                                        heading: "Zweiter Teil",
+                                                        heading: "Zweiter    Teil",
                                                         children: [{
                                                             component: {
                                                                 name: StandardSegmentNode,
@@ -65,7 +66,8 @@ export const ast = {
                                                                     component: {
                                                                         name: StandardTextNode,
                                                                         text: "Das ist ein ganz lange Text $x = \\textbf{N}$ !",
-                                                                    }}],
+                                                                    }
+                                                                }],
                                                             },
                                                         },
                                                             {
@@ -87,7 +89,8 @@ export const ast = {
                                                                                     component: {
                                                                                         name: StandardTextNode,
                                                                                         text: "Das ist ein ganz lange Text $x = \\textbf{N}$ !",
-                                                                                    }}]
+                                                                                    }
+                                                                                }]
                                                                             },
                                                                         }]
                                                                 },
@@ -100,7 +103,8 @@ export const ast = {
                         }],
                 }
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Preamble",
                     children: [
@@ -119,7 +123,8 @@ export const ast = {
                                     component: {
                                         name: StandardTextNode,
                                         text: "Das ist Text",
-                                    }},{
+                                    }
+                                }, {
                                     component: {
                                         name: StandardSegmentNode,
                                         heading: "Erster Teil",
@@ -176,35 +181,41 @@ export const ast = {
                         }],
                 }
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Einführung",
                     children: [],
                 },
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Diffgeo",
                     children: [],
                 },
-            },{component: {
+            }, {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Einführung",
                     children: [],
                 },
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Diffgeo",
                     children: [],
                 },
-            },{component: {
+            }, {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Einführung",
                     children: [],
                 },
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Preamble",
                     children: [
@@ -276,18 +287,21 @@ export const ast = {
                         }],
                 }
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Diffgeo",
                     children: [],
                 },
-            },{component: {
+            }, {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Einführung",
                     children: [],
                 },
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Preamble",
                     children: [
@@ -359,7 +373,8 @@ export const ast = {
                         }],
                 }
             },
-            {component: {
+            {
+                component: {
                     name: StandardSegmentNode,
                     heading: "Diffgeo",
                     children: [],

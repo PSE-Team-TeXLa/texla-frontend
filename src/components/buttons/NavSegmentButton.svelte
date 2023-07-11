@@ -6,7 +6,8 @@
 
     export let isOnLayer: number;
     function setCurrentLayer() {
-        currentLayer.set(isOnLayer);
+        if (isOnLayer > $currentLayer)
+            currentLayer.set(isOnLayer);
     }
 </script>
 

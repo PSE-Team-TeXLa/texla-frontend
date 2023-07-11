@@ -15,7 +15,7 @@
 </script>
 
 {#if !isNavColumn}
-    <div id="text-box" class="pl-4 flex flex-col cursor-default">
+    <div id="text-box" class="flex flex-col cursor-default bg-green-800">
         {#if isEditorOpen}
             <MiniEditor bind:isEditorOpen bind:raw_latex={newText}/>
         {:else}

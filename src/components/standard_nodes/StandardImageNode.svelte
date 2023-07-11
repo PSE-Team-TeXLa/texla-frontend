@@ -12,7 +12,7 @@
 </script>
 
 {#if !isNavColumn}
-    <div class="pl-4 flex flex-col cursor-default">
+    <div class="flex flex-col cursor-default bg-amber-300">
         {#if isEditorOpen}
             <MiniEditor bind:isEditorOpen bind:raw_latex={url} />
         {:else}

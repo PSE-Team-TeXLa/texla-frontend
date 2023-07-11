@@ -1,24 +1,15 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import StandardExpandableNode from "./StandardExpandableNode.svelte";
     export let children;
-    export let filename;
+    let isEditorOpen = false;
+    export let heading;
 
     export let isNavColumn;
 
     export let layerShown;
-    let container;
-
-    onMount(async () => {
-        if (!isNavColumn)
-            container.style.marginLeft = "2em";
-    });
 </script>
 
 
+<StandardExpandableNode children={children} heading={heading} layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
 
-<div bind:this={container} class="flex flex-col my-4 ">
-    DOCUMENTNODE {filename}
-    {#each children as node}
-        <svelte:component this={node.component.name} {...{...node.component, layerShown: layerShown + 1, isNavColumn}} />
-    {/each}
-</div>
+</StandardExpandableNode>
