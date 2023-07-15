@@ -16,7 +16,7 @@
 
 {#if !isNavColumn}
     <div id="text-box" class="flex flex-col cursor-default bg-green-800">
-        <StandardLeafNode bind:isEditorOpen bind:raw_latex={newText}>
+        <StandardLeafNode uuid={uuid} bind:isEditorOpen bind:raw_latex={newText}>
             <div class="my-4">
                 <span class="text-lg">{newText}</span>
             </div>

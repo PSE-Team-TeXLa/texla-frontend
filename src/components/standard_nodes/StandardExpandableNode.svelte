@@ -3,19 +3,21 @@
     import {currentLayer} from "../../globals/Variables";
     import MiniEditor from "./MiniEditor.svelte";
     import StandardNode from "./StandardNode.svelte";
-    import {onMount} from "svelte";
+
+    import {dndzone} from "svelte-dnd-action";
 
     export let isNavColumn: boolean;
     export let layerShown: number;
     export let heading: string;
     export let children;
     export let isEditorOpen;
+    export let uuid;
 
 </script>
 
 {#if isNavColumn}
     <div class="flex flex-col ml-4 mt-2">
-        <NavSegmentButton isOnLayer={layerShown}>{heading}</NavSegmentButton>
+        <NavSegmentButton uuid={uuid} isOnLayer={layerShown}>{heading}</NavSegmentButton>
         <!-- Anzeigedetail, ob die neuen Layers in der rechten Spalte angezeigt werden sollen-->
         {#if layerShown < $currentLayer - 1 }
             {#each children as node}
@@ -30,7 +32,8 @@
             <MiniEditor bind:isEditorOpen bind:raw_latex={heading}/>
         {:else}
         {#if layerShown < $currentLayer }
-            <StandardNode bind:isEditorOpen>
+
+            <StandardNode uuid={uuid} bind:isEditorOpen>
                 <slot />
             </StandardNode>
             <div class="mb-4">

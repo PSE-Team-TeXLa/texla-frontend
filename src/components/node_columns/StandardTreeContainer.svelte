@@ -20,10 +20,10 @@
 <div class="snap-proximity snap-y h-full w-full p-10 overflow-scroll overflow-x-hidden">
 
     {#if isNavColumn}
-            <StandardDocumentNode heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
+            <StandardDocumentNode uuid={ast.component.uuid} heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
     {:else}
         <div bind:this={container}>
-            <StandardDocumentNode heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
+            <StandardDocumentNode uuid={ast.component.uuid} heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
         </div>
     {/if}
 </div>
