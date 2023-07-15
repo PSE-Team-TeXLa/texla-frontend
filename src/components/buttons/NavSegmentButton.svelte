@@ -13,8 +13,8 @@
 
     function scrollToNode() {
         let target: HTMLElement = $scrollMap.get(uuid);
-        target.scrollIntoView();
-        console.log(target);
+        target.scrollIntoView({behavior: "smooth"});
+        //console.log(target);
     }
 </script>
 

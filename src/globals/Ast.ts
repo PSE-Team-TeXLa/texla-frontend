@@ -57,7 +57,7 @@ export const ast = {
                                             heading: "Zweiter Teil",
                                             children: [{
                                                 component: {
-                                                    uuid: 8,
+                                                    uuid: 70,
                                                     name: StandardSegmentNode,
                                                     heading: "Eerster Teil",
                                                     children: [],

@@ -4,15 +4,8 @@
 
     export let uuid;
 
-    import {dndzone} from "svelte-dnd-action";
     import {onMount} from "svelte";
 
-    let items = [
-        {
-            id:1,
-            title: "Post1"
-        }
-    ]
     function enterEditMode() {
 
         if ($isEditorActive) {
@@ -39,12 +32,11 @@
     let node;
     onMount(async () => {
         scrollMap.update((o) => o.set(uuid, node))
-        console.log($scrollMap);
     })
 </script>
 
 <div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative my-4">
-    {uuid} <slot/>
+    <slot/>
     <div class="absolute left-[-40px] top-[-4px]">
         {#if isHovered}
             <div class="w-[60px] h-[60px]">

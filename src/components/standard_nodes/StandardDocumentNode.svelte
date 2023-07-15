@@ -11,7 +11,7 @@
 </script>
 
 
-<StandardExpandableNode uuid={uuid} children={children} heading={heading} layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
+<StandardExpandableNode uuid={uuid} bind:children bind:heading layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
     <h1 class="text-4xl font-bold">{heading}</h1>
     <hr>
 </StandardExpandableNode>
