@@ -2,6 +2,7 @@
     import {ast} from "../../globals/Ast.ts";
     import {onMount} from "svelte";
     import StandardDocumentNode from "../standard_nodes/StandardDocumentNode.svelte";
+    import {json_ast} from "../../globals/Variables";
 
     export let isNavColumn: boolean;
 
@@ -20,10 +21,12 @@
 <div class="snap-proximity snap-y h-full w-full p-10 overflow-scroll overflow-x-hidden">
 
     {#if isNavColumn}
-            <StandardDocumentNode uuid={ast.component.uuid} heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
+            <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
+            <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
     {:else}
         <div bind:this={container}>
-            <StandardDocumentNode uuid={ast.component.uuid} heading={ast.component.heading} layerShown={layerShown} isNavColumn="{isNavColumn}" children={ast.component.children}/>
+            <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
+            <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
         </div>
     {/if}
 </div>

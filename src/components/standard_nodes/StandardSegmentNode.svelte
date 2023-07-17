@@ -1,11 +1,12 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
 
+    export let uuid;
     export let children;
     export let heading;
+
     export let isNavColumn;
     export let layerShown: number;
-    export let uuid;
     let isEditorOpen: boolean;
 
 </script>

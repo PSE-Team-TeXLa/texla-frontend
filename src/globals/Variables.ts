@@ -1,18 +1,23 @@
 import {writable} from "svelte/store";
+import type {Writable} from "svelte/store";
+import type API from "./socket.api";
 
-export const json_ast = writable({
+export const json_ast: Writable<API.Ast.Ast> = writable({
     "root": {
         "uuid": 6,
+        "raw_latex": "main.tex",
         "node_type": {
             "type": "Expandable",
             "data": {
                 "type": "Document",
                 "preamble": "",
-                "postamble": ""
+                "postamble": "",
+                "filename": "main.tex",
             },
             "children": [
                 {
                     "uuid": 4,
+                    "raw_latex": "Title1",
                     "node_type": {
                         "type": "Expandable",
                         "data": {
@@ -22,6 +27,7 @@ export const json_ast = writable({
                         "children": [
                             {
                                 "uuid": 1,
+                                "raw_latex": "Block\nof\nText\n",
                                 "node_type": {
                                     "type": "Leaf",
                                     "data": {
@@ -33,6 +39,7 @@ export const json_ast = writable({
                             },
                             {
                                 "uuid": 3,
+                                "raw_latex": "Subtitle",
                                 "node_type": {
                                     "type": "Expandable",
                                     "data": {
@@ -42,6 +49,7 @@ export const json_ast = writable({
                                     "children": [
                                         {
                                             "uuid": 2,
+                                            "raw_latex": "another Block of text\naaaaa\n",
                                             "node_type": {
                                                 "type": "Leaf",
                                                 "data": {
@@ -61,6 +69,7 @@ export const json_ast = writable({
                 },
                 {
                     "uuid": 5,
+                    "raw_latex": "Title2",
                     "node_type": {
                         "type": "Expandable",
                         "data": {

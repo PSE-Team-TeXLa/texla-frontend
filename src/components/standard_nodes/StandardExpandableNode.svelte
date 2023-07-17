@@ -14,19 +14,20 @@
     import StandardImageNode from "./StandardImageNode.svelte";
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
-        [["StandardDocumentNode", StandardDocumentNode],
-            ["StandardSegmentNode", StandardSegmentNode],
-            ["StandardTextNode", StandardTextNode],
+        [["Document", StandardDocumentNode],
+            ["Segment", StandardSegmentNode],
+            ["Text", StandardTextNode],
             ["StandardImageNode", StandardImageNode],
         ]
     );
 
+    export let uuid: number;
+    export let type: string;
+    export let children;
+    export let node_type;
     export let isNavColumn: boolean;
     export let layerShown: number;
-    export let heading: string;
-    export let children;
     export let isEditorOpen;
-    export let uuid: number;
 
     children.forEach((o, i) => children[i] = {...o, id: o.component.uuid})
     children.forEach(e => console.log(e));
@@ -53,8 +54,8 @@
         <!-- Anzeigedetail, ob die neuen Layers in der rechten Spalte angezeigt werden sollen-->
         {#if layerShown < $currentLayer - 1 }
             {#each children as node}
-                <svelte:component this={standardNodeTypeMap.get(node.component.name)}
-                                  {...{...node.component, layerShown: layerShown + 1, isNavColumn}}/>
+                <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
+                                  {...{...node, layerShown: layerShown + 1, isNavColumn}}/>
             {/each}
         {/if}
     </div>

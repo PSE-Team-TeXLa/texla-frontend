@@ -1,18 +1,17 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
-    export let children;
+    import API from "../../globals/socket.api";
+    export let node: API.Ast.Node;
+
+
+    export let isNavColumn: boolean;
+    export let layerShown: number;
     let isEditorOpen = false;
-    export let heading;
-
-    export let isNavColumn;
-
-    export let layerShown;
-    export let uuid;
 </script>
 
 
-<StandardExpandableNode uuid={uuid} bind:children bind:heading layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
-    <h1 class="text-4xl font-bold">{heading}</h1>
+<StandardExpandableNode bind:node layerShown={layerShown} heading={node.node_type.data.filename} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
+    <h1 class="text-4xl font-bold">{node.node_type}</h1>
     <hr>
 </StandardExpandableNode>
 
