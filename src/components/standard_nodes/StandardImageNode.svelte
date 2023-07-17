@@ -16,7 +16,7 @@
         <StandardLeafNode uuid={uuid} bind:isEditorOpen bind:raw_latex={url}>
             <div class="my-4 flex flex-col items-center">
                 <img alt={imageTitle} src={url} class="max-h-20 w-auto"/>
-                <div class="p-2 mt-2">
+                <div class="p-1 mt-1">
                     <span class="text-2xl font-bold">{imageTitle}</span>
                 </div>
             </div>

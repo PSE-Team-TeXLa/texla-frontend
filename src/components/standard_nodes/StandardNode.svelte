@@ -35,7 +35,7 @@
     })
 </script>
 
-<div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative my-4">
+<div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative my-2">
     <slot/>
     <div class="absolute left-[-40px] top-[-4px]">
         {#if isHovered}
