@@ -10,45 +10,49 @@ export namespace API {
             root: Document;
             highest_level: number;
         }
-        
+
         interface Document {
             uuid: Uuid;
-            type: "Expandable";
-            data: {
-                type: "Document";
-                preamble: string;
-                postamble: string;
+            node_type: {
+                type: "Expandable";
+                data: {
+                    type: "Document";
+                    preamble: string;
+                    postamble: string;
+                }
+                children: Node[];
             }
-            children: Node[];
         }
-        
+
         type Node = ExpandableNode | LeafNode;
+
         interface GeneralNode {
             uuid: Uuid;
             type: "Expandable" | "Leaf";
+            raw_latex: string
             data: ExpandableData | LeafData;
             meta_data: Metadata;
         }
-        
+
         interface ExpandableNode extends GeneralNode {
             type: "Expandable";
             data: ExpandableData;
             children: Node[];
         }
-        
+
         interface LeafNode extends GeneralNode {
             type: "Leaf";
             data: LeafData;
         }
-        
+
         type ExpandableData = Segment; // TODO more
         type LeafData = Text; // TODO more
-        
+
         interface Segment {
             type: "Segment";
             heading: string;
         }
-        
+
         interface Text {
             type: "Text";
             text: string;
