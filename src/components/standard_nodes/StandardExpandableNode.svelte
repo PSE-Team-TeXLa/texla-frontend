@@ -4,15 +4,29 @@
     import MiniEditor from "./MiniEditor.svelte";
     import StandardNode from "./StandardNode.svelte";
     import {flip} from "svelte/animate";
+    import type {ComponentType} from "svelte";
+
 
     import {dndzone} from "svelte-dnd-action";
+    import StandardDocumentNode from "./StandardDocumentNode.svelte";
+    import StandardSegmentNode from "./StandardSegmentNode.svelte";
+    import StandardTextNode from "./StandardTextNode.svelte";
+    import StandardImageNode from "./StandardImageNode.svelte";
+
+    export const standardNodeTypeMap = new Map<string, ComponentType>(
+        [["StandardDocumentNode", StandardDocumentNode],
+            ["StandardSegmentNode", StandardSegmentNode],
+            ["StandardTextNode", StandardTextNode],
+            ["StandardImageNode", StandardImageNode],
+        ]
+    );
 
     export let isNavColumn: boolean;
     export let layerShown: number;
     export let heading: string;
     export let children;
     export let isEditorOpen;
-    export let uuid;
+    export let uuid: number;
 
     children.forEach((o, i) => children[i] = {...o, id: o.component.uuid})
     children.forEach(e => console.log(e));
@@ -39,7 +53,7 @@
         <!-- Anzeigedetail, ob die neuen Layers in der rechten Spalte angezeigt werden sollen-->
         {#if layerShown < $currentLayer - 1 }
             {#each children as node}
-                <svelte:component this={node.component.name}
+                <svelte:component this={standardNodeTypeMap.get(node.component.name)}
                                   {...{...node.component, layerShown: layerShown + 1, isNavColumn}}/>
             {/each}
         {/if}
@@ -57,7 +71,7 @@
             <div use:dndzone="{{items: children, flipDurationMs: 100}}" on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
             {#each children as node (node.id)}
                 <div animate:flip="{{duration: 100}}">
-                    <svelte:component this={node.component.name}
+                    <svelte:component this={standardNodeTypeMap.get(node.component.name)}
                                   {...{...node.component, layerShown: layerShown + 1, isNavColumn}} />
                 </div>
             {/each}

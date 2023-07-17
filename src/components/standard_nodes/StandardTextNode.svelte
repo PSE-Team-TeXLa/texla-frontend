@@ -4,7 +4,7 @@
 
     export let text: string;
 
-    export let uuid: bigint;
+    export let uuid: number;
 
     $: newText = text;
 

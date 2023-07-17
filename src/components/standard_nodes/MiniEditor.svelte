@@ -4,7 +4,7 @@
     import {editNode} from "../../globals/Api";
 
     export let raw_latex: string;
-    export let uuid: bigint;
+    export let uuid: number;
     export let isEditorOpen: boolean;
 
 
