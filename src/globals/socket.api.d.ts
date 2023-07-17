@@ -1,13 +1,60 @@
 export default API;
 export namespace API {
     type Uuid = number;
-    type Metadata = {[key: string]: string};
-    
+    type Metadata = { [key: string]: string };
+
     export namespace Ast {
         // TODO
-        type Ast = any;
+
+        interface Ast {
+            root: Document;
+            highest_level: number;
+        }
+        
+        interface Document {
+            uuid: Uuid;
+            type: "Expandable";
+            data: {
+                type: "Document";
+                preamble: string;
+                postamble: string;
+            }
+            children: Node[];
+        }
+        
+        type Node = ExpandableNode | LeafNode;
+        interface GeneralNode {
+            uuid: Uuid;
+            type: "Expandable" | "Leaf";
+            data: ExpandableData | LeafData;
+            meta_data: Metadata;
+        }
+        
+        interface ExpandableNode extends GeneralNode {
+            type: "Expandable";
+            data: ExpandableData;
+            children: Node[];
+        }
+        
+        interface LeafNode extends GeneralNode {
+            type: "Leaf";
+            data: LeafData;
+        }
+        
+        type ExpandableData = Segment; // TODO more
+        type LeafData = Text; // TODO more
+        
+        interface Segment {
+            type: "Segment";
+            heading: string;
+        }
+        
+        interface Text {
+            type: "Text";
+            text: string;
+        }
     }
-    
+
     export namespace Operation {
         // TODO: da fehlt noch die Information, welche Operation es sein soll, also so type: ...
         type Operation = AddNode | MoveNode | EditNode | DeleteNode | MergeNodes | EditMetadata | DeleteMetadata;
