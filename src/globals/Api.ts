@@ -1,6 +1,6 @@
 // import { io } from "../lib/socket.io.esm.min";
 import { io } from "socket.io-client";
-import type API from "./socket.api";
+import type API from "./socket.api.d.ts";
 import {isFrozen} from "./Variables";
 
 const socket = io("ws://localhost:13814/");
@@ -22,8 +22,18 @@ socket.on("new_ast", (ast: API.Ast.Ast) => {
 
 export function editNode(target: number, raw_latex: string) {
     const operation: API.Operation.EditNode = {
-        target:target, // TODO: information is lost here! -> limit uuids to 2^53 or 2^32
+        target, // TODO: information is lost here! -> limit uuids to 2^53 or 2^32
         raw_latex
+    }
+
+    socket.emit("operation", operation);
+    console.log("operation sent: ", operation);
+}
+
+export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
+    const operation: API.Operation.MoveNode = {
+        target, // TODO: information is lost here! -> limit uuids to 2^53 or 2^32
+        destination
     }
 
     socket.emit("operation", operation);

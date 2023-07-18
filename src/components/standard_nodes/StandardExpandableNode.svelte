@@ -13,6 +13,8 @@
     import StandardTextNode from "./StandardTextNode.svelte";
     import StandardImageNode from "./StandardImageNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
+    import {moveNode} from "../../globals/Api";
+
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
         [["Document", StandardDocumentNode],
@@ -73,14 +75,14 @@
     {:else}
         <div class="flex flex-col mt-2">
             {#if isEditorOpen}
-                <MiniEditor bind:raw_latex={node.raw_latex} bind:isEditorOpen/>
+                <MiniEditor bind:node bind:isEditorOpen/>
             {:else}
                 {#if layerShown < $currentLayer }
 
                     <StandardNode uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{{items: children, info: {id: 'uuid'}, flipDurationMs: 100}}"
+                    <div use:dndzone="{{items: children, flipDurationMs: 100}}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">

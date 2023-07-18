@@ -15,7 +15,7 @@
 
 {#if !isNavColumn}
     <div class="flex flex-col cursor-default bg-amber-300">
-        <StandardLeafNode uuid={node.uuid} bind:isEditorOpen bind:raw_latex={node.raw_latex}>
+        <StandardLeafNode bind:node bind:isEditorOpen >
             <div class="my-4 flex flex-col items-center">
                 <img alt={path} src={path} class="max-h-20 w-auto"/>
             </div>

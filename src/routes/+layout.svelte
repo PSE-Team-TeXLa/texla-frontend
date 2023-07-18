@@ -2,6 +2,10 @@
     import "../app.css";
     import Sidebar from "../components/sidebar/Sidebar.svelte";
     import "../globals/Api"
+
+
+    import {overrideItemIdKeyNameBeforeInitialisingDndZones} from "svelte-dnd-action";
+    overrideItemIdKeyNameBeforeInitialisingDndZones("uuid");
 </script>
 
 

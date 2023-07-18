@@ -1,16 +1,16 @@
 <script lang="ts">
 import MiniEditor from "./MiniEditor.svelte";
 import StandardNode from "./StandardNode.svelte";
+import type API from "../../globals/socket.api.d.ts";
 
-export let uuid;
-export let raw_latex: string;
+export let node: API.Ast.Node;
 export let isEditorOpen: boolean;
 </script>
 
 {#if isEditorOpen}
-    <MiniEditor bind:isEditorOpen bind:raw_latex/>
+    <MiniEditor bind:isEditorOpen bind:node />
 {:else}
-    <StandardNode uuid={uuid} bind:isEditorOpen>
+    <StandardNode uuid={node.uuid} bind:isEditorOpen>
         <slot />
     </StandardNode>
 {/if}
