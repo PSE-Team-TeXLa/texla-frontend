@@ -27,12 +27,12 @@
     export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
-    if (node.node_type.type === "Expandable") {
+    $: if (node.node_type.type === "Expandable") {
         children = node.node_type.children;
     }
 
     let text: string;
-    if (node.node_type.type === "Expandable")
+    $: if (node.node_type.type === "Expandable")
         if (node.node_type.data.type === "Document")
             text = "Document";
         else if (node.node_type.data.type === "Segment")
@@ -48,16 +48,25 @@
 
     const handleConsider = (evt) => {
         console.log("consider");
-        children = evt.detail.items;
+        if ("children" in node.node_type) {
+            children = evt.detail.items;
+        }
     }
 
     const handleFinalize = (evt) => {
         console.log("FInalize");
-        children = evt.detail.items;
+        if ("children" in node.node_type) {
+            // TODO change to node.node_type.children for navcolumn to change
+            children = evt.detail.items;
+        }
+        //TODO Position finden
+        let pos: API.Operation.Position = {
+            parent: evt.detail.parent,
+            after_sibling: -1 //
+        }
+        moveNode(evt.detail.info.id, pos)
         console.log(children)
     }
-
-
 </script>
 
 <div>
@@ -73,16 +82,15 @@
             {/if}
         </div>
     {:else}
-        <div class="flex flex-col mt-2">
+        <div class="flex flex-col ml-4 mt-2">
             {#if isEditorOpen}
                 <MiniEditor bind:node bind:isEditorOpen/>
             {:else}
                 {#if layerShown < $currentLayer }
-
                     <StandardNode uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{{items: children, flipDurationMs: 100}}"
+                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-bottom': '40px'}, flipDurationMs: 100}}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">

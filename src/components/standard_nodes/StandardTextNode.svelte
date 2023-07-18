@@ -9,7 +9,6 @@
         text = node.node_type.data.text;
 
     export let isNavColumn: boolean;
-
     let isEditorOpen;
 
 </script>

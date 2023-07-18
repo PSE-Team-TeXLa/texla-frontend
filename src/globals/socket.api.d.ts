@@ -36,7 +36,6 @@ namespace API {
             type: "Document";
             preamble: string;
             postamble: string;
-            filename: string;
 
         }
         interface Segment {
