@@ -1,7 +1,7 @@
 // import { io } from "../lib/socket.io.esm.min";
 import { io } from "socket.io-client";
-import type API from "./socket.api.d.ts";
-import {isFrozen} from "./Variables";
+import type API from "./socket.api";
+import {isFrozen, json_ast} from "./Variables";
 
 const socket = io("ws://localhost:13814/");
 console.count("socket established");
@@ -13,8 +13,9 @@ socket.on("remote_url", (url: string | null) => {
     console.log("remote_url: ", url);
 });
 
-socket.on("new_ast", (ast: API.Ast.Ast) => {
-    // TODO: save ast into store (that does not exist yet)
+socket.on("new_ast", (new_ast: API.Ast.Ast) => {
+    json_ast.set(new_ast);
+    isFrozen.set(false);
 });
 
 
@@ -22,22 +23,20 @@ socket.on("new_ast", (ast: API.Ast.Ast) => {
 
 export function editNode(target: number, raw_latex: string) {
     const operation: API.Operation.EditNode = {
-        target, // TODO: information is lost here! -> limit uuids to 2^53 or 2^32
+        target,
         raw_latex
     }
-
-    socket.emit("operation", operation);
-    console.log("operation sent: ", operation);
+    
+    sendOperation(operation);
 }
 
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
     const operation: API.Operation.MoveNode = {
-        target, // TODO: information is lost here! -> limit uuids to 2^53 or 2^32
+        target,
         destination
     }
 
-    socket.emit("operation", operation);
-    console.log("operation sent: ", operation);
+    sendOperation(operation);
 }
 function sendOperation(operation: API.Operation.Operation) {
     socket.emit("operation", operation);
