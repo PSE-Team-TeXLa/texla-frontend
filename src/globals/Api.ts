@@ -14,6 +14,7 @@ socket.on("remote_url", (url: string | null) => {
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     json_ast.set(new_ast);
+    console.log("new_ast: ", new_ast);
     isFrozen.set(false);
 });
 
