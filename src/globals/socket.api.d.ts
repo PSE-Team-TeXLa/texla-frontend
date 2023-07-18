@@ -61,42 +61,79 @@ namespace API {
     }
 
     export namespace Operation {
-        // TODO: da fehlt noch die Information, welche Operation es sein soll, also so type: ...
         type Operation = AddNode | MoveNode | EditNode | DeleteNode | MergeNodes | EditMetadata | DeleteMetadata;
-
+        type OperationData = AddNodeData | MoveNodeData | EditNodeData | DeleteNodeData | MergeNodesData | EditMetadataData | DeleteMetadataData;
+        
         interface AddNode {
-            destination: Position;
-            raw_latex: string;
+            type: "AddNode";
+            arguments: AddNodeData;
         }
-
+        
         interface MoveNode {
+            type: "MoveNode";
+            arguments: MoveNodeData;
+        }
+        
+        interface EditNode {
+            type: "EditNode";
+            arguments: EditNodeData;
+        }
+        
+        interface DeleteNode {
+            type: "DeleteNode";
+            arguments: DeleteNodeData;
+        }
+        
+        interface MergeNodes {
+            type: "MergeNodes";
+            arguments: MergeNodesData;
+        }
+        
+        interface EditMetadata {
+            type: "EditMetadata";
+            arguments: EditMetadataData;
+        }
+        
+        interface DeleteMetadata {
+            type: "DeleteMetadata";
+            arguments: DeleteMetadataData;
+        }
+        
+        
+        interface AddNodeData {
+            destination: Position;
+            raw_latex: string;
+        }
+
+        interface MoveNodeData {
             target: Uuid;
             destination: Position;
         }
 
-        interface EditNode {
+        interface EditNodeData {
             target: Uuid;
             raw_latex: string;
         }
 
-        interface DeleteNode {
+        interface DeleteNodeData {
             target: Uuid;
         }
 
-        interface MergeNodes {
+        interface MergeNodesData {
             second_node: Uuid;
         }
 
 
-        interface EditMetadata {
+        interface EditMetadataData {
             target: Uuid;
             new: Metadata;
         }
 
-        interface DeleteMetadata {
+        interface DeleteMetadataData {
             target: Uuid;
             key: string;
         }
+        
 
         interface Position {
             parent: Uuid;

@@ -22,21 +22,21 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
 // outgoing
 
 export function editNode(target: number, raw_latex: string) {
-    const operation: API.Operation.EditNode = {
-        target,
-        raw_latex
-    }
-    
-    sendOperation(operation);
+    sendOperation({
+        type: "EditNode", arguments: {
+            target,
+            raw_latex
+        }
+    });
 }
 
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
-    const operation: API.Operation.MoveNode = {
-        target,
-        destination
-    }
-
-    sendOperation(operation);
+    sendOperation({
+        type: "MoveNode", arguments: {
+            target,
+            destination
+        }
+    });
 }
 function sendOperation(operation: API.Operation.Operation) {
     socket.emit("operation", operation);
