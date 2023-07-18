@@ -1,4 +1,3 @@
-// import { io } from "../lib/socket.io.esm.min";
 import { io } from "socket.io-client";
 import type API from "./socket.api";
 import {isFrozen, json_ast} from "./Variables";
