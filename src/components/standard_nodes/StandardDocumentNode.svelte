@@ -1,6 +1,7 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
+
     export let node: API.Ast.Node;
 
     export let isNavColumn: boolean;
@@ -8,11 +9,13 @@
     let isEditorOpen = false;
 </script>
 
-
-<StandardExpandableNode bind:node layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen} >
-    <h1 class="text-4xl font-bold">Document</h1>
-    <hr>
-</StandardExpandableNode>
+<!-- rerender entire tree when there is a new root -->
+{#key node.uuid}
+    <StandardExpandableNode bind:node layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen}>
+        <h1 class="text-4xl font-bold">Document</h1>
+        <hr>
+    </StandardExpandableNode>
+{/key}
 
 <style>
     hr {

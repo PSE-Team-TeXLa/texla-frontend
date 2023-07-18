@@ -2,6 +2,7 @@ import {writable} from "svelte/store";
 import type {Writable} from "svelte/store";
 import type API from "./socket.api";
 
+// TODO: rename to ast
 export const json_ast: Writable<API.Ast.Ast | undefined> = writable();
 
 
