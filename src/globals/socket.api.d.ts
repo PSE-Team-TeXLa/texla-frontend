@@ -1,5 +1,5 @@
 export default API;
-export namespace API {
+namespace API {
     type Uuid = number;
     type Metadata = { [key: string]: string };
 
@@ -30,7 +30,7 @@ export namespace API {
         }
 
         type ExpandableData = Segment | Document; // TODO more
-        type LeafData = Text; // TODO more
+        type LeafData = Text | Image | Caption; // TODO more
 
         interface Document {
             type: "Document";
@@ -47,6 +47,16 @@ export namespace API {
         interface Text {
             type: "Text";
             text: string;
+        }
+
+        interface Image {
+            type: "Image";
+            path: string;
+        }
+
+        interface Caption {
+            type: "Caption";
+            caption: string;
         }
     }
 

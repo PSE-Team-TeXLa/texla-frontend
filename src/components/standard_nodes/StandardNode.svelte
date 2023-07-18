@@ -3,21 +3,20 @@
     import {isEditorActive, scrollMap} from "../../globals/Variables";
 
     export let uuid;
+    export let isEditorOpen: boolean;
 
     import {onMount} from "svelte";
 
     function enterEditMode() {
-
         if ($isEditorActive) {
             console.log("Editor already open");
         } else {
             $isEditorActive = true;
             isEditorOpen = true;
+
         }
 
     }
-
-    export let isEditorOpen: boolean;
 
     let isHovered = false;
 

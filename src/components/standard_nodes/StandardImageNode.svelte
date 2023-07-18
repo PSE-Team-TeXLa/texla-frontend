@@ -1,24 +1,23 @@
 <script lang="ts">
     import StandardLeafNode from "./StandardLeafNode.svelte";
+    import type API from "../../globals/socket.api.d.ts";
 
-    export let imageTitle: string;
-
-    export let url: string;
+    export let node: API.Ast.Node;
+    let path: string;
+    if (node.node_type.type === "Leaf")
+        if (node.node_type.data.type === "Image")
+            path = node.node_type.data.path;
 
     export let isNavColumn: boolean;
-    export let uuid;
 
     let isEditorOpen: boolean;
 </script>
 
 {#if !isNavColumn}
     <div class="flex flex-col cursor-default bg-amber-300">
-        <StandardLeafNode uuid={uuid} bind:isEditorOpen bind:raw_latex={url}>
+        <StandardLeafNode uuid={node.uuid} bind:isEditorOpen bind:raw_latex={node.raw_latex}>
             <div class="my-4 flex flex-col items-center">
-                <img alt={imageTitle} src={url} class="max-h-20 w-auto"/>
-                <div class="p-1 mt-1">
-                    <span class="text-2xl font-bold">{imageTitle}</span>
-                </div>
+                <img alt={path} src={path} class="max-h-20 w-auto"/>
             </div>
         </StandardLeafNode>
     </div>

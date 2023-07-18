@@ -2,9 +2,9 @@
 import MiniEditor from "./MiniEditor.svelte";
 import StandardNode from "./StandardNode.svelte";
 
-export let isEditorOpen: boolean;
-export let raw_latex: string;
 export let uuid;
+export let raw_latex: string;
+export let isEditorOpen: boolean;
 </script>
 
 {#if isEditorOpen}
