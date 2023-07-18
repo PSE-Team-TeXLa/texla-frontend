@@ -1,9 +1,12 @@
-import { io } from "socket.io-client";
+import {io} from "socket.io-client";
 import type API from "./socket.api";
 import {isFrozen, json_ast} from "./Variables";
 
 const socket = io("ws://localhost:13814/");
 console.count("socket established");
+// useful for debugging in the browser console
+// @ts-ignore
+globalThis.socket = socket;
 // of course, it should only be one
 
 // incoming
@@ -16,6 +19,11 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     json_ast.set(new_ast);
     console.log("new_ast: ", new_ast);
     isFrozen.set(false);
+    console.timeEnd("roundtrip");
+});
+
+socket.on("disconnect", () => {
+    console.log("disconnect");
 });
 
 
@@ -38,8 +46,10 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
         }
     });
 }
+
 function sendOperation(operation: API.Operation.Operation) {
-    socket.emit("operation", operation);
-    console.log("operation sent: ", operation);
+    socket.emit("operation", JSON.stringify(operation));
+    console.log("[socket %s] operation sent: ", socket.id, operation);
     isFrozen.set(true);
+    console.time("roundtrip");
 }
