@@ -12,6 +12,8 @@ export const isGraphActive = writable(false);
 
 export const scrollMap = writable(new Map<number, HTMLElement>());
 
+export const modal = writable();
+
 
 export const isFrozen = writable(false);
 

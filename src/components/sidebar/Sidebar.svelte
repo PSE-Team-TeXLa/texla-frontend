@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import SidebarContentWrapper from "./SidebarContentWrapper.svelte";
     import SidebarSlot from "./SidebarSlot.svelte";
     import SidebarImage from "./SidebarImage.svelte";
@@ -17,6 +17,12 @@
 
     import {goto} from "$app/navigation";
 
+    import ExportPopup from "../popups/ExportPopup.svelte";
+
+    import {modal} from "../../globals/Variables.ts";
+    import {bind} from "svelte-simple-modal";
+    import ErrorPopup from "../popups/ErrorPopup.svelte";
+
 
     function enterGraphMode() {
         isGraphActive.set(true);
@@ -33,11 +39,14 @@
     }
 
     function startExport() {
+        modal.set(bind(ExportPopup, {}));
         console.log("Export");
     }
 
     function quitTexla() {
-        console.log("QUIT")
+        close();
+        modal.set(bind(ErrorPopup, { message: "It's a modal!" }));
+        console.log("QUIT");
     }
 
 </script>
@@ -48,7 +57,7 @@
             <SidebarImage on:click={leaveGraphMode} image="{logo}"/>
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon on:click={startExport} icon={export_icon}/>
+            <SidebarIcon popup={ExportPopup} on:click={startExport} icon={export_icon}/>
         </SidebarSlot>
         <SidebarSlot>
             <SidebarIcon on:click={openOverleaf} icon={overleaf_icon}/>
