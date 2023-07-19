@@ -58,27 +58,15 @@
         if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
             return;
         }
-
-        console.log(evt.detail)
-        console.log("FInalize");
-        // TODO change to node.node_type.children for navcolumn to change
         node.node_type.children = evt.detail.items;
-
         let target = evt.detail.info.id;
         let childrenArray: [] = node.node_type.children;
         let lastChildIndex = childrenArray.findIndex((o) => o.uuid === target) - 1;
-        console.log(node.node_type.children)
-        dispatch('hasMovedNode', {target: evt.detail.info.id, lastChild: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid})
-
-        //moveNode(evt.detail.info.id, pos)
-    }
-
-    export function handleHasMoved(evt) {
-        let pos: API.Operation.Position = {
+        let position: API.Operation.Position = {
             parent: node.uuid,
-            after_sibling: evt.detail.lastChild //
+            after_sibling: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid
         }
-        moveNode(evt.detail.target, pos)
+        moveNode(target, position)
     }
 
 
@@ -109,7 +97,7 @@
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">
-                                <svelte:component on:hasMovedNode={handleHasMoved} this={standardNodeTypeMap.get(node.node_type.data.type)}
+                                <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
                                                   {...{node, layerShown: layerShown + 1, isNavColumn}}/>
                             </div>
                         {/each}

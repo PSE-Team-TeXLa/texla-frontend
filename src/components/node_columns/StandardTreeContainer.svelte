@@ -18,13 +18,6 @@
             container.style.marginLeft = "2em";
     });
 
-    function handleHasMoved(evt) {
-        let pos: API.Operation.Position = {
-            parent: $json_ast.root.uuid,
-            after_sibling: evt.detail.lastChild //
-        }
-        moveNode(evt.detail.target, pos)
-    }
 </script>
 
 <div class="snap-proximity snap-y h-full w-full p-10 overflow-scroll overflow-x-hidden">
@@ -32,10 +25,10 @@
     {#if $json_ast !== undefined}
         {#if isNavColumn}
             <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
-            <StandardDocumentNode on:hasMovedNode={handleHasMoved} bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
+            <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
         {:else}
             <div bind:this={container}>
-                <StandardDocumentNode on:hasMovedNode={handleHasMoved} bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
+                <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
                 <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
             </div>
         {/if}

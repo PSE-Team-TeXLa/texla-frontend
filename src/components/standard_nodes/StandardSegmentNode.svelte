@@ -13,7 +13,7 @@
 
 </script>
 
-<StandardExpandableNode on:hasMovedNode bind:node isNavColumn={isNavColumn} layerShown={layerShown} isEditorOpen={isEditorOpen}>
+<StandardExpandableNode bind:node isNavColumn={isNavColumn} layerShown={layerShown} isEditorOpen={isEditorOpen}>
     <h1 class="text-4xl font-bold mt-4 mb-2">{heading}</h1>
     <div class="w-full border-b-4 border-solid border-lightpurple mb-4"></div>
 </StandardExpandableNode>
