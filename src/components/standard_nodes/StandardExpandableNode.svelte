@@ -14,6 +14,7 @@
     import StandardImageNode from "./StandardImageNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
+    import {afterUpdate, createEventDispatcher, getContext, onMount, setContext} from "svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
@@ -45,26 +46,42 @@
     //children.forEach((o, i) => children[i] = {...o, id: o.uuid})
     //children.forEach(e => console.log(e));
 
+    let dispatch = createEventDispatcher();
 
     const handleConsider = (evt) => {
-        console.log("consider");
+        //console.log("consider");
         node.node_type.children = evt.detail.items;
-        console.log(children)
+        //console.log(children)
     }
 
     const handleFinalize = (evt) => {
+        if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
+            return;
+        }
+
+        console.log(evt.detail)
         console.log("FInalize");
         // TODO change to node.node_type.children for navcolumn to change
-        console.log(children)
         node.node_type.children = evt.detail.items;
-        //TODO Position finden
-        let pos: API.Operation.Position = {
-            parent: evt.detail.parent,
-            after_sibling: -1 //
-        }
+
+        let target = evt.detail.info.id;
+        let childrenArray: [] = node.node_type.children;
+        let lastChildIndex = childrenArray.findIndex((o) => o.uuid === target) - 1;
+        console.log(node.node_type.children)
+        dispatch('hasMovedNode', {target: evt.detail.info.id, lastChild: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid})
+
         //moveNode(evt.detail.info.id, pos)
-        console.log(children)
     }
+
+    export function handleHasMoved(evt) {
+        let pos: API.Operation.Position = {
+            parent: node.uuid,
+            after_sibling: evt.detail.lastChild //
+        }
+        moveNode(evt.detail.target, pos)
+    }
+
+
 </script>
 
 <div>
@@ -88,11 +105,11 @@
                     <StandardNode uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '2px'}, flipDurationMs: 100}}"
+                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '20px'}, flipDurationMs: 100}}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">
-                                <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
+                                <svelte:component on:hasMovedNode={handleHasMoved} this={standardNodeTypeMap.get(node.node_type.data.type)}
                                                   {...{node, layerShown: layerShown + 1, isNavColumn}}/>
                             </div>
                         {/each}

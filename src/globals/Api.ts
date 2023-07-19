@@ -12,18 +12,18 @@ globalThis.socket = socket;
 // incoming
 
 socket.on("remote_url", (url: string | null) => {
-    console.log("remote_url: ", url);
+    console.info("remote_url: ", url);
 });
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     json_ast.set(new_ast);
-    console.log("new_ast: ", new_ast);
+    console.info("new_ast: ", new_ast);
     isFrozen.set(false);
     console.timeEnd("roundtrip");
 });
 
 socket.on("disconnect", () => {
-    console.log("disconnect");
+    console.info("disconnect");
 });
 
 
@@ -49,7 +49,7 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
 
 function sendOperation(operation: API.Operation.Operation) {
     socket.emit("operation", JSON.stringify(operation));
-    console.log("[socket %s] operation sent: ", socket.id, operation);
+    console.info("[socket %s] operation sent: ", socket.id, operation);
     isFrozen.set(true);
     console.time("roundtrip");
 }
