@@ -48,23 +48,21 @@
 
     const handleConsider = (evt) => {
         console.log("consider");
-        if ("children" in node.node_type) {
-            children = evt.detail.items;
-        }
+        node.node_type.children = evt.detail.items;
+        console.log(children)
     }
 
     const handleFinalize = (evt) => {
         console.log("FInalize");
-        if ("children" in node.node_type) {
-            // TODO change to node.node_type.children for navcolumn to change
-            children = evt.detail.items;
-        }
+        // TODO change to node.node_type.children for navcolumn to change
+        console.log(children)
+        node.node_type.children = evt.detail.items;
         //TODO Position finden
         let pos: API.Operation.Position = {
             parent: evt.detail.parent,
             after_sibling: -1 //
         }
-        moveNode(evt.detail.info.id, pos)
+        //moveNode(evt.detail.info.id, pos)
         console.log(children)
     }
 </script>
@@ -90,7 +88,7 @@
                     <StandardNode uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-bottom': '40px'}, flipDurationMs: 100}}"
+                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '2px'}, flipDurationMs: 100}}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">
