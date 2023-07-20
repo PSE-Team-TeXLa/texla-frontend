@@ -14,7 +14,6 @@
     import StandardImageNode from "./StandardImageNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
-    import {afterUpdate, createEventDispatcher, getContext, onMount, setContext} from "svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
@@ -43,25 +42,23 @@
     export let layerShown: number;
     export let isEditorOpen;
 
-    //children.forEach((o, i) => children[i] = {...o, id: o.uuid})
-    //children.forEach(e => console.log(e));
-
-    let dispatch = createEventDispatcher();
-
     const handleConsider = (evt) => {
-        //console.log("consider");
-        node.node_type.children = evt.detail.items;
-        //console.log(children)
+        if (node.node_type.type === "Expandable")
+            node.node_type.children = evt.detail.items;
+
     }
 
     const handleFinalize = (evt) => {
         if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
             return;
         }
-        node.node_type.children = evt.detail.items;
+        if (node.node_type.type === "Expandable")
+            node.node_type.children = evt.detail.items;
         let target = evt.detail.info.id;
-        let childrenArray: [] = node.node_type.children;
-        let lastChildIndex = childrenArray.findIndex((o) => o.uuid === target) - 1;
+        let childrenArray;
+        if (node.node_type.type === "Expandable")
+            childrenArray = node.node_type.children;
+        let lastChildIndex = childrenArray.findIndex((o: API.Ast.Node) => o.uuid === target) - 1;
         let position: API.Operation.Position = {
             parent: node.uuid,
             after_sibling: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid
