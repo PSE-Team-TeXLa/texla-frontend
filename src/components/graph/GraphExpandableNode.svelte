@@ -49,7 +49,7 @@
             {text}
         </GraphNode>
     </div>
-    <div use:dndzone="{{items: children, dropTargetStyle: {'border-color': '#ccc','min-width': '60px', 'border-width': '4px','padding-top': '20px','padding-bottom': '20px', 'transition': 'padding 0.2s'}}}"
+    <div use:dndzone="{{items: children, dropTargetStyle: {'min-width': '60px', 'outline-offset': '2px',  'outline': '3px solid #ccc', 'transition': 'padding 0.2s'}}}"
          class="my-auto flex flex-col"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
         {#each children as new_node (new_node.uuid)}
