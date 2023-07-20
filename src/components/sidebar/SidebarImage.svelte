@@ -1,14 +1,13 @@
 <script lang="ts">
     import Button from "../buttons/Button.svelte";
     import {createEventDispatcher} from "svelte";
+    export let image;
 
     let dispatcher = createEventDispatcher();
-
     function dispatch() {
         dispatcher('click', {});
     }
 
-    export let image;
 </script>
 
 

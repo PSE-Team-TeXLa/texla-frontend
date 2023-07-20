@@ -1,10 +1,7 @@
 <script lang="ts">
-    import {ast} from "../../globals/Ast.ts";
     import {onMount} from "svelte";
     import StandardDocumentNode from "../standard_nodes/StandardDocumentNode.svelte";
     import {json_ast} from "../../globals/Variables";
-    import type API from "../../globals/socket.api.d.ts";
-    import {moveNode} from "../../globals/Api";
 
     export let isNavColumn: boolean;
 

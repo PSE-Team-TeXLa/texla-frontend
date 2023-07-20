@@ -22,7 +22,7 @@
 
 <div class="flex flex-col items-end w-full">
     <textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>
-    <div class="flex ">
+    <div class="flex">
         <EditConfirmButton on:click={leaveEditMode}>
             <span class="font-bold">C</span>
         </EditConfirmButton>

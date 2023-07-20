@@ -31,7 +31,8 @@ socket.on("disconnect", () => {
 
 export function editNode(target: number, raw_latex: string) {
     sendOperation({
-        type: "EditNode", arguments: {
+        type: "EditNode",
+        arguments: {
             target,
             raw_latex
         }
@@ -40,7 +41,8 @@ export function editNode(target: number, raw_latex: string) {
 
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
     sendOperation({
-        type: "MoveNode", arguments: {
+        type: "MoveNode",
+        arguments: {
             target,
             destination
         }
