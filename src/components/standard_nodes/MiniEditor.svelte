@@ -3,25 +3,70 @@
     import {isEditorActive} from "../../globals/Variables";
     import {editNode} from "../../globals/Api";
     import type API from "../../globals/socket.api.d.ts";
+    import type monaco from 'monaco-editor';
+    import { onMount } from 'svelte';
+    import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+    import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+    import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
+    import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
+    import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
     export let node: API.Ast.Node;
 
 
     export let isEditorOpen: boolean;
 
+    let divEl: HTMLDivElement;
+    let editor: monaco.editor.IStandaloneCodeEditor;
+    let Monaco;
 
     function leaveEditMode() {
         isEditorActive.set(false);
         isEditorOpen = false;
 
+        node.raw_latex = editor.getValue()
         editNode(node.uuid, node.raw_latex);
     }
+
+
+    onMount(async () => {
+        // @ts-ignore
+        self.MonacoEnvironment = {
+            getWorker: function (_moduleId: any, label: string) {
+                if (label === 'json') {
+                    return new jsonWorker();
+                }
+                if (label === 'css' || label === 'scss' || label === 'less') {
+                    return new cssWorker();
+                }
+                if (label === 'html' || label === 'handlebars' || label === 'razor') {
+                    return new htmlWorker();
+                }
+                if (label === 'typescript' || label === 'javascript') {
+                    return new tsWorker();
+                }
+                return new editorWorker();
+            }
+        };
+
+        Monaco = await import('monaco-editor');
+        editor = Monaco.editor.create(divEl, {
+            value: node.raw_latex,
+            language: 'latex'
+        });
+
+        return () => {
+            editor.dispose();
+        };
+    });
 
 </script>
 
 
+
 <div class="flex flex-col items-end w-full">
-    <textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>
+    <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
+    <div bind:this={divEl} class="h-[300px] w-full" />
     <div class="flex">
         <EditConfirmButton on:click={leaveEditMode}>
             <span class="font-bold">C</span>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import NavSegmentButton from "../buttons/NavSegmentButton.svelte";
-    import {currentLayer} from "../../globals/Variables";
+    import {currentLayer, isEditorActive} from "../../globals/Variables";
     import MiniEditor from "./MiniEditor.svelte";
     import StandardNode from "./StandardNode.svelte";
     import {flip} from "svelte/animate";
@@ -66,7 +66,12 @@
         moveNode(target, position)
     }
 
-
+ $: dndOptiions = {
+     dragDisabled: $isEditorActive,
+     items: children,
+     dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '20px'},
+     flipDurationMs: 100
+ }
 </script>
 
 <div>
@@ -90,7 +95,7 @@
                     <StandardNode uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '20px'}, flipDurationMs: 100}}"
+                    <div use:dndzone="{dndOptiions}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                         {#each children as node (node.uuid)}
                             <div animate:flip="{{duration: 100}}">
