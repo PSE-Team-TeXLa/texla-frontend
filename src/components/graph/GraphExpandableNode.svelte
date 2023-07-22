@@ -49,8 +49,8 @@
             {text}
         </GraphNode>
     </div>
-    <div use:dndzone="{{items: children, dropTargetStyle: {'min-width': '60px', 'outline-offset': '2px',  'outline': '3px solid #ccc', 'transition': 'padding 0.2s'}}}"
-         class="my-auto flex flex-col"
+    <div use:dndzone="{{items: children, dropTargetStyle: {'outline-offset': '2px',  'outline': '3px dashed #ccc', 'transition': 'padding 0.2s', 'padding-top': '8px' , 'padding-bottom': '8px', 'min-height': '60px', 'min-width': '110px'}}}"
+         class="my-auto flex flex-col gap-1 ml-2"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
         {#each children as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">

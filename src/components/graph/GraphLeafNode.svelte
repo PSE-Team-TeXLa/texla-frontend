@@ -1,6 +1,6 @@
 <script lang="ts">
 </script>
 
-<div class="bg-lightpurple border-2 border-lightpurple w-fit">
+<div class=" border-2 border-lightpurple p-2 ml-2 w-fit">
     <slot />
 </div>

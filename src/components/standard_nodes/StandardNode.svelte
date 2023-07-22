@@ -14,6 +14,8 @@
             $isEditorActive = true;
             isEditorOpen = true;
 
+            let target: HTMLElement = $scrollMap.get(uuid);
+            target.scrollIntoView({behavior: "smooth"});
         }
 
     }
@@ -34,7 +36,7 @@
     })
 </script>
 
-<div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative my-2">
+<div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative">
     <slot/>
     <div class="absolute left-[-40px] top-[-4px]">
         {#if isHovered}
@@ -50,6 +52,6 @@
 <style>
     #text-container:hover {
         outline: 3px dashed theme('colors.red');
-        outline-offset: 2px;
+        outline-offset: -2px;
     }
 </style>

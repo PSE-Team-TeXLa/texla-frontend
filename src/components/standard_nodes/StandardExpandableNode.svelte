@@ -69,7 +69,7 @@
  $: dndOptiions = {
      dragDisabled: $isEditorActive,
      items: children,
-     dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '20px'},
+     dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '8px' , 'padding-bottom': '8px'},
      flipDurationMs: 100
  }
 </script>
@@ -87,7 +87,7 @@
             {/if}
         </div>
     {:else}
-        <div class="flex flex-col ml-4 mt-2">
+        <div class="flex flex-col ml-8 ">
             {#if isEditorOpen}
                 <MiniEditor bind:node bind:isEditorOpen/>
             {:else}

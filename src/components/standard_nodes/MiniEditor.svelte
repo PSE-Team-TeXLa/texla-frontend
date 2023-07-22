@@ -66,7 +66,7 @@
 
 <div class="flex flex-col items-end w-full">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
-    <div bind:this={divEl} class="h-[300px] w-full" />
+    <div bind:this={divEl} class="h-[300px] w-full mt-4 border-lightcyan border-2" />
     <div class="flex">
         <EditConfirmButton on:click={leaveEditMode}>
             <span class="font-bold">C</span>

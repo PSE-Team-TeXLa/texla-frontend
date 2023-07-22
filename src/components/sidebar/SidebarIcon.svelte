@@ -10,7 +10,7 @@
     export let icon;
 </script>
 
-<div on:click={dispatch} class="px-3">
+<div on:click={dispatch} class="px-1">
     <SidebarImage image={icon}>
         <slot />
     </SidebarImage>

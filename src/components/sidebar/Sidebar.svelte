@@ -47,7 +47,7 @@
 
 </script>
 
-<div class="p-3 w-20 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0" >
+<div class="p-3 w-16 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0" >
     <SidebarContentWrapper>
         <SidebarSlot>
             <SidebarImage on:click={leaveGraphMode} image="{logo}"/>
