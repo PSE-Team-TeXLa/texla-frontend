@@ -7,6 +7,13 @@ const socket = io("ws://localhost:13814/");
 // @ts-ignore
 globalThis.socket = socket;
 
+socket.on("connect", () => {
+    console.info("connect");
+});
+socket.on("disconnect", (reason, description) => {
+    console.info("disconnect", reason, description);
+});
+
 // incoming
 
 socket.on("remote_url", (url: string | null) => {
@@ -18,14 +25,6 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.info("new_ast: ", new_ast);
     isFrozen.set(false);
     console.timeEnd("roundtrip");
-});
-
-socket.on("disconnect", (reason, description) => {
-    console.info("disconnect", reason, description);
-});
-
-socket.on("connect", () => {
-    console.info("connect");
 });
 
 
