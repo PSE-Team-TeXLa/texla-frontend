@@ -1,3 +1,4 @@
+import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
 import type API from "./socket.api";
 import {isFrozen, json_ast} from "./Variables";
@@ -25,6 +26,11 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.info("new_ast: ", new_ast);
     isFrozen.set(false);
     console.timeEnd("roundtrip");
+});
+
+socket.on("quit", () => {
+    console.info("quit");
+    goto("/close");
 });
 
 
