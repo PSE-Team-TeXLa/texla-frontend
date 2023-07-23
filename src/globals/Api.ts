@@ -52,8 +52,9 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
 }
 
 function sendOperation(operation: API.Operation.Operation) {
-    socket.emit("operation", JSON.stringify(operation));
-    console.info("[socket %s] operation sent: ", socket.id, operation);
+    // volatile -> message is not buffered (it would contain wrong UUIDs anyway)
+    socket.volatile.emit("operation", JSON.stringify(operation));
+    console.info("[sid=%s] operation sent: ", socket.id, operation);
     isFrozen.set(true);
     console.time("roundtrip");
 }
