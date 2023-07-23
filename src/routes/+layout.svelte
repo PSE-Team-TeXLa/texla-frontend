@@ -8,6 +8,9 @@
     import {overrideItemIdKeyNameBeforeInitialisingDndZones} from "svelte-dnd-action";
     overrideItemIdKeyNameBeforeInitialisingDndZones("uuid");
 
+    // disable Server Side Rendering in order to prevent establishing invalid socket connections
+    export const ssr = false;
+
 </script>
 
 <Modal transitionBgProps={{duration: 30}} closeButton={false} show={$modal} />
