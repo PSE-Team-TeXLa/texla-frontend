@@ -139,5 +139,10 @@ namespace API {
             after_sibling: Uuid | null;
         }
     }
+
+    interface StringificationOptions {
+        include_comments: boolean;
+        include_metadata: boolean;
+    }
 }
 

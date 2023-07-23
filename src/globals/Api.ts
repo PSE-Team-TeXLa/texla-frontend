@@ -19,6 +19,7 @@ socket.on("disconnect", (reason, description) => {
 
 socket.on("remote_url", (url: string | null) => {
     console.info("remote_url: ", url);
+    // TODO: transform to user-friendly URL and put into some store
 });
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
@@ -28,9 +29,19 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.timeEnd("roundtrip");
 });
 
+socket.on("export_ready", (url: string) => {
+    console.info("export_ready: ", url);
+    downloadFile(url);
+});
+
 socket.on("quit", () => {
     console.info("quit");
     goto("/close");
+});
+
+socket.on("error", (error: string) => {
+    console.error("error: ", error);
+    // TODO: show error in pop up
 });
 
 
@@ -62,4 +73,16 @@ function sendOperation(operation: API.Operation.Operation) {
     console.info("[sid=%s] operation sent: ", socket.id, operation);
     isFrozen.set(true);
     console.time("roundtrip");
+}
+
+function sendPrepareExport(options: API.StringificationOptions) {
+    socket.emit("prepare_export", JSON.stringify(options));
+    console.info("[sid=%s] prepare_export sent: ", socket.id, options);
+}
+
+function downloadFile(url: string) {
+    const link = document.createElement("a");
+    link.download = url;
+    link.href = url;
+    link.click();
 }
