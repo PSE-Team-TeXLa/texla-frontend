@@ -3,11 +3,9 @@ import type API from "./socket.api";
 import {isFrozen, json_ast} from "./Variables";
 
 const socket = io("ws://localhost:13814/");
-console.count("socket established");
 // useful for debugging in the browser console
 // @ts-ignore
 globalThis.socket = socket;
-// of course, it should only be one
 
 // incoming
 
@@ -22,8 +20,12 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.timeEnd("roundtrip");
 });
 
-socket.on("disconnect", () => {
-    console.info("disconnect");
+socket.on("disconnect", (reason, description) => {
+    console.info("disconnect", reason, description);
+});
+
+socket.on("connect", () => {
+    console.info("connect");
 });
 
 
