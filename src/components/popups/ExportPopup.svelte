@@ -16,7 +16,7 @@
             include_metadata: includeMetadata
         }
         sendPrepareExport(stringificationOptions);
-        modal.set(null);
+        handleClose()
     };
 
 
