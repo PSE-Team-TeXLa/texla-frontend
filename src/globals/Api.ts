@@ -3,6 +3,10 @@ import {io} from "socket.io-client";
 import type API from "./socket.api";
 import {isFrozen, json_ast} from "./Variables";
 
+import {modal} from "./Variables";
+import {bind} from "svelte-simple-modal";
+import ErrorPopup from "../components/popups ErrorPopup.svelte";
+
 const socket = io("ws://localhost:13814/");
 // useful for debugging in the browser console
 // @ts-ignore
@@ -42,6 +46,7 @@ socket.on("quit", () => {
 socket.on("error", (error: string) => {
     console.error("error: ", error);
     // TODO: show error in pop up
+    modal.set(bind(ErrorPopup, { message: error}));
 });
 
 
