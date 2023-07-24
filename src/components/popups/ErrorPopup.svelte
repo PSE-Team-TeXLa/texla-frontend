@@ -11,7 +11,11 @@
 
 
 <StandardPopup title="Error">
-    <p> {message} </p>
+
+    <div class="text-red">
+        <p> {message} </p>
+    </div>
+
     <div class="flex justify-end">
         <button on:click={handleClose} class="bg-red text-white px-4 py-2 rounded mr-2">Understood</button>
     </div>
