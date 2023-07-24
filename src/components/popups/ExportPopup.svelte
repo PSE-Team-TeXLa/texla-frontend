@@ -1,7 +1,10 @@
 <script lang="ts">
     import StandardPopup from "./StandardPopup.svelte";
     import {sendPrepareExport} from "../../globals/Api";
+    //import Sidebar, {quitPopup} from '../sidebar/Sidebar.svelte'
+    import {modal} from "../../globals/Variables.ts";
     import type API from "../../globals/socket.api.d.ts";
+
 
     let includeComments = false;
     let includeMetadata = false;
@@ -13,7 +16,15 @@
             include_metadata: includeMetadata
         }
         sendPrepareExport(stringificationOptions);
+        modal.set(null);
     };
+
+
+    const handleClose = () => {
+        includeComments = includeMetadata = false;
+        modal.set(null);
+    };
+
 </script>
 
 <StandardPopup title="Export">
@@ -30,7 +41,7 @@
     </label>
 
     <div class="flex justify-end">
-        <button on:click={() => (includeComments = includeMetadata = false)} class="bg-red text-white px-4 py-2 rounded mr-2">Cancel</button>
         <button on:click={handleExport} class="bg-darkcyan px-4 py-2 rounded">Export</button>
+        <button on:click={handleClose} class="bg-red text-white px-4 py-2 rounded mr-2">Cancel</button>
     </div>
 </StandardPopup>
