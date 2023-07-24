@@ -5,7 +5,7 @@ import {isFrozen, json_ast} from "./Variables";
 
 import {modal} from "./Variables";
 import {bind} from "svelte-simple-modal";
-import ErrorPopup from "../components/popups ErrorPopup.svelte";
+import ErrorPopup from "../components/popups/ErrorPopup.svelte";
 
 const socket = io("ws://localhost:13814/");
 // useful for debugging in the browser console
