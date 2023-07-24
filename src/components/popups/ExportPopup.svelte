@@ -1,43 +1,28 @@
 <script lang="ts">
-    import {writable} from "svelte/store";
-    let includeComments = writable(false);
-    let includeMetaData = writable(false);
-    let isOpen = false;
+    let includeComments = false;
+    let includeMetadata = false;
 
-    function enterExportPopup() {
-        isOpen = true;
-        console.log("works?")
-    }
-
-    function handleCancel() {
-        isOpen = false;
-    }
-
-    function handleExport() {
-        // TODO handle export
-    }
-
+    const handleExport = () => {
+        // export logic goes here
+        console.log("hmm");
+    };
 </script>
 
-<button on:click={enterExportPopup()}
-        class="bg-blue-50 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-</button>
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-md z-50">
+    <h2 class="text-xl font-semibold mb-2">Export</h2>
+    <p class="mb-4">Choose your export settings</p>
 
-{#if isOpen}
-    <div class="fixed bg-white p-3 rounded shadow-lg">
-        <h2 class="text-lg font-semibold mb-2">Export</h2>
-        <p>Choose your export settings</p>
+    <label class="inline-flex items-center mb-3">
+        <input type="checkbox" bind:checked={includeComments} class="mr-2 form-checkbox" />
+        <span>Include comments</span>
+    </label>
+    <label class="inline-flex items-center mb-4">
+        <input type="checkbox" bind:checked={includeMetadata} class="mr-2 form-checkbox" />
+        <span>Include metadata</span>
+    </label>
 
-        <label class="block mt-2">
-            <input type="checkbox" bind:checked={includeComments} class="mr-2" /> Include Comments
-        </label>
-        <label class="block mt-2">
-            <input type="checkbox" bind:checked={includeMetaData} class="mr-2" /> Include Meta Data
-        </label>
-
-        <div class="mt-2">
-            <button on:click={() => (isOpen = false)} class="bg-red-500 text-white px-2 py-1 rounded mr-2">Cancel</button>
-            <button on:click={handleExport} class="bg-green-500 text-white px-2 py-1 rounded mr-2">Export</button>
-        </div>
+    <div class="flex justify-end">
+        <button on:click={() => (includeComments = includeMetadata = false)} class="bg-red-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+        <button on:click={handleExport} class="bg-green-500 text-white px-4 py-2 rounded">Export</button>
     </div>
-{/if}
+</div>
