@@ -1,12 +1,18 @@
 <script lang="ts">
     import StandardPopup from "./StandardPopup.svelte";
+    import {sendPrepareExport} from "../../globals/Api";
+    import type API from "../../globals/socket.api.d.ts";
 
     let includeComments = false;
     let includeMetadata = false;
 
     const handleExport = () => {
         // export logic goes here
-        console.log("hmm");
+        let stringificationOptions: API.StringificationOptions =  {
+            include_comments: includeComments,
+            include_metadata: includeMetadata
+        }
+        sendPrepareExport(stringificationOptions);
     };
 </script>
 

@@ -75,7 +75,7 @@ function sendOperation(operation: API.Operation.Operation) {
     console.time("roundtrip");
 }
 
-function sendPrepareExport(options: API.StringificationOptions) {
+export function sendPrepareExport(options: API.StringificationOptions) {
     socket.emit("prepare_export", JSON.stringify(options));
     console.info("[sid=%s] prepare_export sent: ", socket.id, options);
 }
