@@ -1,7 +1,13 @@
 export default API;
 namespace API {
     type Uuid = number;
-    type Metadata = { [key: string]: string };
+
+    interface Metadata {
+        short_form?: string;
+        note?: string;
+
+        [key: string]: string;
+    }
 
     export namespace Ast {
         // TODO
@@ -38,6 +44,7 @@ namespace API {
             postamble: string;
 
         }
+
         interface Segment {
             type: "Segment";
             heading: string;
@@ -61,44 +68,51 @@ namespace API {
 
     export namespace Operation {
         type Operation = AddNode | MoveNode | EditNode | DeleteNode | MergeNodes | EditMetadata | DeleteMetadata;
-        type OperationData = AddNodeData | MoveNodeData | EditNodeData | DeleteNodeData | MergeNodesData | EditMetadataData | DeleteMetadataData;
-        
+        type OperationData =
+            AddNodeData
+            | MoveNodeData
+            | EditNodeData
+            | DeleteNodeData
+            | MergeNodesData
+            | EditMetadataData
+            | DeleteMetadataData;
+
         interface AddNode {
             type: "AddNode";
             arguments: AddNodeData;
         }
-        
+
         interface MoveNode {
             type: "MoveNode";
             arguments: MoveNodeData;
         }
-        
+
         interface EditNode {
             type: "EditNode";
             arguments: EditNodeData;
         }
-        
+
         interface DeleteNode {
             type: "DeleteNode";
             arguments: DeleteNodeData;
         }
-        
+
         interface MergeNodes {
             type: "MergeNodes";
             arguments: MergeNodesData;
         }
-        
+
         interface EditMetadata {
             type: "EditMetadata";
             arguments: EditMetadataData;
         }
-        
+
         interface DeleteMetadata {
             type: "DeleteMetadata";
             arguments: DeleteMetadataData;
         }
-        
-        
+
+
         interface AddNodeData {
             destination: Position;
             raw_latex: string;
@@ -132,7 +146,7 @@ namespace API {
             target: Uuid;
             key: string;
         }
-        
+
 
         interface Position {
             parent: Uuid;
