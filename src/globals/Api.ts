@@ -43,10 +43,10 @@ socket.on("quit", () => {
     goto("/close");
 });
 
-socket.on("error", (error: string) => {
+socket.on("error", (error) => {
     console.error("error: ", error);
-    // TODO: show error in pop up
-    modal.set(bind(ErrorPopup, { message: error}));
+    modal.set(bind(ErrorPopup, {message: error.message}));
+    isFrozen.set(false);
 });
 
 
