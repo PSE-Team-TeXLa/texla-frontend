@@ -8,6 +8,8 @@
     import {onMount} from "svelte";
     import DeleteButton from "../buttons/DeleteButton.svelte";
     import {deleteNode} from "../../globals/Api";
+    import {createEventDispatcher} from "svelte";
+    import CreateElementSpacer from "./CreateElementSpacer.svelte";
 
     function enterEditMode() {
         if ($isEditorActive) {
@@ -37,26 +39,44 @@
         scrollMap.update((o) => o.set(uuid, node))
     })
 
+    let dispatch = createEventDispatcher();
+    function handleMouseDown() {
+        console.log("mousedown")
+        dispatch("mousedown", {})
+    }
+    function handleTouchStart() {
+        dispatch("touchstart", {})
+    }
+    function handleMouseUp() {
+        dispatch("mouseup", {})
+    }
+    function handleTouchEnd() {
+        dispatch("touchend", {})
+    }
+
+
     function handleDelete() {
         deleteNode(uuid);
     }
 </script>
-
-<div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative">
-    <slot/>
-    <div class="absolute left-[-40px] top-[-4px]">
-        {#if isHovered}
-            <div class="w-[60px] h-[60px]">
-                <EditButton on:click={enterEditMode}>
-                    E
-                </EditButton>
-                <DeleteButton on:click={handleDelete}>
-                    X
-                </DeleteButton>
-            </div>
-        {/if}
+    <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart} on:mouseup={handleMouseUp}
+         on:touchend={handleTouchEnd} bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave}
+         class="flex flex-col relative">
+        <slot/>
+        <div class="absolute left-[-40px] top-[-4px]">
+            {#if isHovered}
+                <div class="w-[60px] h-[60px]">
+                    <EditButton on:click={enterEditMode}>
+                        E
+                    </EditButton>
+                    <DeleteButton on:click={handleDelete}>
+                        X
+                    </DeleteButton>
+                </div>
+            {/if}
+        </div>
     </div>
-</div>
+    <CreateElementSpacer />
 
 <style>
     #text-container:hover {

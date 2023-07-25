@@ -21,7 +21,7 @@
 <Button>
     {#if isShort}
         <div on:click={setCurrentLayer}
-             class="flex justify-start items-center ml-12 p-2 pl-8 mb-2 w-3/4 bg-darkcyan">
+             class="flex justify-start items-center ml-12 py-1 pl-8 my-2 w-3/4 bg-darkcyan">
             <slot/>
         </div>
     {:else}

@@ -14,6 +14,7 @@
     import StandardImageNode from "./StandardImageNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
+    import CreateElementSpacer from "./CreateElementSpacer.svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
@@ -66,12 +67,33 @@
         moveNode(target, position)
     }
 
- $: dndOptiions = {
-     dragDisabled: $isEditorActive,
-     items: children,
-     dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '8px' , 'padding-bottom': '8px'},
-     flipDurationMs: 100
- }
+    $: dndOptiions = {
+        dragDisabled: $isEditorActive,
+        items: children,
+        dropTargetStyle: {
+            'border-left': '6px solid #2196F3',
+            'background-color': '#ddffff',
+            'padding-top': '8px',
+            'padding-bottom': '8px'
+        },
+        flipDurationMs: 100
+    }
+
+    let isDragged = false;
+    let dragStuff;
+
+    function startDrag() {
+        //dragStuff.classList.add("hidden");
+        isDragged = true;
+        console.log("startDrag");
+    }
+
+    function stopDrag() {
+        //dragStuff.classList.remove("hidden");
+        isDragged = false;
+        console.log("stopDrag");
+    }
+
 </script>
 
 <div>
@@ -92,22 +114,36 @@
                 <MiniEditor bind:node bind:isEditorOpen/>
             {:else}
                 {#if layerShown < $currentLayer }
-                    <StandardNode uuid={node.uuid} bind:isEditorOpen>
+                    <StandardNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+                                  on:touchend={stopDrag} uuid={node.uuid} bind:isEditorOpen>
                         <slot/>
                     </StandardNode>
-                    <div use:dndzone="{dndOptiions}"
-                         on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                        {#each children as node (node.uuid)}
-                            <div animate:flip="{{duration: 100}}">
-                                <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
-                                                  {...{node, layerShown: layerShown + 1, isNavColumn}}/>
-                            </div>
-                        {/each}
-                    </div>
+                    {#if !isDragged}
+                        <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
+                             on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
+                            {#each children as node (node.uuid)}
+                                <div animate:flip="{{duration: 100}}">
+                                    <div>
+
+                                        <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
+                                                          {...{node, layerShown: layerShown + 1, isNavColumn}}/>
+                                    </div>
+                                </div>
+                            {/each}
+                        </div>
+                    {/if}
                 {:else if layerShown === $currentLayer }
                     <NavSegmentButton uuid={node.uuid} isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
+                    <CreateElementSpacer />
                 {/if}
             {/if}
         </div>
     {/if}
 </div>
+
+<style>
+    .hidden {
+        height: 0;
+        transition: height 0.2s;
+    }
+</style>

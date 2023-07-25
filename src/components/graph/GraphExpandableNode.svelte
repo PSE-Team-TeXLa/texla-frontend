@@ -7,14 +7,15 @@
     import {graphNodeTypeMap} from "../../globals/Constants";
     import {flip} from "svelte/animate";
     import {dndzone} from "svelte-dnd-action";
-    import {onMount} from "svelte";
+    import {createEventDispatcher, onMount} from "svelte";
+    import StandardNode from "../standard_nodes/StandardNode.svelte";
     import {moveNode} from "../../globals/Api";
 
     export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
     $: if (node.node_type.type === "Expandable") {
-        children = node.node_type.children;
+        node.node_type.children = node.node_type.children;
     }
 
     let text: string;
@@ -25,10 +26,11 @@
             text = node.node_type.data.heading
 
     const handleConsider = (evt) => {
-        if (node.node_type.type === "Expandable")
-        node.node_type.children = evt.detail.items;
-        console.log("consider");
+        console.log("consider " + evt.detail.info.id + " in " + node.uuid);
         console.log(evt.detail.items);
+
+        if (node.node_type.type === "Expandable")
+            children = evt.detail.items;
     }
 
     const handleFinalize = (evt) => {
@@ -41,7 +43,7 @@
         }
 
         if (node.node_type.type === "Expandable")
-        node.node_type.children = evt.detail.items;
+            node.node_type.children = evt.detail.items;
 
         // TODO MAKE method for getting position
         let target = evt.detail.info.id;
@@ -56,11 +58,38 @@
         moveNode(target, position)
     }
 
+    let isDragged = false;
+
+    function startDrag() {
+        //dragStuff.classList.add("hidden");
+        isDragged = true;
+        console.log("startDrag");
+    }
+
+    function stopDrag() {
+        //dragStuff.classList.remove("hidden");
+        isDragged = false;
+        console.log("stopDrag");
+    }
+
+    /*function checkForUuidInList(list: API.Ast.Node[], uuid: API.Uuid): boolean {
+        let foundUuid = false;
+        list.forEach((o) => {
+            if (o.uuid === uuid)
+                foundUuid = true;
+            else
+                if (o.node_type.type === "Expandable")
+                    foundUuid = checkForUuidInList(o.node_type.children, uuid)
+        })
+        return foundUuid;
+    }*/
+
 </script>
 
 <div class="my-2 py-4 flex flex-row">
     <div class=" flex justify-center items-center border-lightpurple border-r-4">
-        <GraphNode>
+        <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+                   on:touchend={stopDrag}>
             {text}
         </GraphNode>
     </div>
@@ -69,16 +98,18 @@
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
         {#each children as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">
-                {#if new_node.node_type.type === "Expandable"}
-                    <div>
-                        <svelte:self {...{node: new_node}}/>
-                    </div>
+                {#if !isDragged}
+                    {#if new_node.node_type.type === "Expandable"}
+                        <div>
+                            <svelte:self {...{node: new_node}}/>
+                        </div>
 
-                {:else if new_node.node_type.type === "Leaf"}
-                    <GraphLeafNode>
-                        <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)}
-                                          {...{node: new_node}}/>
-                    </GraphLeafNode>
+                    {:else if new_node.node_type.type === "Leaf"}
+                        <GraphLeafNode>
+                            <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)}
+                                              {...{node: new_node}}/>
+                        </GraphLeafNode>
+                    {/if}
                 {/if}
             </div>
         {/each}

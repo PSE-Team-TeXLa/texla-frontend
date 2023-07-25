@@ -15,12 +15,11 @@
 </script>
 
 {#if !isNavColumn}
-    <div id="text-box" class="flex flex-col cursor-default bg-green-800">
+    <div id="text-box" class="flex flex-col cursor-default">
         <StandardLeafNode bind:node bind:isEditorOpen >
             <div class="my-2">
                 <span class="text-lg">{layerShown + " "}{text}</span>
             </div>
         </StandardLeafNode>
     </div>
-
 {/if}
