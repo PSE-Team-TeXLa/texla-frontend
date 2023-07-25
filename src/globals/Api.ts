@@ -49,6 +49,15 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
     });
 }
 
+export function deleteNode(target: API.Uuid) {
+    sendOperation({
+        type: "DeleteNode",
+        arguments: {
+            target
+        }
+    })
+}
+
 function sendOperation(operation: API.Operation.Operation) {
     socket.emit("operation", JSON.stringify(operation));
     console.info("[socket %s] operation sent: ", socket.id, operation);

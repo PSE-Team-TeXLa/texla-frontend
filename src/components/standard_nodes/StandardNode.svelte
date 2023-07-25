@@ -6,6 +6,8 @@
     export let isEditorOpen: boolean;
 
     import {onMount} from "svelte";
+    import DeleteButton from "../buttons/DeleteButton.svelte";
+    import {deleteNode} from "../../globals/Api";
 
     function enterEditMode() {
         if ($isEditorActive) {
@@ -34,6 +36,10 @@
     onMount(async () => {
         scrollMap.update((o) => o.set(uuid, node))
     })
+
+    function handleDelete() {
+        deleteNode(uuid);
+    }
 </script>
 
 <div bind:this={node} id="text-container" on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class="flex flex-col relative">
@@ -44,6 +50,9 @@
                 <EditButton on:click={enterEditMode}>
                     E
                 </EditButton>
+                <DeleteButton on:click={handleDelete}>
+                    X
+                </DeleteButton>
             </div>
         {/if}
     </div>
