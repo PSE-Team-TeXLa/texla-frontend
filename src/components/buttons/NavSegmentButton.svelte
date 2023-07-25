@@ -2,7 +2,7 @@
     import Button from "./Button.svelte";
     import {currentLayer, scrollMap} from "../../globals/Variables.ts";
 
-    export let isShort: boolean;
+    export let isShort = false;
     export let isOnLayer: number;
     export let uuid;
 

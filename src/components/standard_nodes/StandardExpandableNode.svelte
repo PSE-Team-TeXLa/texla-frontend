@@ -105,7 +105,7 @@
                         {/each}
                     </div>
                 {:else if layerShown === $currentLayer }
-                    <NavSegmentButton isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
+                    <NavSegmentButton uuid={node.uuid} isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
                 {/if}
             {/if}
         </div>

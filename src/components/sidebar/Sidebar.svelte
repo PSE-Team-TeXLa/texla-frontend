@@ -53,7 +53,7 @@
             <SidebarImage on:click={leaveGraphMode} image="{logo}"/>
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon popup={ExportPopup} on:click={startExport} icon={export_icon}/>
+            <SidebarIcon on:click={startExport} icon={export_icon}/>
         </SidebarSlot>
         <SidebarSlot>
             <SidebarIcon on:click={openOverleaf} icon={overleaf_icon}/>

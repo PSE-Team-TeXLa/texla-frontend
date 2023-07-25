@@ -10,6 +10,7 @@
 
     export let isNavColumn: boolean;
     let isEditorOpen;
+    export let layerShown;
 
 </script>
 
@@ -17,7 +18,7 @@
     <div id="text-box" class="flex flex-col cursor-default bg-green-800">
         <StandardLeafNode bind:node bind:isEditorOpen >
             <div class="my-2">
-                <span class="text-lg">{text}</span>
+                <span class="text-lg">{layerShown + " "}{text}</span>
             </div>
         </StandardLeafNode>
     </div>
