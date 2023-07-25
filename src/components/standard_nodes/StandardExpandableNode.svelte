@@ -83,13 +83,13 @@
 
     function startDrag() {
         //dragStuff.classList.add("hidden");
-        isDragged = true;
+        //isDragged = true;
         console.log("startDrag");
     }
 
     function stopDrag() {
         //dragStuff.classList.remove("hidden");
-        isDragged = false;
+        //isDragged = false;
         console.log("stopDrag");
     }
 
