@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {onMount} from "svelte";
     import StandardDocumentNode from "../standard_nodes/StandardDocumentNode.svelte";
     import {json_ast} from "../../globals/Variables";
 
@@ -9,8 +8,6 @@
     let layerShown = 0;
 
     let container;
-
-
 </script>
 
 <div class="snap-proximity snap-y h-full w-full p-4 mt-2 overflow-scroll overflow-x-hidden">

@@ -9,13 +9,14 @@
             path = node.node_type.data.path;
 
     export let isNavColumn: boolean;
+    export let parent;
 
     let isEditorOpen: boolean;
 </script>
 
 {#if !isNavColumn}
     <div class="flex flex-col cursor-default bg-amber-300">
-        <StandardLeafNode bind:node bind:isEditorOpen >
+        <StandardLeafNode parent={parent} bind:node bind:isEditorOpen>
             <div class="my-4 flex flex-col items-center">
                 <img alt={path} src={path} class="max-h-20 w-auto"/>
             </div>

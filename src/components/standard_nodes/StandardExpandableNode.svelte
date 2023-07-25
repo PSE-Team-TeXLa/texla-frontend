@@ -1,7 +1,6 @@
 <script lang="ts">
     import NavSegmentButton from "../buttons/NavSegmentButton.svelte";
     import {currentLayer, isEditorActive} from "../../globals/Variables";
-    import MiniEditor from "./MiniEditor.svelte";
     import StandardNode from "./StandardNode.svelte";
     import {flip} from "svelte/animate";
     import type {ComponentType} from "svelte";
@@ -14,7 +13,6 @@
     import StandardImageNode from "./StandardImageNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
-    import CreateElementSpacer from "./CreateElementSpacer.svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
@@ -25,6 +23,7 @@
         ]
     );
 
+    export let parent;
     export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
@@ -94,6 +93,8 @@
         console.log("stopDrag");
     }
 
+
+    // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
 </script>
 
 <div>
@@ -103,39 +104,35 @@
             <!-- Anzeigedetail, ob die neuen Layers in der rechten Spalte angezeigt werden sollen-->
             {#if layerShown < $currentLayer - 1 }
                 {#each children as node}
-                    <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
+                    <svelte:component parent={node.uuid} this={standardNodeTypeMap.get(node.node_type.data.type)}
                                       {...{node, layerShown: layerShown + 1, isNavColumn}}/>
                 {/each}
             {/if}
         </div>
     {:else}
         <div class="flex flex-col ml-8 ">
-            {#if isEditorOpen}
-                <MiniEditor bind:node bind:isEditorOpen/>
-            {:else}
-                {#if layerShown < $currentLayer }
-                    <StandardNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
-                                  on:touchend={stopDrag} uuid={node.uuid} bind:isEditorOpen>
-                        <slot/>
-                    </StandardNode>
-                    {#if !isDragged}
-                        <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
-                             on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                            {#each children as node (node.uuid)}
-                                <div animate:flip="{{duration: 100}}">
-                                    <div>
+            {#if layerShown < $currentLayer }
+                <StandardNode parent={parent} on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+                              on:touchend={stopDrag} node={node} bind:isEditorOpen>
+                    <slot/>
+                </StandardNode>
+                {#if !isDragged}
+                    <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
+                         on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
+                        {#each children as new_node (new_node.uuid)}
+                            <div animate:flip="{{duration: 100}}">
+                                <div>
 
-                                        <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
-                                                          {...{node, layerShown: layerShown + 1, isNavColumn}}/>
-                                    </div>
+                                    <svelte:component parent={node.uuid}
+                                                      this={standardNodeTypeMap.get(new_node.node_type.data.type)}
+                                                      {...{node: new_node, layerShown: layerShown + 1, isNavColumn}}/>
                                 </div>
-                            {/each}
-                        </div>
-                    {/if}
-                {:else if layerShown === $currentLayer }
-                    <NavSegmentButton uuid={node.uuid} isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
-                    <CreateElementSpacer />
+                            </div>
+                        {/each}
+                    </div>
                 {/if}
+            {:else if layerShown === $currentLayer }
+                <NavSegmentButton uuid={node.uuid} isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
             {/if}
         </div>
     {/if}

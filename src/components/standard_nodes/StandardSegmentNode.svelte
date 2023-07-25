@@ -3,6 +3,7 @@
     import type API from "../../globals/socket.api.d.ts";
     import {onMount} from "svelte";
 
+    export let parent;
     export let node: API.Ast.Node;
     let heading;
     if (node.node_type.type === "Expandable" && node.node_type.data.type === "Segment" )
@@ -22,7 +23,7 @@
 
 </script>
 
-<StandardExpandableNode bind:node isNavColumn={isNavColumn} layerShown={layerShown} isEditorOpen={isEditorOpen}>
+<StandardExpandableNode parent={parent} bind:node isNavColumn={isNavColumn} layerShown={layerShown} isEditorOpen={isEditorOpen}>
     <h1 style="font-size: {fontsize}" class="font-bold mt-2 mb-2">{layerShown} {heading}</h1>
     <div style="border-color: {color}" class="w-full border-b-4 border-solid border-lightpurple mb-1"></div>
 </StandardExpandableNode>

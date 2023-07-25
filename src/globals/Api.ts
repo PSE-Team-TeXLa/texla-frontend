@@ -29,6 +29,16 @@ socket.on("disconnect", () => {
 
 // outgoing
 
+export function addNode(destination: API.Operation.Position, raw_latex: string) {
+    sendOperation({
+        type: "AddNode",
+        arguments: {
+            destination,
+            raw_latex
+        }
+    });
+}
+
 export function editNode(target: number, raw_latex: string) {
     sendOperation({
         type: "EditNode",

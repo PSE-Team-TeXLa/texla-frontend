@@ -7,15 +7,13 @@
     import {graphNodeTypeMap} from "../../globals/Constants";
     import {flip} from "svelte/animate";
     import {dndzone} from "svelte-dnd-action";
-    import {createEventDispatcher, onMount} from "svelte";
-    import StandardNode from "../standard_nodes/StandardNode.svelte";
     import {moveNode} from "../../globals/Api";
 
     export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
     $: if (node.node_type.type === "Expandable") {
-        node.node_type.children = node.node_type.children;
+        children = node.node_type.children;
     }
 
     let text: string;
@@ -29,18 +27,24 @@
         console.log("consider " + evt.detail.info.id + " in " + node.uuid);
         console.log(evt.detail.items);
 
+        /*let target: API.Uuid = evt.detail.info.id;
+        let targetIndex = evt.detail.items.findIndex((o) => o.uuid === target)
+        console.log(target + " " + targetIndex)
+        if (evt.detail.items[targetIndex].node_type.type === "Expandable" && evt.detail.items[targetIndex].node_type.children.filter((o) => o.uuid === target) !== 0)
+            return;*/
+
         if (node.node_type.type === "Expandable")
-            children = evt.detail.items;
+            node.node_type.children = evt.detail.items;
     }
 
     const handleFinalize = (evt) => {
-            console.log("FINALIZE")
-        //console.log(evt.detail.info.id)
-        //console.log(evt.detail.items)
-        //console.log(evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0)
         if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
             return;
         }
+        //console.log(evt.detail.info.id)
+        //console.log(evt.detail.items)
+        //console.log(evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0)
+        console.log("FINALIZE")
 
         if (node.node_type.type === "Expandable")
             node.node_type.children = evt.detail.items;
@@ -93,10 +97,10 @@
             {text}
         </GraphNode>
     </div>
-    <div use:dndzone="{{items: children, dropTargetStyle: {'outline-offset': '2px',  'outline': '3px dashed #ccc', 'transition': 'padding 0.2s', 'padding-top': '8px' , 'padding-bottom': '8px', 'min-height': '60px', 'min-width': '110px'}}}"
+    <div use:dndzone="{{items: node.node_type.children, dropTargetStyle: {'outline-offset': '2px',  'outline': '3px dashed #ccc', 'transition': 'padding 0.2s', 'padding-top': '8px' , 'padding-bottom': '8px', 'min-height': '60px', 'min-width': '110px'}}}"
          class="my-auto flex flex-col gap-1 ml-2"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-        {#each children as new_node (new_node.uuid)}
+        {#each node.node_type.children as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">
                 {#if !isDragged}
                     {#if new_node.node_type.type === "Expandable"}
