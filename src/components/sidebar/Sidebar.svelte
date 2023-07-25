@@ -21,12 +21,10 @@
     import graph from "$lib/assets/icons/graph.svg"
 
     function enterGraphMode() {
-        isGraphActive.set(true);
         goto('/graph_view');
-        console.log("cool");
     }
+
     function leaveGraphMode() {
-        isGraphActive.set(false);
         goto('/standard_view')
     }
 
@@ -48,13 +46,13 @@
 
 </script>
 
-<div class="p-3 w-20 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0" >
+<div class="p-3 w-16 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0">
     <SidebarContentWrapper>
         <SidebarSlot>
             <SidebarImage on:click={leaveGraphMode} image="{logo}"/>
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon popup={ExportPopup} on:click={startExport} icon={export_icon}/>
+            <SidebarIcon on:click={startExport} icon={export_icon}/>
         </SidebarSlot>
         <SidebarSlot>
             <SidebarIcon on:click={openOverleaf} icon={overleaf_icon}/>
@@ -68,9 +66,9 @@
         {/if}
         <SidebarSlot>
             {#if !$isGraphActive}
-            <SidebarIcon on:click={enterGraphMode} icon={graph}/>
+                <SidebarIcon on:click={enterGraphMode} icon={graph}/>
             {:else}
-            <SidebarIcon on:click={leaveGraphMode} icon={back}/>
+                <SidebarIcon on:click={leaveGraphMode} icon={back}/>
             {/if}
         </SidebarSlot>
         <SidebarSlot>

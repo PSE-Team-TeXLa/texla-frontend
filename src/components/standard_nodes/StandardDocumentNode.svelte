@@ -11,7 +11,8 @@
 
 <!-- rerender entire tree when there is a new root -->
 {#key node.uuid}
-    <StandardExpandableNode bind:node layerShown={layerShown} isNavColumn={isNavColumn} isEditorOpen={isEditorOpen}>
+    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown} isNavColumn={isNavColumn}
+                            isEditorOpen={isEditorOpen}>
         <h1 class="text-4xl font-bold">Document</h1>
         <hr>
     </StandardExpandableNode>

@@ -52,6 +52,16 @@ socket.on("error", (error: string) => {
 
 // outgoing
 
+export function addNode(destination: API.Operation.Position, raw_latex: string) {
+    sendOperation({
+        type: "AddNode",
+        arguments: {
+            destination,
+            raw_latex
+        }
+    });
+}
+
 export function editNode(target: number, raw_latex: string) {
     sendOperation({
         type: "EditNode",
@@ -70,6 +80,15 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
             destination
         }
     });
+}
+
+export function deleteNode(target: API.Uuid) {
+    sendOperation({
+        type: "DeleteNode",
+        arguments: {
+            target
+        }
+    })
 }
 
 function sendOperation(operation: API.Operation.Operation) {

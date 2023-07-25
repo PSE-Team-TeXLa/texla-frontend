@@ -1,7 +1,6 @@
 <script lang="ts">
     import NavSegmentButton from "../buttons/NavSegmentButton.svelte";
-    import {currentLayer} from "../../globals/Variables";
-    import MiniEditor from "./MiniEditor.svelte";
+    import {currentLayer, isEditorActive} from "../../globals/Variables";
     import StandardNode from "./StandardNode.svelte";
     import {flip} from "svelte/animate";
     import type {ComponentType} from "svelte";
@@ -24,6 +23,7 @@
         ]
     );
 
+    export let parent;
     export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
@@ -66,7 +66,35 @@
         moveNode(target, position)
     }
 
+    $: dndOptiions = {
+        dragDisabled: $isEditorActive,
+        items: children,
+        dropTargetStyle: {
+            'border-left': '6px solid #2196F3',
+            'background-color': '#ddffff',
+            'padding-top': '8px',
+            'padding-bottom': '8px'
+        },
+        flipDurationMs: 100
+    }
 
+    let isDragged = false;
+    let dragStuff;
+
+    function startDrag() {
+        //dragStuff.classList.add("hidden");
+        //isDragged = true;
+        console.log("startDrag");
+    }
+
+    function stopDrag() {
+        //dragStuff.classList.remove("hidden");
+        //isDragged = false;
+        console.log("stopDrag");
+    }
+
+
+    // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
 </script>
 
 <div>
@@ -76,33 +104,43 @@
             <!-- Anzeigedetail, ob die neuen Layers in der rechten Spalte angezeigt werden sollen-->
             {#if layerShown < $currentLayer - 1 }
                 {#each children as node}
-                    <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
+                    <svelte:component parent={node.uuid} this={standardNodeTypeMap.get(node.node_type.data.type)}
                                       {...{node, layerShown: layerShown + 1, isNavColumn}}/>
                 {/each}
             {/if}
         </div>
     {:else}
-        <div class="flex flex-col ml-4 mt-2">
-            {#if isEditorOpen}
-                <MiniEditor bind:node bind:isEditorOpen/>
-            {:else}
-                {#if layerShown < $currentLayer }
-                    <StandardNode uuid={node.uuid} bind:isEditorOpen>
-                        <slot/>
-                    </StandardNode>
-                    <div use:dndzone="{{items: children, dropTargetStyle: {'border-left': '6px solid #2196F3', 'background-color': '#ddffff', 'padding-top': '2px' , 'padding-bottom': '20px'}, flipDurationMs: 100}}"
+        <div class="flex flex-col ml-8 ">
+            {#if layerShown < $currentLayer }
+                <StandardNode parent={parent} on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+                              on:touchend={stopDrag} node={node} bind:isEditorOpen>
+                    <slot/>
+                </StandardNode>
+                {#if !isDragged}
+                    <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                        {#each children as node (node.uuid)}
+                        {#each children as new_node (new_node.uuid)}
                             <div animate:flip="{{duration: 100}}">
-                                <svelte:component this={standardNodeTypeMap.get(node.node_type.data.type)}
-                                                  {...{node, layerShown: layerShown + 1, isNavColumn}}/>
+                                <div>
+
+                                    <svelte:component parent={node.uuid}
+                                                      this={standardNodeTypeMap.get(new_node.node_type.data.type)}
+                                                      {...{node: new_node, layerShown: layerShown + 1, isNavColumn}}/>
+                                </div>
                             </div>
                         {/each}
                     </div>
-                {:else if layerShown === $currentLayer }
-                    <NavSegmentButton isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
                 {/if}
+            {:else if layerShown === $currentLayer }
+                <NavSegmentButton uuid={node.uuid} isShort={true} isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
             {/if}
         </div>
     {/if}
 </div>
+
+<style>
+    .hidden {
+        height: 0;
+        transition: height 0.2s;
+    }
+</style>

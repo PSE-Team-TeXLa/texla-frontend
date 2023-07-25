@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let spin: boolean;
+    export let spin = false;
 
 </script>
 
