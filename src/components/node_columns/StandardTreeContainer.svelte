@@ -17,7 +17,7 @@
             <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
             <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
         {:else}
-            <div bind:this={container}>
+            <div class="ml-12" bind:this={container}>
                 <StandardDocumentNode bind:node={$json_ast.root} layerShown={layerShown} isNavColumn="{isNavColumn}"/>
                 <!--<StandardDocumentNode uuid={$json_ast.root.uuid} filename={$json_ast.root.node_type.data.filename} children={$json_ast.root.node_type.children} layerShown={layerShown} isNavColumn="{isNavColumn}" />-->
             </div>

@@ -40,7 +40,6 @@
     function quitTexla() {
         close();
         //TODO remove error popup testing
-        modal.set(bind(ErrorPopup, { message: "It's a modal!" }));
         console.log("QUIT");
     }
 

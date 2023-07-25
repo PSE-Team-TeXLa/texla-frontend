@@ -6,13 +6,11 @@
 
     export let isNavColumn: boolean;
     export let layerShown: number;
-    let isEditorOpen = false;
 </script>
 
 <!-- rerender entire tree when there is a new root -->
 {#key node.uuid}
-    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown} isNavColumn={isNavColumn}
-                            isEditorOpen={isEditorOpen}>
+    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown} isNavColumn={isNavColumn}>
         <h1 class="text-4xl font-bold">Document</h1>
         <hr>
     </StandardExpandableNode>
