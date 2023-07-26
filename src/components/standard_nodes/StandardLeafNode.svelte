@@ -7,6 +7,8 @@
 
 </script>
 
-<StandardNodeContent parent={parent} node={node}>
-    <slot/>
-</StandardNodeContent>
+<div class="ml-4">
+    <StandardNodeContent parent={parent} node={node}>
+        <slot/>
+    </StandardNodeContent>
+</div>

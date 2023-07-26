@@ -35,7 +35,7 @@ namespace API {
             data: LeafData;
         }
 
-        type ExpandableData = Segment | Document; // TODO more
+        type ExpandableData = Segment | Document | Environment; // TODO more
         type LeafData = Text | Image | Caption; // TODO more
 
         interface Document {
@@ -43,6 +43,11 @@ namespace API {
             preamble: string;
             postamble: string;
 
+        }
+
+        interface Environment {
+            type: "Environment",
+            name: string
         }
 
         interface Segment {
@@ -59,6 +64,7 @@ namespace API {
             type: "Image";
             path: string;
         }
+
 
         interface Caption {
             type: "Caption";

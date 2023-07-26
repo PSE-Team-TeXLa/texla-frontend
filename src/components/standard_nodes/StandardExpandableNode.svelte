@@ -10,7 +10,7 @@
     import StandardDocumentNode from "./StandardDocumentNode.svelte";
     import StandardSegmentNode from "./StandardSegmentNode.svelte";
     import StandardTextNode from "./StandardTextNode.svelte";
-    import StandardImageNode from "./StandardImageNode.svelte";
+    import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
 
@@ -19,7 +19,7 @@
         [["Document", StandardDocumentNode],
             ["Segment", StandardSegmentNode],
             ["Text", StandardTextNode],
-            ["StandardImageNode", StandardImageNode],
+            ["Environment", StandardEnvironmentNode],
         ]
     );
 
@@ -36,7 +36,9 @@
         if (node.node_type.data.type === "Document")
             text = "Document";
         else if (node.node_type.data.type === "Segment")
-            text = node.node_type.data.heading
+            text = node.node_type.data.heading;
+        else if (node.node_type.data.type === "Environment")
+            text = node.node_type.data.name
 
     export let isNavColumn: boolean;
     export let layerShown: number;
@@ -94,6 +96,7 @@
 
 
     // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
+    //TODO fix navcolumn logic (navsegment buttons)
 </script>
 
 {#if isNavColumn}
