@@ -24,13 +24,13 @@ namespace API {
             raw_latex: string;
         }
 
-        interface ExpandableType extends GeneralNode {
+        interface ExpandableType {
             type: "Expandable";
             data: ExpandableData;
             children: Node[];
         }
 
-        interface LeafType extends GeneralNode {
+        interface LeafType {
             type: "Leaf";
             data: LeafData;
         }
