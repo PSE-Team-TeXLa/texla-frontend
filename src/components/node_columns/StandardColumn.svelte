@@ -2,8 +2,8 @@
 
 </script>
 
-<div class="container flex flex-col min-h-screen bg-verylightcyan" >
-    <slot />
+<div class="container flex flex-col min-h-screen bg-verylightcyan">
+    <slot/>
 </div>
 
 <style>
