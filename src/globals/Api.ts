@@ -92,6 +92,15 @@ export function deleteNode(target: API.Uuid) {
     })
 }
 
+export function mergeNodes(second_node: API.Uuid) {
+    sendOperation({
+        type: "MergeNodes",
+        arguments: {
+            second_node
+        }
+    })
+}
+
 function sendOperation(operation: API.Operation.Operation) {
     // volatile -> message is not buffered (it would contain wrong UUIDs anyway)
     socket.volatile.emit("operation", JSON.stringify(operation));

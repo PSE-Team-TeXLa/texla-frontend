@@ -39,7 +39,11 @@
         Monaco = await import('monaco-editor');
         editor = Monaco.editor.create(divEl, {
             value: raw_latex,
-            language: 'latex'
+            language: 'latex',
+            minimap: {
+                enabled: false
+            },
+            lineNumbers: "off"
         });
 
         return () => {
@@ -51,19 +55,26 @@
 
     function handleConfirm() {
         let new_latex = editor.getValue();
-        console.log(new_latex)
         dispatcher('confirm', {
             new_latex
         });
     }
 
+    function handleBackspace(evt) {
+        const position = editor.getPosition();
+
+        if (evt.keyCode === 8 && position.column === 1 && position.lineNumber === 1) {
+            dispatcher('mergeincoming', {})
+        }
+    }
+
 </script>
 
 
-<div class="flex flex-col items-end w-full">
+<div class="flex flex-col items-start w-full">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
-    <div bind:this={divEl} class="h-[300px] w-full mt-4 border-lightcyan border-2"/>
-    <div class="flex">
+    <div on:keydown={handleBackspace} bind:this={divEl} class="h-[300px] w-[80%] mt-4 border-lightcyan border-2"/>
+    <div class="flex flex-row flex-end w-full">
         <EditConfirmButton on:click={handleConfirm}>
             <span class="font-bold">C</span>
         </EditConfirmButton>

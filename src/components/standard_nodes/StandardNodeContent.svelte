@@ -2,7 +2,7 @@
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
     import {isEditorActive, modal, scrollMap} from "../../globals/Variables";
     import {onMount} from "svelte";
-    import {deleteNode, editNode} from "../../globals/Api";
+    import {deleteNode, editNode, mergeNodes} from "../../globals/Api";
     import {createEventDispatcher} from "svelte";
     import CreateElementSpacer from "./CreateElementSpacer.svelte";
     import MiniEditor from "./MiniEditor.svelte";
@@ -30,8 +30,6 @@
     }
 
     let isHovered = false;
-    let isContentHovered = false;
-    let isButtonsHovered = false;
 
     function mouseEnter() {
         isHovered = true;
@@ -74,19 +72,25 @@
     function handleEditConfirm(evt) {
         isEditorActive.set(false);
         isEditorOpen = false;
-        editNode(node.uuid, evt.detail.new_latex);
+        if (evt.detail.new_latex !== node.raw_latex)
+            editNode(node.uuid, evt.detail.new_latex);
     }
 
     function handleMetaEdit() {
         modal.set(bind(MetaDataPopup, {meta_data: node.meta_data}))
-        console.log("Meta")
+    }
+
+    function handleMergeNodes() {
+        isEditorActive.set(false);
+        isEditorOpen = false;
+        mergeNodes(node.uuid);
     }
 </script>
 
 <div bind:this={new_node_html}>
 
     {#if isEditorOpen}
-        <MiniEditor on:confirm={handleEditConfirm} raw_latex={node.raw_latex}/>
+        <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
         <div id="text-container" on:mouseenter={mouseEnter}
              on:mouseleave={mouseLeave} class="flex flex-col relative">

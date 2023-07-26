@@ -83,13 +83,11 @@
     let dragStuff;
 
     function startDrag() {
-        //dragStuff.classList.add("hidden");
         isDragged = true;
         console.log("startDrag");
     }
 
     function stopDrag() {
-        //dragStuff.classList.remove("hidden");
         isDragged = false;
         console.log("stopDrag");
     }
@@ -125,10 +123,3 @@
         {/if}
     </div>
 </div>
-
-<style>
-    .hidden {
-        height: 0;
-        transition: height 0.2s;
-    }
-</style>

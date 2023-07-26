@@ -16,6 +16,6 @@
 
 <StandardLeafNode parent={parent} bind:node bind:isEditorOpen>
     <div class="flex flex-col cursor-default my-2">
-        <span class="text-lg">{layerShown + " "}{text}</span>
+        <span class="whitespace-pre-wrap text-lg">{layerShown + " "}{text}</span>
     </div>
 </StandardLeafNode>
