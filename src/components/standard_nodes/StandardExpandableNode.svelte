@@ -1,6 +1,5 @@
 <script lang="ts">
-    import NavSegmentButton from "../buttons/NavSegmentButton.svelte";
-    import {currentLayer, isEditorActive, json_ast} from "../../globals/Variables";
+    import {isEditorActive, json_ast} from "../../globals/Variables";
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {flip} from "svelte/animate";
     import type {ComponentType} from "svelte";
@@ -100,38 +99,31 @@
     // TODO fix navcolumn logic (navsegment buttons)
 </script>
 
-<div class="flex flex-col ml-3">
-    {#if layerShown < $currentLayer }
-        <div class=" py-4">
-            <StandardNodeContent parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
-                                 on:mouseup={stopDrag}
-                                 on:touchend={stopDrag} node={node}>
-                <slot/>
-            </StandardNodeContent>
-            {#if !isDragged}
-                <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
-                     on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                    {#each children as new_node (new_node.uuid)}
-                        <div animate:flip="{{duration: 100}}">
-                            <div>
+<div class="flex flex-col">
+    <StandardNodeContent parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
+                         on:mouseup={stopDrag}
+                         on:touchend={stopDrag} node={node}>
+        <slot/>
+    </StandardNodeContent>
 
-                                <svelte:component parent={node.uuid}
-                                                  this={standardNodeTypeMap.get(new_node.node_type.data.type)}
-                                                  {...{
-                                                      node: new_node,
-                                                      layerShown: layerShown + 1,
-                                                      isNavColumn
-                                                  }}/>
-                            </div>
-                        </div>
-                    {/each}
-                </div>
-            {/if}
-        </div>
-    {:else if layerShown === $currentLayer }
-        <NavSegmentButton uuid={node.uuid} isNavColumn={isNavColumn}
-                          isOnLayer={layerShown + 1 }>{text}</NavSegmentButton>
-    {/if}
+    <div class="ml-6 py-4">
+        {#if !isDragged}
+            <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
+                 on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
+                {#each children as new_node (new_node.uuid)}
+                    <div animate:flip="{{duration: 100}}">
+                        <svelte:component parent={node.uuid}
+                                          this={standardNodeTypeMap.get(new_node.node_type.data.type)}
+                                          {...{
+                                              node: new_node,
+                                              layerShown: layerShown + 1,
+                                              isNavColumn
+                                          }}/>
+                    </div>
+                {/each}
+            </div>
+        {/if}
+    </div>
 </div>
 
 <style>
