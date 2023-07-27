@@ -1,5 +1,15 @@
 import type {ComponentType} from "svelte";
 import GraphTextNode from "../components/graph/GraphTextNode.svelte";
+import StandardCaptionNode from "../components/standard_nodes/StandardCaptionNode.svelte";
+import StandardCommentNode from "../components/standard_nodes/StandardCommentNode.svelte";
+import StandardDocumentNode from "../components/standard_nodes/StandardDocumentNode.svelte";
+import StandardEnvironmentNode from "../components/standard_nodes/StandardEnvironmentNode.svelte";
+import StandardFileNode from "../components/standard_nodes/StandardFileNode.svelte";
+import StandardImageNode from "../components/standard_nodes/StandardImageNode.svelte";
+import StandardLabelNode from "../components/standard_nodes/StandardLabelNode.svelte";
+import StandardMathNode from "../components/standard_nodes/StandardMathNode.svelte";
+import StandardSegmentNode from "../components/standard_nodes/StandardSegmentNode.svelte";
+import StandardTextNode from "../components/standard_nodes/StandardTextNode.svelte";
 import type API from "./socket.api";
 import {scrollMap} from "./Variables";
 import GraphSegmentNode from "../components/graph/GraphSegmentNode.svelte";
@@ -19,10 +29,20 @@ export const graphNodeTypeMap = new Map<string, ComponentType>(
     ]
 );
 
+export const standardNodeTypeMap = new Map<string, ComponentType>(
+    //Expandable
+    [
+        ["Segment", StandardSegmentNode],
+        ["File", StandardFileNode],
+        ["Environment", StandardEnvironmentNode],
+        ["Text", StandardTextNode],
+        ["Math", StandardMathNode],
+        ["Image", StandardImageNode],
+        ["Label", StandardLabelNode],
+        ["Caption", StandardCaptionNode],
+        ["Comment", StandardCommentNode]
+    ]);
+
 export const scrollToNode = (node: API.Uuid) => {
-    if (scrollMap.get(node) !== undefined) {
-        scrollMap.get(node).scrollIntoView({behavior: "smooth"});
-    }
-
-
+    scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
 }

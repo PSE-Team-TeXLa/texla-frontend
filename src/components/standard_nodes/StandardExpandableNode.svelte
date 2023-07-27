@@ -1,40 +1,17 @@
 <script lang="ts">
+    import {standardNodeTypeMap} from "../../globals/Constants";
     import {isEditorActive, json_ast} from "../../globals/Variables";
     import {dndzone} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
     import {flip} from "svelte/animate";
 
-    import type {ComponentType} from "svelte";
     import type API from "../../globals/socket.api.d.ts";
 
-    import StandardDocumentNode from "./StandardDocumentNode.svelte";
     import StandardNodeContent from "./StandardNodeContent.svelte";
-    import StandardSegmentNode from "./StandardSegmentNode.svelte";
-    import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
-    import StandardFileNode from "./StandardFileNode.svelte";
-    import StandardTextNode from "./StandardTextNode.svelte";
-    import StandardMathNode from "./StandardMathNode.svelte";
-    import StandardImageNode from "./StandardImageNode.svelte";
-    import StandardLabelNode from "./StandardLabelNode.svelte";
-    import StandardCaptionNode from "./StandardCaptionNode.svelte";
-    import StandardCommentNode from "./StandardCommentNode.svelte";
 
     export let parent;
     export let node: API.Ast.Node;
 
-    export const standardNodeTypeMap = new Map<string, ComponentType>(
-        //Expandable
-        [["Document", StandardDocumentNode],
-            ["Segment", StandardSegmentNode],
-            ["File", StandardFileNode],
-            ["Environment", StandardEnvironmentNode],
-            ["Text", StandardTextNode],
-            ["Math", StandardMathNode],
-            ["Image", StandardImageNode],
-            ["Label", StandardLabelNode],
-            ["Caption", StandardCaptionNode],
-            ["Comment", StandardCommentNode]
-        ]);
 
     let children: API.Ast.Node[];
     $: if (node.node_type.type === "Expandable") {
