@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {dndzone, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
+    import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
     import {moveNode} from "../../globals/Api";
 
@@ -79,7 +79,11 @@
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
         {#each node.node_type.children.filter(item => item.uuid != SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">
-                <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
+                {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+                    <div class="h-[50px]"></div>
+                {:else}
+                    <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
+                {/if}
             </div>
         {/each}
     </div>
