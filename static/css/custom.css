@@ -1,0 +1,7 @@
+html {
+    --size: 16px !important;
+}
+
+body, .page {
+    grid-template-columns: [body] 1fr;
+}

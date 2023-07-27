@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import Latex from "../rendering/Latex.svelte";
     import StandardLeafNode from "./StandardLeafNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
 
@@ -16,6 +17,8 @@
 
 <StandardLeafNode parent={parent} bind:node bind:isEditorOpen>
     <div class="flex flex-col cursor-default my-2">
-        <span class="text-lg">{layerShown + " "}{text}</span>
+        <span class="text-lg">
+            <Latex latex="{text}"></Latex>
+        </span>
     </div>
 </StandardLeafNode>
