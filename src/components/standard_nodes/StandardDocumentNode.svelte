@@ -4,20 +4,13 @@
 
     export let node: API.Ast.Node;
 
-    export let isNavColumn: boolean;
     export let layerShown: number;
 </script>
 
 <!-- rerender entire tree when there is a new root -->
 {#key node.uuid}
-    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown} isNavColumn={isNavColumn}>
+    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown}>
         <h1 class="text-4xl font-bold">Document</h1>
-        <hr>
+        <div class="w-full border-b-8 border-solid border-document mb-1"></div>
     </StandardExpandableNode>
 {/key}
-
-<style>
-    hr {
-        border-bottom: 6px solid theme('colors.darkpurple');
-    }
-</style>

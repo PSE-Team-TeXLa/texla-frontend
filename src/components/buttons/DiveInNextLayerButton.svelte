@@ -1,19 +1,22 @@
 <script lang="ts">
-    import Button from "./Button.svelte";
     import {currentLayer} from "../../globals/Variables.ts";
+    import {createEventDispatcher} from "svelte";
 
     export let isOnLayer: number;
 
+    let dispatch = createEventDispatcher();
+
     function setCurrentLayer() {
+
+        dispatch('myclick', {});
         if (isOnLayer > $currentLayer)
             currentLayer.set(isOnLayer);
     }
 
+
 </script>
 
-<Button>
-    <div on:click={setCurrentLayer}
-         class="cursor-pointer flex justify-start items-center ml-12 py-1 pl-8 my-2 w-3/4 bg-darkcyan">
-        <slot/>
-    </div>
-</Button>
+<div on:click={setCurrentLayer}
+     class="cursor-pointer flex justify-start items-center ml-12 my-2 w-3/4">
+    <slot/>
+</div>

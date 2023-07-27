@@ -10,7 +10,7 @@
 
 <NavColumnExpandableNode bind:node layerShown={layerShown}>
     <ScrollToExpandableButton uuid={node.uuid}>
-        <div class="flex w-full h-full p-2 pl-8 bg-[#234435]">
+        <div class="flex w-[90%] h-full p-2 pl-8 bg-file">
             {node.node_type.data.path}
         </div>
     </ScrollToExpandableButton>

@@ -50,8 +50,7 @@
             text = node.node_type.data.path
         else if (node.node_type.data.type === "Environment")
             text = node.node_type.data.name
-
-    export let isNavColumn: boolean;
+    
     export let layerShown: number;
 
     const handleConsider = (evt) => {
@@ -127,7 +126,6 @@
                                           {...{
                                               node: new_node,
                                               layerShown: layerShown + 1,
-                                              isNavColumn
                                           }}/>
                     </div>
                 {/each}

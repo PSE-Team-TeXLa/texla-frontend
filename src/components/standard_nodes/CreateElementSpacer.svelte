@@ -9,12 +9,15 @@
     export let parent;
 
     let isEditorOpen = false;
+    let editor;
 
     function createElement() {
         if (!$isEditorActive) {
             isEditorActive.set(true);
             isEditorOpen = true;
             console.log("Start Create");
+
+            editor.scrollIntoView({behavior: "smooth"});
         }
     }
 
@@ -33,7 +36,7 @@
 </script>
 
 {#if !isEditorOpen}
-    <div id="bar-container" class="h-2 w-[90%] items-center">
+    <div bind:this={editor} id="bar-container" class="h-3 w-[90%] items-center">
         <div class="w-full hidden flex-row items-center">
             <div class="w-full mr-2 border-b-2 border-red border-dashed"></div>
             <CreateElementButton on:click={createElement}>+</CreateElementButton>

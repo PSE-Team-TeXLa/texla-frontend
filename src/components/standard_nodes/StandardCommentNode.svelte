@@ -3,6 +3,8 @@
     import StandardLeafNode from "./StandardLeafNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
 
+    import commentIcon from "$lib/assets/icons/commentnode.svg"
+
     export let parent;
     export let node: API.Ast.Node;
 
@@ -11,7 +13,10 @@
 
 
 <StandardLeafNode parent={parent} bind:node>
-    <div class="flex flex-col cursor-default bg-comment p-2 my-2">
-        <span class="whitespace-pre-wrap text-lg">{node.node_type.data.comment}</span>
+    <div class="flex flex-row items-center bg-comment opacity-70">
+        <img src={commentIcon} alt="SidebarImage" class="px-4 p-1 cursor-pointer max-h-8"/>
+        <div class="flex flex-col cursor-default my-2">
+            <span class="whitespace-pre-wrap text-lg">{node.node_type.data.comment}</span>
+        </div>
     </div>
 </StandardLeafNode>
