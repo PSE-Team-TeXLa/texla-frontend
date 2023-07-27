@@ -2,7 +2,6 @@ import type {ComponentType} from "svelte";
 import GraphTextNode from "../components/graph/GraphTextNode.svelte";
 import StandardCaptionNode from "../components/standard_nodes/StandardCaptionNode.svelte";
 import StandardCommentNode from "../components/standard_nodes/StandardCommentNode.svelte";
-import StandardDocumentNode from "../components/standard_nodes/StandardDocumentNode.svelte";
 import StandardEnvironmentNode from "../components/standard_nodes/StandardEnvironmentNode.svelte";
 import StandardFileNode from "../components/standard_nodes/StandardFileNode.svelte";
 import StandardImageNode from "../components/standard_nodes/StandardImageNode.svelte";
@@ -12,7 +11,6 @@ import StandardSegmentNode from "../components/standard_nodes/StandardSegmentNod
 import StandardTextNode from "../components/standard_nodes/StandardTextNode.svelte";
 import type API from "./socket.api";
 import {scrollMap} from "./Variables";
-import GraphSegmentNode from "../components/graph/GraphSegmentNode.svelte";
 
 
 export const editorStandardNavSize = 20;
@@ -21,11 +19,6 @@ export const nonEditorStandardReadSize = 40;
 export const graphNodeTypeMap = new Map<string, ComponentType>(
     [
         ["Text", GraphTextNode],
-        ["Segment", GraphSegmentNode],
-        ["Environment", GraphSegmentNode],
-        ["Document", GraphSegmentNode],
-        ["File", GraphSegmentNode],
-
     ]
 );
 

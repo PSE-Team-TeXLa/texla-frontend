@@ -31,6 +31,18 @@
         }
     }
 
+    function compactForm(node: API.Ast.Node<API.Ast.ExpandableType>) {
+        const data = node.node_type.data;
+        if (data.type === "Document") {
+            return "Document";
+        } else if (data.type === "Segment") {
+            return data.heading;
+        } else if (data.type === "Environment") {
+            return data.name;
+        } else if (data.type === "File") {
+            return data.path;
+        }
+    }
 
     const handleConsider = (evt) => {
         console.log("consider " + evt.detail.info.id + " in " + node.uuid);
@@ -71,18 +83,23 @@
     <div class="flex-none">
         <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
                    on:touchend={stopDrag}>
-            <slot/>
+            {compactForm(node)}
         </GraphNode>
     </div>
     <div use:dndzone="{dndOptions}"
          class="flex flex-col gap-1 ml-2 border-lightpurple border-l-2 min-w-[300px]"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-        {#each node.node_type.children.filter(item => item.uuid != SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
+        {#each node.node_type.children.filter(child => child.uuid.toString() !== SHADOW_PLACEHOLDER_ITEM_ID) as child
+            (child.uuid)}
             <div animate:flip="{{duration: 300}}">
-                {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+                {#if child[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
                     <div class="h-[50px]"></div>
                 {:else}
-                    <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
+                    {#if child.node_type.type === "Expandable"}
+                        <svelte:self node={child}></svelte:self>
+                    {:else}
+                        <svelte:component this={graphNodeTypeMap.get(child.node_type.data.type)} {...{node: child}}/>
+                    {/if}
                 {/if}
             </div>
         {/each}
