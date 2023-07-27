@@ -17,6 +17,7 @@ socket.on("connect", () => {
 });
 socket.on("disconnect", (reason, description) => {
     console.info("disconnect", reason, description);
+    modal.set(bind(ErrorPopup, {message: "Backend disconnected"}));
 });
 
 // incoming
