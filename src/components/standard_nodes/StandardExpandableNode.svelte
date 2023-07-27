@@ -8,16 +8,10 @@
     import {dndzone} from "svelte-dnd-action";
     import StandardDocumentNode from "./StandardDocumentNode.svelte";
     import StandardSegmentNode from "./StandardSegmentNode.svelte";
-    import StandardTextNode from "./StandardTextNode.svelte";
     import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
     import StandardFileNode from "./nav_column_nodes/StandardFileNode.svelte";
-    import StandardImageNode from "./StandardImageNode.svelte";
-    import StandardLabelNode from "./StandardLabelNode.svelte";
-    import StandardCaptionNode from "./StandardCaptionNode.svelte";
-    import StandardCommentNode from "./StandardCommentNode.svelte";
-
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
         //Expandable
@@ -25,13 +19,6 @@
             ["Segment", StandardSegmentNode],
             ["File", StandardFileNode],
             ["Environment", StandardEnvironmentNode],
-            //Leafs
-            ["Text", StandardTextNode],
-            ["Math", ],
-            ["Image", StandardImageNode],
-            ["Label", StandardLabelNode],
-            ["Caption", StandardCaptionNode],
-            ["Comment", StandardCommentNode]
         ]
     );
 
