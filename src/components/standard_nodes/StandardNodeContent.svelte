@@ -9,6 +9,7 @@
     import {bind} from "svelte-simple-modal";
     import MetaDataPopup from "../popups/MetaDataPopup.svelte";
     import type API from "../../globals/socket.api";
+    import {scrollToNode} from "../../globals/Constants";
 
     export let node: API.Ast.Node;
     export let parent;
@@ -16,15 +17,11 @@
 
     function enterEditMode() {
         if ($isEditorActive) {
-            console.log("Editor already open");
+            console.error("Editor already open");
         } else {
             $isEditorActive = true;
             isEditorOpen = true;
-
-            console.log($scrollMap);
-
-            let target: HTMLElement = $scrollMap.get(node.uuid);
-            target.scrollIntoView({behavior: "smooth"});
+            scrollToNode(node.uuid);
         }
 
     }
@@ -42,7 +39,7 @@
 
     let new_node_html;
     onMount(async () => {
-        scrollMap.update((o) => o.set(node.uuid, new_node_html))
+        scrollMap.set(node.uuid, new_node_html);
     })
 
     let dispatch = createEventDispatcher();

@@ -83,13 +83,12 @@
     let dragStuff;
 
     function startDrag() {
-        isDragged = true;
-        console.log("startDrag");
+        if (!$isEditorActive)
+            isDragged = true;
     }
 
     function stopDrag() {
         isDragged = false;
-        console.log("stopDrag");
     }
 
 

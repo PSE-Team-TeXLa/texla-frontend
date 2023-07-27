@@ -60,9 +60,10 @@
         });
     }
 
-    function handleBackspace(evt) {
+    function handleKeyStrokes(evt) {
         const position = editor.getPosition();
 
+        // Backspace Key
         if (evt.keyCode === 8 && position.column === 1 && position.lineNumber === 1) {
             dispatcher('mergeincoming', {})
         }
@@ -71,10 +72,10 @@
 </script>
 
 
-<div class="flex flex-col items-start w-full">
+<div class="flex flex-col items-start w-[90%] h-[300px] gap-4">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
-    <div on:keydown={handleBackspace} bind:this={divEl} class="h-[300px] w-[80%] mt-4 border-lightcyan border-2"/>
-    <div class="flex flex-row flex-end w-full">
+    <div on:keydown={handleKeyStrokes} bind:this={divEl} class="flex w-full h-full mt-4 border-lightcyan border-2"/>
+    <div class="flex flex-row justify-end w-full">
         <EditConfirmButton on:click={handleConfirm}>
             <span class="font-bold">C</span>
         </EditConfirmButton>
