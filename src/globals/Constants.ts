@@ -46,3 +46,10 @@ export const standardNodeTypeMap = new Map<string, ComponentType>(
 export const scrollToNode = (node: API.Uuid) => {
     scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
 }
+
+export function firstXChars(text: string, x: number) {
+    if (text.length <= x) return text;
+    text = text.slice(0, x);
+    if (text[20] !== " ") text = text.split(" ").slice(0, -1).join(" ");
+    return text + "...";
+}

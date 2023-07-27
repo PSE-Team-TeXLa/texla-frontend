@@ -24,15 +24,15 @@ namespace API {
             raw_latex: string;
         }
 
-        interface ExpandableType {
+        interface ExpandableType<T extends ExpandableData = ExpandableData> {
             type: "Expandable";
-            data: ExpandableData;
+            data: T;
             children: Node[];
         }
 
-        interface LeafType {
+        interface LeafType<T extends LeafData = LeafData> {
             type: "Leaf";
-            data: LeafData;
+            data: T;
         }
 
         type ExpandableData = Document | Segment | Environment | File;

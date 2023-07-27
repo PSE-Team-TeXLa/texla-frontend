@@ -1,17 +1,12 @@
 <script lang="ts">
+    import {firstXChars} from "../../globals/Constants";
     import type API from "../../globals/socket.api";
     import GraphLeafNode from "./GraphLeafNode.svelte";
 
-    export let node: API.Ast.Node;
-
-    let text
-    if (node.node_type.data.type === "Text")
-        text = node.node_type.data.text;
-
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Text>>;
 </script>
 <GraphLeafNode>
     <div class="flex justify-center items-center">
-        {text}
+        {firstXChars(node.node_type.data.text, 50)}
     </div>
-
 </GraphLeafNode>
