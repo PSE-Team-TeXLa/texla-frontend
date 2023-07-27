@@ -11,7 +11,13 @@
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import StandardSegmentNode from "./StandardSegmentNode.svelte";
     import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
-    import StandardFileNode from "./nav_column_nodes/StandardFileNode.svelte";
+    import StandardFileNode from "./StandardFileNode.svelte";
+    import StandardTextNode from "./StandardTextNode.svelte";
+    import StandardMathNode from "./StandardMathNode.svelte";
+    import StandardImageNode from "./StandardImageNode.svelte";
+    import StandardLabelNode from "./StandardLabelNode.svelte";
+    import StandardCaptionNode from "./StandardCaptionNode.svelte";
+    import StandardCommentNode from "./StandardCommentNode.svelte";
 
     export let parent;
     export let node: API.Ast.Node;
@@ -22,14 +28,18 @@
             ["Segment", StandardSegmentNode],
             ["File", StandardFileNode],
             ["Environment", StandardEnvironmentNode],
-        ]
-    );
+            ["Text", StandardTextNode],
+            ["Math", StandardMathNode],
+            ["Image", StandardImageNode],
+            ["Label", StandardLabelNode],
+            ["Caption", StandardCaptionNode],
+            ["Comment", StandardCommentNode]
+        ]);
 
     let children: API.Ast.Node[];
     $: if (node.node_type.type === "Expandable") {
         children = node.node_type.children;
     }
-
     let text: string;
     $: if (node.node_type.type === "Expandable")
         if (node.node_type.data.type === "Document")
@@ -81,17 +91,17 @@
         flipDurationMs: 100
     }
 
-    let isDragged = false;
+    let isDraggedLocal = false;
     let dragStuff;
 
     function startDrag() {
-        isDragged = true;
-        console.log("startDrag");
+        if (!$isEditorActive) {
+            isDraggedLocal = true;
+        }
     }
 
     function stopDrag() {
-        isDragged = false;
-        console.log("stopDrag");
+        isDraggedLocal = false;
     }
 
 
@@ -107,7 +117,7 @@
     </StandardNodeContent>
 
     <div class="ml-6 py-4">
-        {#if !isDragged}
+        {#if !isDraggedLocal}
             <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
                  on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                 {#each children as new_node (new_node.uuid)}
