@@ -20,6 +20,9 @@ export const graphNodeTypeMap = new Map<string, ComponentType>(
 );
 
 export const scrollToNode = (node: API.Uuid) => {
-    const target: HTMLElement = scrollMap.get(node);
-    target.scrollIntoView({behavior: "smooth"});
+    if (scrollMap.get(node) !== undefined) {
+        scrollMap.get(node).scrollIntoView({behavior: "smooth"});
+    }
+
+
 }
