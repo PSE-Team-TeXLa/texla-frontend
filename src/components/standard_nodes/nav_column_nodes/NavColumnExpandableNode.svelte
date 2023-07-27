@@ -5,6 +5,7 @@
     import NavColumnEnvironmentNode from "./NavColumnEnvironmentNode.svelte";
     import NavColumnSegmentNode from "./NavColumnSegmentNode.svelte";
     import NavColumnDocumentNode from "./NavColumnDocumentNode.svelte";
+    import NavColumnFileNode from "./NavColumnFileNode.svelte";
 
     export let node: API.Ast.Node;
     export let layerShown: number;
@@ -13,6 +14,7 @@
         [["Document", NavColumnDocumentNode],
             ["Segment", NavColumnSegmentNode],
             ["Environment", NavColumnEnvironmentNode],
+            ["File", NavColumnFileNode],
         ]
     );
 

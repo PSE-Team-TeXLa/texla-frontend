@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {isEditorActive, json_ast} from "../../globals/Variables";
+    import {isDragged, isEditorActive, json_ast} from "../../globals/Variables";
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {flip} from "svelte/animate";
     import type {ComponentType} from "svelte";
@@ -12,6 +12,7 @@
     import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
+    import StandardFileNode from "./StandardFileNode.svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
@@ -19,6 +20,7 @@
             ["Segment", StandardSegmentNode],
             ["Text", StandardTextNode],
             ["Environment", StandardEnvironmentNode],
+            ["File", StandardFileNode],
         ]
     );
 
@@ -79,16 +81,17 @@
         flipDurationMs: 100
     }
 
-    let isDragged = false;
+    let isDraggedLocal = false;
     let dragStuff;
 
     function startDrag() {
-        if (!$isEditorActive)
-            isDragged = true;
+        if (!$isEditorActive) {
+            isDraggedLocal = true;
+        }
     }
 
     function stopDrag() {
-        isDragged = false;
+        isDraggedLocal = false;
     }
 
 
@@ -104,7 +107,7 @@
     </StandardNodeContent>
 
     <div class="ml-6 py-4">
-        {#if !isDragged}
+        {#if !isDraggedLocal}
             <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
                  on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                 {#each children as new_node (new_node.uuid)}

@@ -15,7 +15,7 @@
 {:else}
     <StandardExpandableNode parent={parent} bind:node isNavColumn={isNavColumn} layerShown={layerShown}>
         <div class="w-[70%]">
-            <h1 class="font-bold mt-2 mb-2">{layerShown} {node.node_type.data.name}</h1>
+            <h1 class="font-bold mt-2 mb-2">{node.node_type.data.name}</h1>
             <div class="w-full border-b-4 border-solid border-green mb-1"></div>
         </div>
     </StandardExpandableNode>

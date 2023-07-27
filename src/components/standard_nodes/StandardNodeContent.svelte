@@ -1,6 +1,6 @@
 <script lang="ts">
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
-    import {isEditorActive, modal, scrollMap} from "../../globals/Variables";
+    import {isDragged, isEditorActive, modal, scrollMap} from "../../globals/Variables";
     import {onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes} from "../../globals/Api";
     import {createEventDispatcher} from "svelte";
@@ -29,7 +29,8 @@
     let isHovered = false;
 
     function mouseEnter() {
-        isHovered = true;
+        if (!$isDragged)
+            isHovered = true;
     }
 
     function mouseLeave() {
@@ -89,8 +90,8 @@
     {#if isEditorOpen}
         <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
-        <div id="text-container" on:mouseenter={mouseEnter}
-             on:mouseleave={mouseLeave} class="flex flex-col relative">
+        <div on:mouseenter={mouseEnter}
+             on:mouseleave={mouseLeave} class="text-container flex flex-col relative">
             <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
                  on:touchend={handleTouchEnd} class="px-2 pb-1">
@@ -117,8 +118,8 @@
 </div>
 
 <style>
-    #text-container:hover {
+    .text-container:hover {
         outline: 3px dashed theme('colors.red');
-        outline-offset: 0px;
+        outline-offset: 0;
     }
 </style>
