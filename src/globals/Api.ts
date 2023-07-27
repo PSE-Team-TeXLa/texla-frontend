@@ -44,9 +44,9 @@ socket.on("quit", () => {
     goto("/close");
 });
 
-socket.on("error", (error) => {
+socket.on("error", (error: API.Error) => {
     console.error("error: ", error);
-    modal.set(bind(ErrorPopup, {message: error.message}));
+    modal.set(bind(ErrorPopup, error));
     isFrozen.set(false);
 });
 

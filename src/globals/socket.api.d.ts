@@ -164,5 +164,9 @@ namespace API {
         include_comments: boolean;
         include_metadata: boolean;
     }
+
+    interface Error {
+        message: string;
+    }
 }
 
