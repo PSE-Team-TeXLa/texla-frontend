@@ -1,7 +1,7 @@
 <script lang="ts">
     import {standardNodeTypeMap} from "../../globals/Constants";
     import {isEditorActive, json_ast} from "../../globals/Variables";
-    import {dndzone} from "svelte-dnd-action";
+    import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
     import {flip} from "svelte/animate";
 
@@ -88,20 +88,23 @@
     </StandardNodeContent>
 
     <div class="ml-6 my-4">
-        {#if !isDraggedLocal}
-            <div bind:this={dragStuff} use:dndzone="{dndOptions}"
-                 on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                {#each children as new_node (new_node.uuid)}
-                    <div animate:flip="{{duration: 100}}">
+        <div bind:this={dragStuff} use:dndzone="{dndOptions}"
+             on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
+            {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
+                <div animate:flip="{{duration: 100}}">
+                    {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+                        <div class="h-[50px]">
+                        </div>
+                    {:else}
                         <svelte:component parent={node.uuid}
                                           this={standardNodeTypeMap.get(new_node.node_type.data.type)}
                                           {...{
                                               node: new_node,
                                               layerShown: layerShown + 1,
                                           }}/>
-                    </div>
-                {/each}
-            </div>
-        {/if}
+                    {/if}
+                </div>
+            {/each}
+        </div>
     </div>
 </div>

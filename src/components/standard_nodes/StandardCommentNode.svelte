@@ -13,7 +13,7 @@
 
 
 <StandardLeafNode parent={parent} bind:node>
-    <div class="flex flex-row items-center bg-comment opacity-70">
+    <div class="flex mt-2 flex-row items-center bg-comment opacity-70">
         <img src={commentIcon} alt="SidebarImage" class="px-4 p-1 cursor-pointer max-h-8"/>
         <div class="flex flex-col cursor-default my-2">
             <span class="whitespace-pre-wrap text-lg">{node.node_type.data.comment}</span>

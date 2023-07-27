@@ -10,6 +10,9 @@
     import MetaDataPopup from "../popups/MetaDataPopup.svelte";
     import type API from "../../globals/socket.api";
     import {scrollToNode} from "../../globals/Constants";
+    import trash_icon from "$lib/assets/icons/trash.svg";
+    import edit_icon from "$lib/assets/icons/edit.svg";
+    import meta_icon from "$lib/assets/icons/metaedit.svg";
 
     export let node: API.Ast.Node;
     export let parent;
@@ -102,13 +105,13 @@
                 {#if isHovered}
                     <div class="w-[60px] h-fit">
                         <HoverMenuButton on:click={enterEditMode}>
-                            E
+                            <img src={edit_icon} alt="E"/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleDelete}>
-                            X
+                            <img src={trash_icon} alt="X"/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleMetaEdit}>
-                            M
+                            <img src={meta_icon} alt="X"/>
                         </HoverMenuButton>
                     </div>
                 {/if}
