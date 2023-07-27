@@ -1,7 +1,7 @@
 import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
 import type API from "./socket.api";
-import {isFrozen, json_ast, scrollMap} from "./Variables";
+import {isEditorActive, isFrozen, json_ast, scrollMap} from "./Variables";
 
 import {modal} from "./Variables";
 import {bind} from "svelte-simple-modal";
@@ -31,7 +31,8 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.info("new_ast: ", new_ast);
     isFrozen.set(false);
     console.timeEnd("roundtrip");
-    scrollMap.set(new Map<number, HTMLElement>())
+    scrollMap.clear();
+    isEditorActive.set(false);
 });
 
 socket.on("export_ready", (url: string) => {

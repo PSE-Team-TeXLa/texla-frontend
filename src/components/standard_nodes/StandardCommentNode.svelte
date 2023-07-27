@@ -11,7 +11,7 @@
 
 
 <StandardLeafNode parent={parent} bind:node>
-    <div class="flex flex-col cursor-default bg-comment my-2">
+    <div class="flex flex-col cursor-default bg-comment p-2 my-2">
         <span class="whitespace-pre-wrap text-lg">{node.node_type.data.comment}</span>
     </div>
 </StandardLeafNode>

@@ -68,6 +68,7 @@
     }
 
     function handleEditConfirm(evt) {
+        mouseLeave();
         isEditorActive.set(false);
         isEditorOpen = false;
         if (evt.detail.new_latex !== node.raw_latex)
@@ -85,7 +86,7 @@
     }
 </script>
 
-<div bind:this={new_node_html}>
+<div class="flex w-[90%] flex-col" bind:this={new_node_html}>
 
     {#if isEditorOpen}
         <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>

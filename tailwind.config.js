@@ -10,7 +10,10 @@ export default {
             'lightcyan': '#A7EDE7',
             'white': '#fff',
             'red': '#B33951',
-            'comment': '#EEE'
+            'comment': '#EEE',
+            'file': '',
+            'segment': '',
+            'environment': ''
         },
         fontFamily: {
             'sans': ['Arial', 'Helvetica', 'serif'],

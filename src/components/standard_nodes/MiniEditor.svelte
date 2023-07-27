@@ -72,7 +72,7 @@
 </script>
 
 
-<div class="flex flex-col items-start w-[90%] h-[300px] gap-4">
+<div class="flex flex-col items-start w-full h-[300px] gap-4">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
     <div on:keydown={handleKeyStrokes} bind:this={divEl} class="flex w-full h-full mt-4 border-lightcyan border-2"/>
     <div class="flex flex-row justify-end w-full">

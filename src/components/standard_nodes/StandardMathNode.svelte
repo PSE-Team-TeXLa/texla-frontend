@@ -12,6 +12,6 @@
 
 <StandardLeafNode parent={parent} bind:node>
     <div class="flex flex-col cursor-default my-2">
-        <span class="whitespace-pre-wrap text-lg">{node.node_type.data.content}</span>
+        <span class="text-lg">{node.node_type.data.content}</span>
     </div>
 </StandardLeafNode>
