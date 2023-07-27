@@ -15,39 +15,22 @@
 
     let children: API.Ast.Node[];
     $: children = node.node_type.children;
-    let text: string;
-    $: if (node.node_type.type === "Expandable")
-        if (node.node_type.data.type === "Document")
-            text = "Document";
-        else if (node.node_type.data.type === "Segment")
-            text = node.node_type.data.heading;
-        else if (node.node_type.data.type === "File")
-            text = node.node_type.data.path
-        else if (node.node_type.data.type === "Environment")
-            text = node.node_type.data.name
 
     export let layerShown: number;
 
     const handleConsider = (evt) => {
         node.node_type.children = evt.detail.items;
-
-        console.log($json_ast);
     }
 
     const handleFinalize = (evt) => {
-        if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
-            return;
-        }
         node.node_type.children = evt.detail.items;
-        let target = evt.detail.info.id;
-        let childrenArray;
-        childrenArray = node.node_type.children;
-        let lastChildIndex = childrenArray.findIndex((o: API.Ast.Node) => o.uuid === target) - 1;
+        let targetId = evt.detail.info.id;
+        let lastChildIndex = node.node_type.children.findIndex((o: API.Ast.Node) => o.uuid === targetId) - 1;
         let position: API.Operation.Position = {
             parent: node.uuid,
             after_sibling: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid
         }
-        moveNode(target, position)
+        moveNode(targetId, position)
     }
 
     $: dndOptions = {
