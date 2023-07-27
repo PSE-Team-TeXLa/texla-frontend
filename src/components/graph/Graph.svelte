@@ -1,10 +1,11 @@
 <script>
     import {json_ast} from "../../globals/Variables.ts";
     import GraphExpandableNode from "./GraphExpandableNode.svelte";
+    import GraphSegmentNode from "./GraphSegmentNode.svelte";
 </script>
 
-<div class="w-screen h-screen overflow-scroll flex items-center">
+<div class="w-full h-full overflow-scroll">
     {#if $json_ast !== undefined}
-        <GraphExpandableNode bind:node={$json_ast.root}/>
+        <GraphSegmentNode bind:node={$json_ast.root}/>
     {/if}
 </div>

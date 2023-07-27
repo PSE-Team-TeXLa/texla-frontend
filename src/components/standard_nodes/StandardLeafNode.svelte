@@ -1,13 +1,15 @@
 <script lang="ts">
-    import StandardNodeContent from "./StandardNodeContent.svelte";
     import type API from "../../globals/socket.api.d.ts";
 
-    export let node: API.Ast.Node;
+    import StandardNodeContent from "./StandardNodeContent.svelte";
+
+
     export let parent;
+    export let node: API.Ast.Node;
 
 </script>
 
-<div class="ml-4">
+<div class="flex ml-4">
     <StandardNodeContent parent={parent} node={node}>
         <slot/>
     </StandardNodeContent>

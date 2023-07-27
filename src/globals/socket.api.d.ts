@@ -17,9 +17,9 @@ namespace API {
             highest_level: number;
         }
 
-        interface Node {
+        interface Node<T extends ExpandableType | LeafType = ExpandableType | LeafType> {
             uuid: Uuid;
-            node_type: ExpandableType | LeafType;
+            node_type: T;
             meta_data: Metadata;
             raw_latex: string;
         }
@@ -35,8 +35,8 @@ namespace API {
             data: LeafData;
         }
 
-        type ExpandableData = Segment | Document | Environment; // TODO more
-        type LeafData = Text | Image | Caption; // TODO more
+        type ExpandableData = Document | Segment | Environment | File;
+        type LeafData = Text | Math | Image | Label | Caption | Comment;
 
         interface Document {
             type: "Document";
@@ -45,14 +45,19 @@ namespace API {
 
         }
 
+        interface Segment {
+            type: "Segment",
+            heading: string
+        }
+
+        interface File {
+            type: "File",
+            path: string
+        }
+
         interface Environment {
             type: "Environment",
             name: string
-        }
-
-        interface Segment {
-            type: "Segment";
-            heading: string;
         }
 
         interface Text {
@@ -60,15 +65,29 @@ namespace API {
             text: string;
         }
 
+        interface Math {
+            type: "Math";
+            content: string
+        }
+
         interface Image {
             type: "Image";
             path: string;
         }
 
+        interface Label {
+            type: "Label";
+            label: string;
+        }
 
         interface Caption {
             type: "Caption";
             caption: string;
+        }
+
+        interface Comment {
+            type: "Comment"
+            comment: string;
         }
     }
 

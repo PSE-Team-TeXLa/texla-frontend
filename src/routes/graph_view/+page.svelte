@@ -12,6 +12,6 @@
     })
 </script>
 
-<Graph>
-
-</Graph>
+<div class="w-full h-full">
+    <Graph/>
+</div>

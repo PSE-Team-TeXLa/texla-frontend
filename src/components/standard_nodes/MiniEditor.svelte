@@ -39,7 +39,16 @@
         Monaco = await import('monaco-editor');
         editor = Monaco.editor.create(divEl, {
             value: raw_latex,
-            language: 'latex'
+            language: 'latex',
+            minimap: {
+                enabled: false
+            },
+            lineNumbers: "off",
+            glyphMargin: false,
+            folding: false,
+            // Undocumented see https://github.com/Microsoft/vscode/issues/30795#issuecomment-410998882
+            lineDecorationsWidth: 0,
+            lineNumbersMinChars: 0
         });
 
         return () => {
@@ -51,19 +60,29 @@
 
     function handleConfirm() {
         let new_latex = editor.getValue();
-        console.log(new_latex)
         dispatcher('confirm', {
             new_latex
         });
     }
 
+    function handleKeyStrokes(evt) {
+        const position = editor.getPosition();
+
+        // Backspace Key
+        if (evt.keyCode === 8 && position.column === 1 && position.lineNumber === 1) {
+            dispatcher('mergeincoming', {})
+        }
+    }
+
 </script>
 
 
-<div class="flex flex-col items-end w-full">
+<div class="flex flex-col items-start w-full h-[300px] gap-4">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
-    <div bind:this={divEl} class="h-[300px] w-full mt-4 border-lightcyan border-2"/>
-    <div class="flex">
+    <div class="p-1 flex w-full h-full mt-4 border-editor border-8 border-opacity-60">
+        <div on:keydown={handleKeyStrokes} bind:this={divEl} class="flex w-full h-full"/>
+    </div>
+    <div class="flex flex-row justify-end w-full">
         <EditConfirmButton on:click={handleConfirm}>
             <span class="font-bold">C</span>
         </EditConfirmButton>

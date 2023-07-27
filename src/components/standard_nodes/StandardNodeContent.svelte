@@ -1,14 +1,18 @@
 <script lang="ts">
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
-    import {isEditorActive, modal, scrollMap} from "../../globals/Variables";
+    import {isDragged, isEditorActive, modal, scrollMap} from "../../globals/Variables";
     import {onMount} from "svelte";
-    import {deleteNode, editNode} from "../../globals/Api";
+    import {deleteNode, editNode, mergeNodes} from "../../globals/Api";
     import {createEventDispatcher} from "svelte";
     import CreateElementSpacer from "./CreateElementSpacer.svelte";
     import MiniEditor from "./MiniEditor.svelte";
     import {bind} from "svelte-simple-modal";
     import MetaDataPopup from "../popups/MetaDataPopup.svelte";
     import type API from "../../globals/socket.api";
+    import {scrollToNode} from "../../globals/Constants";
+    import trash_icon from "$lib/assets/icons/trash.svg";
+    import edit_icon from "$lib/assets/icons/edit.svg";
+    import meta_icon from "$lib/assets/icons/metaedit.svg";
 
     export let node: API.Ast.Node;
     export let parent;
@@ -16,25 +20,20 @@
 
     function enterEditMode() {
         if ($isEditorActive) {
-            console.log("Editor already open");
+            console.error("Editor already open");
         } else {
             $isEditorActive = true;
             isEditorOpen = true;
-
-            console.log($scrollMap);
-
-            let target: HTMLElement = $scrollMap.get(node.uuid);
-            target.scrollIntoView({behavior: "smooth"});
+            scrollToNode(node.uuid);
         }
 
     }
 
     let isHovered = false;
-    let isContentHovered = false;
-    let isButtonsHovered = false;
 
     function mouseEnter() {
-        isHovered = true;
+        if (!$isDragged)
+            isHovered = true;
     }
 
     function mouseLeave() {
@@ -44,7 +43,7 @@
 
     let new_node_html;
     onMount(async () => {
-        scrollMap.update((o) => o.set(node.uuid, new_node_html))
+        scrollMap.set(node.uuid, new_node_html);
     })
 
     let dispatch = createEventDispatcher();
@@ -72,24 +71,31 @@
     }
 
     function handleEditConfirm(evt) {
+        mouseLeave();
         isEditorActive.set(false);
         isEditorOpen = false;
-        editNode(node.uuid, evt.detail.new_latex);
+        if (evt.detail.new_latex !== node.raw_latex)
+            editNode(node.uuid, evt.detail.new_latex);
     }
 
     function handleMetaEdit() {
         modal.set(bind(MetaDataPopup, {meta_data: node.meta_data}))
-        console.log("Meta")
+    }
+
+    function handleMergeNodes() {
+        isEditorActive.set(false);
+        isEditorOpen = false;
+        mergeNodes(node.uuid);
     }
 </script>
 
-<div bind:this={new_node_html}>
+<div class="flex w-[90%] flex-col" bind:this={new_node_html}>
 
     {#if isEditorOpen}
-        <MiniEditor on:confirm={handleEditConfirm} raw_latex={node.raw_latex}/>
+        <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
-        <div id="text-container" on:mouseenter={mouseEnter}
-             on:mouseleave={mouseLeave} class="flex flex-col relative">
+        <div on:mouseenter={mouseEnter}
+             on:mouseleave={mouseLeave} class="text-container flex flex-col relative">
             <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
                  on:touchend={handleTouchEnd} class="px-2 pb-1">
@@ -99,13 +105,13 @@
                 {#if isHovered}
                     <div class="w-[60px] h-fit">
                         <HoverMenuButton on:click={enterEditMode}>
-                            E
+                            <img src={edit_icon} alt="E"/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleDelete}>
-                            X
+                            <img src={trash_icon} alt="X"/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleMetaEdit}>
-                            M
+                            <img src={meta_icon} alt="X"/>
                         </HoverMenuButton>
                     </div>
                 {/if}
@@ -116,8 +122,8 @@
 </div>
 
 <style>
-    #text-container:hover {
+    .text-container:hover {
         outline: 3px dashed theme('colors.red');
-        outline-offset: 0px;
+        outline-offset: 0;
     }
 </style>

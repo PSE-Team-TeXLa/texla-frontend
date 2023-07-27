@@ -10,10 +10,14 @@ export const currentLayer = writable(2);
 export const isEditorActive = writable(false);
 export const isGraphActive = writable(false);
 
-export const scrollMap = writable(new Map<number, HTMLElement>());
+export const scrollMap = new Map<number, HTMLElement>();
+
 
 export const modal = writable();
 
 
 export const isFrozen = writable(false);
+export const isDragged = writable(false);
+
+
 
