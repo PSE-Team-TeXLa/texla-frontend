@@ -10,13 +10,11 @@
     import StandardNodeContent from "./StandardNodeContent.svelte";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
 
     let children: API.Ast.Node[];
-    $: if (node.node_type.type === "Expandable") {
-        children = node.node_type.children;
-    }
+    $: children = node.node_type.children;
     let text: string;
     $: if (node.node_type.type === "Expandable")
         if (node.node_type.data.type === "Document")
@@ -31,8 +29,7 @@
     export let layerShown: number;
 
     const handleConsider = (evt) => {
-        if (node.node_type.type === "Expandable")
-            node.node_type.children = evt.detail.items;
+        node.node_type.children = evt.detail.items;
 
         console.log($json_ast);
     }
@@ -41,12 +38,10 @@
         if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
             return;
         }
-        if (node.node_type.type === "Expandable")
-            node.node_type.children = evt.detail.items;
+        node.node_type.children = evt.detail.items;
         let target = evt.detail.info.id;
         let childrenArray;
-        if (node.node_type.type === "Expandable")
-            childrenArray = node.node_type.children;
+        childrenArray = node.node_type.children;
         let lastChildIndex = childrenArray.findIndex((o: API.Ast.Node) => o.uuid === target) - 1;
         let position: API.Operation.Position = {
             parent: node.uuid,
@@ -55,7 +50,7 @@
         moveNode(target, position)
     }
 
-    $: dndOptiions = {
+    $: dndOptions = {
         dragDisabled: $isEditorActive,
         items: children,
         dropTargetStyle: {
@@ -94,7 +89,7 @@
 
     <div class="ml-6 my-4">
         {#if !isDraggedLocal}
-            <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
+            <div bind:this={dragStuff} use:dndzone="{dndOptions}"
                  on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                 {#each children as new_node (new_node.uuid)}
                     <div animate:flip="{{duration: 100}}">

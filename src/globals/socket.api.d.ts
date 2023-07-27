@@ -17,9 +17,9 @@ namespace API {
             highest_level: number;
         }
 
-        interface Node {
+        interface Node<T extends ExpandableType | LeafType = ExpandableType | LeafType> {
             uuid: Uuid;
-            node_type: ExpandableType | LeafType;
+            node_type: T;
             meta_data: Metadata;
             raw_latex: string;
         }
