@@ -25,7 +25,24 @@
 
     let text: string;
     $: if (node.node_type.type === "Leaf")
-        if (node.node_type.data)
+        if (node.node_type.data.type === "Text")
+            text = node.node_type.data.text;
+        else if (node.node_type.data.type === "Math")
+            text = node.node_type.data.content;
+        else if (node.node_type.data.type === "Image")
+            text = node.node_type.data.path;
+        else if (node.node_type.data.type === "Label")
+            text = node.node_type.data.label;
+        else if (node.node_type.data.type === "Caption")
+            text = node.node_type.data.caption;
+        else if (node.node_type.data.type === "Comment")
+            text = node.node_type.data.comment
+
+
+
+
+
+
 
 
 </script>
