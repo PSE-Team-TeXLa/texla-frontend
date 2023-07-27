@@ -1,17 +1,20 @@
 <script lang="ts">
     import {isEditorActive, json_ast} from "../../globals/Variables";
-    import StandardNodeContent from "./StandardNodeContent.svelte";
-    import {flip} from "svelte/animate";
-    import type {ComponentType} from "svelte";
-
-
     import {dndzone} from "svelte-dnd-action";
+    import {moveNode} from "../../globals/Api";
+    import {flip} from "svelte/animate";
+
+    import type {ComponentType} from "svelte";
+    import type API from "../../globals/socket.api.d.ts";
+
     import StandardDocumentNode from "./StandardDocumentNode.svelte";
+    import StandardNodeContent from "./StandardNodeContent.svelte";
     import StandardSegmentNode from "./StandardSegmentNode.svelte";
     import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
-    import type API from "../../globals/socket.api.d.ts";
-    import {moveNode} from "../../globals/Api";
     import StandardFileNode from "./nav_column_nodes/StandardFileNode.svelte";
+
+    export let parent;
+    export let node: API.Ast.Node;
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
         //Expandable
@@ -21,9 +24,6 @@
             ["Environment", StandardEnvironmentNode],
         ]
     );
-
-    export let parent;
-    export let node: API.Ast.Node;
 
     let children: API.Ast.Node[];
     $: if (node.node_type.type === "Expandable") {
