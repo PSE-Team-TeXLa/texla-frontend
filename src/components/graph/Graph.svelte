@@ -4,7 +4,7 @@
     import GraphSegmentNode from "./GraphSegmentNode.svelte";
 </script>
 
-<div class="w-full h-full overflow-scroll flex items-center">
+<div class="w-full h-full overflow-scroll">
     {#if $json_ast !== undefined}
         <GraphSegmentNode bind:node={$json_ast.root}/>
     {/if}

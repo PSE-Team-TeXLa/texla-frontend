@@ -3,6 +3,7 @@
 
     export let node;
 
+    // TODO: this should be in GraphExpandableNode
     let text: string;
     $: if (node.node_type.type === "Expandable")
         if (node.node_type.data.type === "Document")

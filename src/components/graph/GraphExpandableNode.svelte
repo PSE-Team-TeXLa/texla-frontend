@@ -1,55 +1,56 @@
 <script lang="ts">
-    import GraphNode from "./GraphNode.svelte";
-
-    import type API from "../../globals/socket.api.d.ts";
-
-    import {graphNodeTypeMap} from "../../globals/Constants";
+    import {dndzone, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
-    import {dndzone} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
 
-    export let node: API.Ast.Node;
+    import {graphNodeTypeMap} from "../../globals/Constants";
+
+    import type API from "../../globals/socket.api.d.ts";
+    import GraphNode from "./GraphNode.svelte";
+
+    export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
     let children: API.Ast.Node[];
-    $: if (node.node_type.type === "Expandable") {
-        children = node.node_type.children;
+    $: children = node.node_type.children;
+
+    // see https://svelte.dev/repl/fe8c9eca04f9417a94a8b6041df77139?version=3.59.2
+    $: dndOptions = {
+        items: children,
+        // centreDraggedOnCursor: true,
+        flipDurationMs: 300,
+        dropTargetStyle: {
+            'outline-offset': '2px',
+            'outline':
+                '3px dashed #ccc',
+            'transition': 'padding 0.2s',
+            'padding-top': '8px',
+            'padding-bottom': '8px',
+            'min-height':
+                '20px',
+            'min-width': '110px'
+        }
     }
 
 
     const handleConsider = (evt) => {
         console.log("consider " + evt.detail.info.id + " in " + node.uuid);
-        console.log(evt.detail.items);
+        console.log("children:", evt.detail.items);
 
-        /*let target: API.Uuid = evt.detail.info.id;
-        let targetIndex = evt.detail.items.findIndex((o) => o.uuid === target)
-        console.log(target + " " + targetIndex)
-        if (evt.detail.items[targetIndex].node_type.type === "Expandable" && evt.detail.items[targetIndex].node_type.children.filter((o) => o.uuid === target) !== 0)
-            return;*/
-
-        if (node.node_type.type === "Expandable")
-            node.node_type.children = evt.detail.items;
+        node.node_type.children = evt.detail.items;
     }
 
     const handleFinalize = (evt) => {
-        if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
-            return;
-        }
         console.log("FINALIZE")
-
-        if (node.node_type.type === "Expandable")
-            node.node_type.children = evt.detail.items;
+        node.node_type.children = evt.detail.items;
 
         // TODO MAKE method for getting position
-        let target = evt.detail.info.id;
-        let childrenArray;
-        if (node.node_type.type === "Expandable")
-            childrenArray = node.node_type.children;
-        let lastChildIndex = childrenArray.findIndex((o: API.Ast.Node) => o.uuid === target) - 1;
+        let targetId: API.Uuid = evt.detail.info.id;
+        let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
         let position: API.Operation.Position = {
             parent: node.uuid,
-            after_sibling: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid
+            after_sibling: previousChildIndex === -1 ? null : node.node_type.children[previousChildIndex].uuid
         }
-        moveNode(target, position)
+        moveNode(targetId, position)
     }
 
     let isDragged = false;
@@ -67,22 +68,19 @@
 </script>
 
 <div class="my-2 py-4 flex flex-row items-center">
-    <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
-               on:touchend={stopDrag}>
-        <slot/>
-    </GraphNode>
-    <div use:dndzone="{{items: node.node_type.children, dropTargetStyle: {'outline-offset': '2px',  'outline': '3px dashed #ccc', 'transition': 'padding 0.2s', 'padding-top': '8px' , 'padding-bottom': '8px', 'min-height': '60px', 'min-width': '110px'}}}"
-         class="my-auto flex flex-col gap-1 ml-2 border-lightpurple border-l-2"
+    <div class="flex-none">
+        <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+                   on:touchend={stopDrag}>
+            <slot/>
+        </GraphNode>
+    </div>
+    <div use:dndzone="{dndOptions}"
+         class="flex flex-col gap-1 ml-2 border-lightpurple border-l-2 min-w-[300px]"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-        {#each node.node_type.children as new_node (new_node.uuid)}
+        {#each node.node_type.children.filter(item => item.uuid != SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">
-                {#if !isDragged}
-                    <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
-                {/if}
+                <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
             </div>
         {/each}
     </div>
 </div>
-
-<style>
-</style>
