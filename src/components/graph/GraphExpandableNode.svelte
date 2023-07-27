@@ -1,6 +1,5 @@
 <script lang="ts">
     import GraphNode from "./GraphNode.svelte";
-    import GraphLeafNode from "./GraphLeafNode.svelte";
 
     import type API from "../../globals/socket.api.d.ts";
 
@@ -16,12 +15,6 @@
         children = node.node_type.children;
     }
 
-    let text: string;
-    $: if (node.node_type.type === "Expandable")
-        if (node.node_type.data.type === "Document")
-            text = "Document";
-        else if (node.node_type.data.type === "Segment")
-            text = node.node_type.data.heading
 
     const handleConsider = (evt) => {
         console.log("consider " + evt.detail.info.id + " in " + node.uuid);
@@ -41,9 +34,6 @@
         if (evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0) {
             return;
         }
-        //console.log(evt.detail.info.id)
-        //console.log(evt.detail.items)
-        //console.log(evt.detail.items.filter(e => e.uuid === evt.detail.info.id).length === 0)
         console.log("FINALIZE")
 
         if (node.node_type.type === "Expandable")
@@ -65,55 +55,29 @@
     let isDragged = false;
 
     function startDrag() {
-        //dragStuff.classList.add("hidden");
         isDragged = true;
         console.log("startDrag");
     }
 
     function stopDrag() {
-        //dragStuff.classList.remove("hidden");
         isDragged = false;
         console.log("stopDrag");
     }
 
-    /*function checkForUuidInList(list: API.Ast.Node[], uuid: API.Uuid): boolean {
-        let foundUuid = false;
-        list.forEach((o) => {
-            if (o.uuid === uuid)
-                foundUuid = true;
-            else
-                if (o.node_type.type === "Expandable")
-                    foundUuid = checkForUuidInList(o.node_type.children, uuid)
-        })
-        return foundUuid;
-    }*/
-
 </script>
 
-<div class="my-2 py-4 flex flex-row">
-    <div class=" flex justify-center items-center border-lightpurple border-r-4">
-        <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
-                   on:touchend={stopDrag}>
-            {text}
-        </GraphNode>
-    </div>
+<div class="my-2 py-4 flex flex-row items-center">
+    <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+               on:touchend={stopDrag}>
+        <slot/>
+    </GraphNode>
     <div use:dndzone="{{items: node.node_type.children, dropTargetStyle: {'outline-offset': '2px',  'outline': '3px dashed #ccc', 'transition': 'padding 0.2s', 'padding-top': '8px' , 'padding-bottom': '8px', 'min-height': '60px', 'min-width': '110px'}}}"
-         class="my-auto flex flex-col gap-1 ml-2"
+         class="my-auto flex flex-col gap-1 ml-2 border-lightpurple border-l-2"
          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
         {#each node.node_type.children as new_node (new_node.uuid)}
             <div animate:flip="{{duration: 300}}">
                 {#if !isDragged}
-                    {#if new_node.node_type.type === "Expandable"}
-                        <div>
-                            <svelte:self {...{node: new_node}}/>
-                        </div>
-
-                    {:else if new_node.node_type.type === "Leaf"}
-                        <GraphLeafNode>
-                            <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)}
-                                              {...{node: new_node}}/>
-                        </GraphLeafNode>
-                    {/if}
+                    <svelte:component this={graphNodeTypeMap.get(new_node.node_type.data.type)} {...{node: new_node}}/>
                 {/if}
             </div>
         {/each}
