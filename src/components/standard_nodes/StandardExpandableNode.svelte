@@ -12,7 +12,6 @@
     import StandardEnvironmentNode from "./StandardEnvironmentNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
-    import StandardFileNode from "./StandardFileNode.svelte";
     import StandardFileNode from "./nav_column_nodes/StandardFileNode.svelte";
     import StandardImageNode from "./StandardImageNode.svelte";
     import StandardLabelNode from "./StandardLabelNode.svelte";
@@ -24,9 +23,8 @@
         //Expandable
         [["Document", StandardDocumentNode],
             ["Segment", StandardSegmentNode],
-            // ["File", StandardFileNode], //TODO add to socket?
-            ["Environment", StandardEnvironmentNode],
             ["File", StandardFileNode],
+            ["Environment", StandardEnvironmentNode],
             //Leafs
             ["Text", StandardTextNode],
             ["Math", ],
@@ -51,6 +49,8 @@
             text = "Document";
         else if (node.node_type.data.type === "Segment")
             text = node.node_type.data.heading;
+        else if (node.node_type.data.type === "File")
+            text = node.node_type.data.path
         else if (node.node_type.data.type === "Environment")
             text = node.node_type.data.name
 
