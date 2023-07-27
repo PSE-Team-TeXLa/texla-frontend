@@ -50,7 +50,7 @@
             text = node.node_type.data.path
         else if (node.node_type.data.type === "Environment")
             text = node.node_type.data.name
-    
+
     export let layerShown: number;
 
     const handleConsider = (evt) => {
@@ -115,7 +115,7 @@
         <slot/>
     </StandardNodeContent>
 
-    <div class="ml-6 py-4">
+    <div class="ml-6 my-4">
         {#if !isDraggedLocal}
             <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
                  on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
