@@ -35,8 +35,8 @@ namespace API {
             data: LeafData;
         }
 
-        type ExpandableData = Segment | Document | Environment | File; // TODO more
-        type LeafData = Text | Image | Caption; // TODO more
+        type ExpandableData = Document | Segment | Environment | File; //TODO file?
+        type LeafData = Text | Math | Image | Label | Caption | Comment;
 
         interface Document {
             type: "Document";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {isDragged, isEditorActive, json_ast} from "../../globals/Variables";
+    import {isEditorActive, json_ast} from "../../globals/Variables";
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {flip} from "svelte/animate";
     import type {ComponentType} from "svelte";
@@ -13,14 +13,27 @@
     import type API from "../../globals/socket.api.d.ts";
     import {moveNode} from "../../globals/Api";
     import StandardFileNode from "./StandardFileNode.svelte";
+    import StandardFileNode from "./nav_column_nodes/StandardFileNode.svelte";
+    import StandardImageNode from "./StandardImageNode.svelte";
+    import StandardLabelNode from "./StandardLabelNode.svelte";
+    import StandardCaptionNode from "./StandardCaptionNode.svelte";
+    import StandardCommentNode from "./StandardCommentNode.svelte";
 
 
     export const standardNodeTypeMap = new Map<string, ComponentType>(
+        //Expandable
         [["Document", StandardDocumentNode],
             ["Segment", StandardSegmentNode],
-            ["Text", StandardTextNode],
+            // ["File", StandardFileNode], //TODO add to socket?
             ["Environment", StandardEnvironmentNode],
             ["File", StandardFileNode],
+            //Leafs
+            ["Text", StandardTextNode],
+            ["Math", ],
+            ["Image", StandardImageNode],
+            ["Label", StandardLabelNode],
+            ["Caption", StandardCaptionNode],
+            ["Comment", StandardCommentNode]
         ]
     );
 
@@ -81,17 +94,17 @@
         flipDurationMs: 100
     }
 
-    let isDraggedLocal = false;
+    let isDragged = false;
     let dragStuff;
 
     function startDrag() {
-        if (!$isEditorActive) {
-            isDraggedLocal = true;
-        }
+        isDragged = true;
+        console.log("startDrag");
     }
 
     function stopDrag() {
-        isDraggedLocal = false;
+        isDragged = false;
+        console.log("stopDrag");
     }
 
 
@@ -107,7 +120,7 @@
     </StandardNodeContent>
 
     <div class="ml-6 py-4">
-        {#if !isDraggedLocal}
+        {#if !isDragged}
             <div bind:this={dragStuff} use:dndzone="{dndOptiions}"
                  on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
                 {#each children as new_node (new_node.uuid)}
