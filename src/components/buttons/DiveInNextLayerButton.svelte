@@ -13,7 +13,7 @@
 
 <Button>
     <div on:click={setCurrentLayer}
-         class="flex justify-start items-center ml-12 py-1 pl-8 my-2 w-3/4 bg-darkcyan">
+         class="cursor-pointer flex justify-start items-center ml-12 py-1 pl-8 my-2 w-3/4 bg-darkcyan">
         <slot/>
     </div>
 </Button>
