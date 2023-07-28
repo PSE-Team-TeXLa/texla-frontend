@@ -2,7 +2,7 @@
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
 
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Document>>;
 
     export let layerShown: number;
 </script>

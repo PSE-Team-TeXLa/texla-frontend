@@ -5,7 +5,7 @@
     import DiveInNextLayerButton from "../buttons/DiveInNextLayerButton.svelte";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
     export let layerShown: number;
 
 </script>

@@ -6,7 +6,7 @@
     import commentIcon from "$lib/assets/icons/commentnode.svg"
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Comment>>;
 
     //TODO test after Tutorium (change div placeholder), change input Latex File in backend.
 </script>

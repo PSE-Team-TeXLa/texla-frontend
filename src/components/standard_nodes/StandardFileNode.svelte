@@ -6,7 +6,7 @@
     import {scrollToNode} from "../../globals/Constants";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.File>>;
 
     export let layerShown: number;
 

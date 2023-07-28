@@ -5,7 +5,7 @@
     import Latex from "../rendering/Latex.svelte";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Caption>>;
 
     //TODO test after Tutorium (change div placeholder), change input Latex File in backend.
 </script>

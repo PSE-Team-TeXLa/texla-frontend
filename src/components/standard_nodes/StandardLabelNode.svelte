@@ -4,7 +4,7 @@
     import type API from "../../globals/socket.api.d.ts";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Label>>;
 
     //TODO test after Tutorium (change div placeholder), change input Latex File in backend.
 </script>

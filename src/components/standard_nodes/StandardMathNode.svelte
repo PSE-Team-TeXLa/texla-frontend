@@ -5,7 +5,7 @@
     import Latex from "../rendering/Latex.svelte";
 
     export let parent;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Math>>;
 
     //TODO test after Tutorium, change input Latex File in backend.
 </script>
