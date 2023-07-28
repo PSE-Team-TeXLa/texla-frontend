@@ -105,6 +105,15 @@ export function mergeNodes(second_node: API.Uuid) {
 }
 
 function sendOperation(operation: API.Operation.Operation) {
+    let frozen: boolean = false;
+    isFrozen.update(x => {
+        frozen = x;
+        return x;
+    });
+    if (frozen) {
+        // TODO: implement some overlay
+        console.log("Ignoring operation, because frontend is still frozen");
+    }
     // volatile -> message is not buffered (it would contain wrong UUIDs anyway)
     socket.volatile.emit("operation", JSON.stringify(operation));
     console.info("[sid=%s] operation sent: ", socket.id, operation);
