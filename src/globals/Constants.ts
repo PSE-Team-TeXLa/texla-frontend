@@ -11,6 +11,11 @@ import StandardSegmentNode from "../components/standard_nodes/StandardSegmentNod
 import StandardTextNode from "../components/standard_nodes/StandardTextNode.svelte";
 import type API from "./socket.api";
 import {scrollMap} from "./Variables";
+import GraphMathNode from "../components/graph/GraphMathNode.svelte";
+import GraphImageNode from "../components/graph/GraphImageNode.svelte";
+import GraphLabelNode from "../components/graph/GraphLabelNode.svelte";
+import GraphCaptionNode from "../components/graph/GraphCaptionNode.svelte";
+import GraphCommentNode from "../components/graph/GraphCommentNode.svelte";
 
 
 export const editorStandardNavSize = 20;
@@ -19,6 +24,11 @@ export const nonEditorStandardReadSize = 40;
 export const graphNodeTypeMap = new Map<string, ComponentType>(
     [
         ["Text", GraphTextNode],
+        ["Math", GraphMathNode],
+        ["Image", GraphImageNode],
+        ["Label", GraphLabelNode],
+        ["Caption", GraphCaptionNode],
+        ["Comment", GraphCommentNode]
     ]
 );
 
