@@ -1,7 +1,7 @@
 <script lang="ts">
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
-    import {moveNode} from "../../globals/Api";
+    import {moveNode, sendActive} from "../../globals/Api";
 
     import {graphNodeTypeMap} from "../../globals/Constants";
 
@@ -67,14 +67,14 @@
 
     let isDragged = false;
 
+    // TODO: this is never called
     function startDrag() {
+        sendActive();
         isDragged = true;
-        console.log("startDrag");
     }
 
     function stopDrag() {
         isDragged = false;
-        console.log("stopDrag");
     }
 
 </script>

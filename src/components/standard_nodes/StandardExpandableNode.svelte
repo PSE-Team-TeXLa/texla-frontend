@@ -2,7 +2,7 @@
     import {standardNodeTypeMap} from "../../globals/Constants";
     import {isEditorActive, json_ast} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
-    import {moveNode} from "../../globals/Api";
+    import {moveNode, sendActive} from "../../globals/Api";
     import {flip} from "svelte/animate";
 
     import type API from "../../globals/socket.api.d.ts";
@@ -45,17 +45,19 @@
         flipDurationMs: 100
     }
 
-    let isDraggedLocal = false;
-    let dragStuff;
+    let isDragged = false;
 
+    // TODO: this is never called
     function startDrag() {
+        sendActive();
+        // TODO: is this if necessary?
         if (!$isEditorActive) {
-            isDraggedLocal = true;
+            isDragged = true;
         }
     }
 
     function stopDrag() {
-        isDraggedLocal = false;
+        isDragged = false;
     }
 
 
@@ -71,7 +73,7 @@
     </StandardNodeContent>
 
     <div class="ml-6 my-4">
-        <div bind:this={dragStuff} use:dndzone="{dndOptions}"
+        <div use:dndzone="{dndOptions}"
              on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
             {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
                 <div animate:flip="{{duration: 100}}">

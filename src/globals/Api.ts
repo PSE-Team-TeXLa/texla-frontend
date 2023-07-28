@@ -126,6 +126,10 @@ export function sendPrepareExport(options: API.StringificationOptions) {
     console.info("[sid=%s] prepare_export sent: ", socket.id, options);
 }
 
+export function sendActive() {
+    socket.emit("active", "{}");
+}
+
 function downloadFile(url: string) {
     const link = document.createElement("a");
     link.download = url;

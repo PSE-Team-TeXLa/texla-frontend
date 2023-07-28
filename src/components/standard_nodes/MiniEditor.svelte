@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {sendActive} from "../../globals/Api";
     import EditConfirmButton from "../buttons/EditConfirmButton.svelte";
     import type monaco from 'monaco-editor';
     import {createEventDispatcher, onMount} from 'svelte';
@@ -18,6 +19,7 @@
 
 
     onMount(async () => {
+        sendActive();
         // @ts-ignore
         self.MonacoEnvironment = {
             getWorker: function (_moduleId: any, label: string) {
@@ -54,6 +56,7 @@
 
         return () => {
             editor.dispose();
+            // TODO: send noop to backend (to end the active state)
         };
     });
 
