@@ -5,7 +5,7 @@
 
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Image>>;
 
-    const src = `${backendUrl}user-assets/${node.node_type.data.path}`;
+    const src = `${backendUrl}/user-assets/${node.node_type.data.path}`;
 </script>
 <GraphLeafNode>
     <div class="flex justify-center items-center">

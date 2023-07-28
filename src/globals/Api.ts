@@ -131,6 +131,7 @@ export function sendActive() {
 }
 
 function downloadFile(url: string) {
+    console.log("Downloading", url)
     const link = document.createElement("a");
     link.download = url;
     link.href = url;

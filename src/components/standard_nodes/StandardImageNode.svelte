@@ -7,7 +7,7 @@
     export let parent;
 
     // TODO: canonicalize path (probably in backend)
-    const src = `${backendUrl}user-assets/${node.node_type.data.path}`;
+    const src = `${backendUrl}/user-assets/${node.node_type.data.path}`;
 </script>
 
 
