@@ -12,7 +12,7 @@
 
 <Button>
     <div on:click={handleEvent}
-         class="cursor-pointer border-4 color border-purple-600 w-8 h-8 flex justify-center items-center text-purple-600 font-bold">
+         class="opacity-50 hover:opacity-100 cursor-pointer border-4 color border-green w-8 h-8 flex justify-center items-center text-purple-600 font-bold">
         <slot/>
     </div>
 </Button>

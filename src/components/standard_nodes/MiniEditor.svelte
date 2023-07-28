@@ -7,6 +7,7 @@
     import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
     import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
     import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+    import check_icon from "$lib/assets/icons/checkicon.svg";
 
     export let raw_latex: string;
 
@@ -84,7 +85,7 @@
     </div>
     <div class="flex flex-row justify-end w-full">
         <EditConfirmButton on:click={handleConfirm}>
-            <span class="font-bold">C</span>
+            <img src={check_icon} alt="C"/>
         </EditConfirmButton>
     </div>
 </div>
