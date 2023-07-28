@@ -15,7 +15,7 @@ export default {
             'segment': '#c1c1f8',
             'environment': '#e1b4a0',
             'document': '#cc8ea2',
-            'editor': '#32533D'
+            'editor': '#3d3d3d'
         },
         fontFamily: {
             'sans': ['Arial', 'Helvetica', 'serif'],

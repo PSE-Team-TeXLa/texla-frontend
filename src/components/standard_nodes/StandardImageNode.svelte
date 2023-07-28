@@ -11,7 +11,8 @@
 
 <StandardLeafNode parent={parent} bind:node>
     <div class="my-4 flex flex-col items-center">
-        <img alt={node.node_type.data.path} src={"/user-assets/" + node.node_type.data.path} class="max-h-20 w-auto"/>
+        <img alt={node.node_type.data.path} src={"/user-assets/" + node.node_type.data.path}
+             class="max-h-20 w-auto"/>
     </div>
 </StandardLeafNode>
 
