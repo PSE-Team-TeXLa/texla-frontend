@@ -17,7 +17,7 @@ import GraphLabelNode from "../components/graph/GraphLabelNode.svelte";
 import GraphCaptionNode from "../components/graph/GraphCaptionNode.svelte";
 import GraphCommentNode from "../components/graph/GraphCommentNode.svelte";
 
-
+export const backendUrl = "http://localhost:13814/";
 export const editorStandardNavSize = 20;
 export const nonEditorStandardReadSize = 40;
 

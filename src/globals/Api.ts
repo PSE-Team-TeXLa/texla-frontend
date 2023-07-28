@@ -1,5 +1,6 @@
 import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
+import {backendUrl} from "./Constants";
 import type API from "./socket.api";
 import {isEditorActive, isFrozen, json_ast, scrollMap} from "./Variables";
 
@@ -38,7 +39,7 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
 
 socket.on("export_ready", (url: string) => {
     console.info("export_ready: ", url);
-    downloadFile(url);
+    downloadFile(backendUrl + url);
 });
 
 socket.on("quit", () => {
