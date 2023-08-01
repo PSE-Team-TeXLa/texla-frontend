@@ -117,7 +117,8 @@
                 {/if}
             </div>
         </div>
-        <CreateElementSpacer parent={parent} after_sibling={node.uuid === parent ? null : node.uuid}/>
+        <CreateElementSpacer parent={node.node_type.type === "Expandable" ? node.uuid : parent}
+                             after_sibling={node.node_type.type === "Expandable" ? null : node.uuid}/>
     {/if}
 </div>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
-    import {isEditorActive, json_ast, lastDovenIn} from "../../globals/Variables";
+    import {isEditorActive, lastDovenIn} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode, sendActive} from "../../globals/Api";
     import {flip} from "svelte/animate";
@@ -29,7 +29,7 @@
         let lastChildIndex = node.node_type.children.findIndex((o: API.Ast.Node) => o.uuid === targetId) - 1;
         let position: API.Operation.Position = {
             parent: node.uuid,
-            after_sibling: lastChildIndex === -1 ? null : evt.detail.items[lastChildIndex].uuid
+            after_sibling: lastChildIndex === -1 || lastChildIndex === -2 ? null : evt.detail.items[lastChildIndex].uuid
         }
         moveNode(targetId, position)
     }
