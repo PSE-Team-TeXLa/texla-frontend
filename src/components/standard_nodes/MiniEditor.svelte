@@ -54,11 +54,30 @@
             lineNumbersMinChars: 0
         });
 
+        const isCursorAtFront = editor.createContextKey('isCursorAtFront', false);
+
+        editor.onDidChangeCursorPosition(e => {
+            const position = e.position;
+            if (position.column === 1 && position.lineNumber === 1) {
+                isCursorAtFront.set(true);
+            } else {
+                isCursorAtFront.set(false);
+            }
+        });
+
+        editor.addCommand(Monaco.KeyCode.Backspace,
+            (e) => {
+                console.log("merge");
+                editor.dispose();
+                dispatcher('mergeincoming', {});
+            }, 'isCursorAtFront');
+
         return () => {
             editor.dispose();
             // TODO: send noop to backend (to end the active state)
         };
-    });
+    })
+    ;
 
     let dispatcher = createEventDispatcher();
 
@@ -69,22 +88,13 @@
         });
     }
 
-    function handleKeyStrokes(evt) {
-        const position = editor.getPosition();
-
-        // Backspace Key
-        if (evt.keyCode === 8 && position.column === 1 && position.lineNumber === 1) {
-            dispatcher('mergeincoming', {})
-        }
-    }
-
 </script>
 
 
 <div class="flex flex-col items-start w-full h-[300px] gap-4">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
     <div class="p-1 flex w-full h-full mt-4 border-editor border-8 border-opacity-60">
-        <div on:keydown={handleKeyStrokes} bind:this={divEl} class="flex w-full h-full"/>
+        <div bind:this={divEl} class="flex w-full h-full"/>
     </div>
     <div class="flex flex-row justify-end w-full">
         <EditConfirmButton on:click={handleConfirm}>
