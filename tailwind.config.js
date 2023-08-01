@@ -16,7 +16,8 @@ export default {
             'environment': '#e1b4a0',
             'document': '#cc8ea2',
             'editor': '#3d3d3d',
-            'label': '#C8AE7D'
+            'label': '#C8AE7D',
+            'caption': '#b0b275',
         },
         fontFamily: {
             'sans': ['Arial', 'Helvetica', 'serif'],
