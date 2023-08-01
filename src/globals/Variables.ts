@@ -19,5 +19,5 @@ export const modal = writable();
 export const isFrozen = writable(false);
 export const isDragged = writable(false);
 
-
+export const lastDovenIn = writable(0);
 

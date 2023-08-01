@@ -8,11 +8,13 @@
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
     export let layerShown: number;
 
+    let content;
+
 </script>
 
 
 {#if layerShown === $currentLayer}
-    <DiveInNextLayerButton isOnLayer={layerShown + 1 }>
+    <DiveInNextLayerButton uuid={node.uuid} bind:this={content} isOnLayer={layerShown + 1 }>
         <div class="flex py-1 pl-8 w-full bg-segment">
             {node.node_type.data.heading}
         </div>

@@ -11,7 +11,7 @@
 
 </script>
 {#if layerShown === $currentLayer}
-    <DiveInNextLayerButton isOnLayer={layerShown + 1 }>
+    <DiveInNextLayerButton uuid={node.uuid} isOnLayer={layerShown + 1 }>
         <div class="flex py-1 pl-8 w-full bg-environment">
             {node.node_type.data.name}
         </div>

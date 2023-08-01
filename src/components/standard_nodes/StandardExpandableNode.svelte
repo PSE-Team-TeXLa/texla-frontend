@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {standardNodeTypeMap} from "../../globals/Constants";
-    import {isEditorActive, json_ast} from "../../globals/Variables";
+    import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
+    import {isEditorActive, json_ast, lastDovenIn} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode, sendActive} from "../../globals/Api";
     import {flip} from "svelte/animate";
@@ -8,6 +8,7 @@
     import type API from "../../globals/socket.api.d.ts";
 
     import StandardNodeContent from "./StandardNodeContent.svelte";
+    import {onMount} from "svelte";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
@@ -60,6 +61,12 @@
         isDragged = false;
     }
 
+
+    onMount(() => {
+        if ($lastDovenIn === node.uuid) {
+            scrollToNode(node.uuid);
+        }
+    })
 
     // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
     // TODO fix navcolumn logic (navsegment buttons)
