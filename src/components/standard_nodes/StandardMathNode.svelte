@@ -14,7 +14,7 @@
 <StandardLeafNode parent={parent} bind:node>
     <div class="flex flex-col cursor-default my-2">
         <span class="text-lg">
-            <Latex latex="{node.node_type.data.content}"></Latex>
+            <Latex latex="${node.node_type.data.content}$"></Latex>
         </span>
     </div>
 </StandardLeafNode>
