@@ -5,7 +5,7 @@
 
 </script>
 
-<div class="container flex flex-col min-h-screen">
+<div class="flex flex-col w-full min-h-screen">
     <StandardTreeContainer>
         <div class="ml-12">
             <StandardDocumentNode bind:node={$json_ast.root} layerShown={0}/>
