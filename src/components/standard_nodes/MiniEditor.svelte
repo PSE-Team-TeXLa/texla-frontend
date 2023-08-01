@@ -72,17 +72,24 @@
                 dispatcher('mergeincoming', {});
             }, 'isCursorAtFront');
 
+        editor.addCommand(Monaco.KeyMod.CtrlCmd | Monaco.KeyCode.Enter,
+            (e) => {
+                console.log("confirm");
+                handleConfirm()
+            });
+
+
         return () => {
             editor.dispose();
             // TODO: send noop to backend (to end the active state)
         };
-    })
-    ;
+    });
 
     let dispatcher = createEventDispatcher();
 
     function handleConfirm() {
         let new_latex = editor.getValue();
+        editor.dispose();
         dispatcher('confirm', {
             new_latex
         });

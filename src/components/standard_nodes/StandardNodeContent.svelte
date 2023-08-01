@@ -85,7 +85,9 @@
     function handleMergeNodes() {
         isEditorActive.set(false);
         isEditorOpen = false;
+        let elementHeight = scrollMap.get(node.uuid).offsetHeight;
         mergeNodes(node.uuid);
+        window.scrollBy(0, elementHeight);
     }
 </script>
 
