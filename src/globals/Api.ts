@@ -2,7 +2,7 @@ import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
 import {backendUrl} from "./Constants";
 import type API from "./socket.api";
-import {isEditorActive, isFrozen, json_ast, scrollMap} from "./Variables";
+import {isEditorActive, isFrozen, json_ast, remoteUrl, scrollMap} from "./Variables";
 
 import {modal} from "./Variables";
 import {bind} from "svelte-simple-modal";
@@ -25,7 +25,16 @@ socket.on("disconnect", (reason, description) => {
 
 socket.on("remote_url", (url: string | null) => {
     console.info("remote_url: ", url);
-    // TODO: transform to user-friendly URL and put into some store
+
+    if (!url) return;
+
+    // TODO: externalize this into {remoteUrlRegex, userUrlFormatString}[]
+    const result = url.match(/^https:\/\/git\.overleaf\.com\/([0-9a-f]+)$/);
+    if (!result) return;
+    const pid = result[1];
+    const userUrl = `https://www.overleaf.com/project/${pid}`;
+
+    remoteUrl.set(userUrl);
 });
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {

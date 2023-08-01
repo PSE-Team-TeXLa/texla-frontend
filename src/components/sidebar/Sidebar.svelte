@@ -7,7 +7,7 @@
     import ExportPopup from "../popups/ExportPopup.svelte";
     import ErrorPopup from "../popups/ErrorPopup.svelte";
 
-    import {isFrozen, isGraphActive} from "../../globals/Variables";
+    import {isFrozen, isGraphActive, remoteUrl} from "../../globals/Variables";
     import {modal} from "../../globals/Variables.ts";
     import {bind} from "svelte-simple-modal";
     import {goto} from "$app/navigation";
@@ -30,6 +30,12 @@
 
     function openOverleaf() {
         console.log("Overleaf");
+        const url = $remoteUrl;
+        if (url === null) {
+            alert("no well-known remote repository hoster connected");
+        } else {
+            open(url, "_blank");
+        }
     }
 
     function startExport() {
