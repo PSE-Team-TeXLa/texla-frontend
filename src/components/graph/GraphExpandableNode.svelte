@@ -45,14 +45,10 @@
     }
 
     const handleConsider = (evt) => {
-        console.log("consider " + evt.detail.info.id + " in " + node.uuid);
-        console.log("children:", evt.detail.items);
-
         node.node_type.children = evt.detail.items;
     }
 
     const handleFinalize = (evt) => {
-        console.log("FINALIZE")
         node.node_type.children = evt.detail.items;
 
         // TODO MAKE method for getting position

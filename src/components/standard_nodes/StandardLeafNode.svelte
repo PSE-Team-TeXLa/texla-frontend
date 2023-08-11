@@ -13,13 +13,12 @@
     onMount(() => {
         if ($lastNodeTouched === node.uuid) {
             scrollToNode(node.uuid);
-            console.log(node.raw_latex)
         }
     })
 
 </script>
 
-<div class="flex ml-4">
+<div class="flex ml-16">
     <StandardNodeContent parent={parent} node={node}>
         <slot/>
     </StandardNodeContent>

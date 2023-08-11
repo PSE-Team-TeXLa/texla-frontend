@@ -7,7 +7,7 @@
 
 <div class="flex flex-col w-full min-h-screen">
     <StandardTreeContainer>
-        <div class="ml-12">
+        <div class="">
             <StandardDocumentNode bind:node={$json_ast.root} layerShown={0}/>
         </div>
     </StandardTreeContainer>

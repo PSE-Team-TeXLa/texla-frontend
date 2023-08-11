@@ -1,6 +1,6 @@
 <script lang="ts">
     import type API from "../../../globals/socket.api";
-    import {currentLayer, expandChange, isExpandedMap} from "../../../globals/Variables";
+    import {isExpandedMap} from "../../../globals/Variables";
     import type {ComponentType} from "svelte";
     import NavColumnEnvironmentNode from "./NavColumnEnvironmentNode.svelte";
     import NavColumnSegmentNode from "./NavColumnSegmentNode.svelte";
@@ -24,12 +24,14 @@
         children = node.node_type.children;
     }
 
+    $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
+
 </script>
 
-    {#key $expandChange}
-        {#if $isExpandedMap.get(node.uuid) }
 <div class="flex flex-col">
     <slot/>
+    {#key $expandChangeCurrent}
+        {#if $expandChangeCurrent }
             <div class="flex flex-col ml-12">
                 {#each children as new_node, i}
                     {#if (new_node.node_type.type === "Expandable") }
@@ -41,6 +43,6 @@
                     {/if}
                 {/each}
             </div>
-</div>
         {/if}
     {/key}
+</div>

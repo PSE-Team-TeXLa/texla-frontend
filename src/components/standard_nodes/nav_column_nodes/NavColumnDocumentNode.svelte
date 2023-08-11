@@ -2,15 +2,10 @@
     import type API from "../../../globals/socket.api";
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
-    import {onMount} from "svelte";
-    import {flipExpandChange} from "../../../globals/Variables";
 
     export let node: API.Ast.Node;
     export let layerShown: number;
 
-    onMount(() => {
-        flipExpandChange();
-    });
 </script>
 
 {#key node.uuid}

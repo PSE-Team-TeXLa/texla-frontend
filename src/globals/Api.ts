@@ -7,6 +7,8 @@ import {isEditorActive, isExpandedMap, isFrozen, json_ast, lastNodeTouched, remo
 import {modal} from "./Variables";
 import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
+import type {Writable} from "svelte/store";
+import {writable} from "svelte/store";
 
 const socket = io("ws://localhost:13814/");
 // useful for debugging in the browser console
@@ -39,17 +41,12 @@ socket.on("remote_url", (url: string | null) => {
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     json_ast.set(new_ast);
-    isExpandedMap.set(new Map<API.Uuid, boolean>());
+    isExpandedMap.set(new Map<API.Uuid, Writable<boolean>>());
     restoreExpandableMapWithNewUuid(new_ast.root);
-
-    lastNodeTouched.update((n) => {
-        console.log(n);
-        return n;
-    })
-
-    let map;
-    isExpandedMap.update((o) => {map = o; return o;});
-    console.log(map)
+    lastNodeTouched.update(o => {
+        console.log(o);
+        return o;
+    });
 
     console.info("new_ast: ", new_ast);
     isFrozen.set(false);
@@ -102,12 +99,9 @@ export function editNode(target: number, raw_latex: string) {
 }
 
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
-    lastNodeTouched.set(destination.after_sibling === null ? destination.parent : destination.after_sibling);
+    lastNodeTouched.set(target);
+    console.log(destination)
 
-    json_ast.update((n) => {
-        console.log(n);
-        return n
-    });
     sendOperation({
         type: "MoveNode",
         arguments: {
@@ -143,21 +137,28 @@ const expandableMapBackup = new Map<string, boolean>();
 let lastTouchedBackup: string;
 
 function saveExpandableMap(currentNode: API.Ast.Node, currentPath = "0") {
-    let lastNodeTouchedL;
+    let lastNodeTouchedUuid;
     lastNodeTouched.update((n) => {
-        lastNodeTouchedL = n;
+        lastNodeTouchedUuid = n;
         return n;
     })
-    if (currentNode.uuid === lastNodeTouchedL) {
+    if (currentNode.uuid === lastNodeTouchedUuid) {
         lastTouchedBackup = currentPath;
     }
 
     if (currentNode.node_type.type === "Expandable") {
-        let isExpanded = false;
+        let isExpandedWritable = writable(false);
         isExpandedMap.update((n) => {
-            isExpanded = n.get(currentNode.uuid);
+            if (n.get(currentNode.uuid) !== undefined)
+                isExpandedWritable = n.get(currentNode.uuid) as Writable<boolean>;
             return n;
         })
+        let isExpanded = false;
+        isExpandedWritable.update((n) => {
+            isExpanded = n;
+            return n;
+        });
+
 
         expandableMapBackup.set(currentPath, isExpanded);
 
@@ -176,7 +177,7 @@ function restoreExpandableMapWithNewUuid(currentNode: API.Ast.Node, currentPath 
     if (currentNode.node_type.type === "Expandable") {
         if (expandableMapBackup.has(currentPath)) {
             isExpandedMap.update((n) => {
-                n.set(currentNode.uuid, expandableMapBackup.get(currentPath) as boolean);
+                n.set(currentNode.uuid, writable(expandableMapBackup.get(currentPath)));
                 return n;
             });
         }

@@ -1,17 +1,10 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
-    import {onMount} from "svelte";
-    import {expandChange, flipExpandChange, isExpandedMap} from "../../globals/Variables";
 
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Document>>;
     export let layerShown: number;
 
-    onMount(() => {
-        $isExpandedMap.set(node.uuid, true);
-        console.log($isExpandedMap);
-        flipExpandChange()
-    });
 </script>
 
 <!-- rerender entire tree when there is a new root -->

@@ -49,7 +49,6 @@
     let dispatch = createEventDispatcher();
 
     function handleMouseDown() {
-        console.log("mousedown")
         dispatch("mousedown", {})
     }
 

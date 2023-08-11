@@ -2,7 +2,6 @@
     import type API from "../../../globals/socket.api";
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
-    import {expandChange, isExpandedMap} from "../../../globals/Variables";
 
     export let node_path: string;
     export let node: API.Ast.Node;
