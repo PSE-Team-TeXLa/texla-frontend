@@ -35,7 +35,6 @@
         }
     } else {
         html = latexMap.get(latex);
-        console.log("latex from cache" + html);
     }
 
     // iframe takes 150px even if the content is much smaller -> we have to resize it to fit content

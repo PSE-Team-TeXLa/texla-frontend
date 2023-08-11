@@ -1,7 +1,13 @@
 <script lang="ts">
-    import {currentLayer, lastDovenIn} from "../../globals/Variables.ts";
+    import {
+        currentLayer,
+        flipExpandChange,
+        isExpandedMap,
+        lastNodeTouched,
+    } from "../../globals/Variables.ts";
     import {createEventDispatcher} from "svelte";
 
+    export let node_path: string;
     export let isOnLayer: number;
     export let uuid;
 
@@ -9,15 +15,19 @@
     let dispatch = createEventDispatcher();
 
     function setCurrentLayer() {
+        $isExpandedMap.set(uuid, true);
+        console.log($isExpandedMap);
         if (isOnLayer > $currentLayer)
             currentLayer.set(isOnLayer);
-        lastDovenIn.set(uuid)
+        lastNodeTouched.set(uuid);
+        flipExpandChange()
+        console.log("dive")
         dispatch('click');
     }
 
 </script>
 
 <div bind:this={clickBox} on:click={setCurrentLayer}
-     class="cursor-pointer flex justify-start items-center ml-12 my-2 w-3/4">
+     class="cursor-pointer flex justify-start items-center my-2 w-3/4">
     <slot/>
 </div>

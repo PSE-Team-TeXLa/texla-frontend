@@ -1,6 +1,6 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
-    import {isEditorActive, lastDovenIn} from "../../globals/Variables";
+    import {flipExpandChange, isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode, sendActive} from "../../globals/Api";
     import {flip} from "svelte/animate";
@@ -10,6 +10,7 @@
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {onMount} from "svelte";
 
+    export let node_path: string;
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
@@ -63,8 +64,9 @@
 
 
     onMount(() => {
-        if ($lastDovenIn === node.uuid) {
+        if ($lastNodeTouched === node.uuid) {
             scrollToNode(node.uuid);
+            console.log(node.raw_latex)
         }
     })
 
@@ -73,22 +75,21 @@
 </script>
 
 <div class="flex flex-col">
-    <StandardNodeContent parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
+    <StandardNodeContent node_path={node_path} parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
                          on:mouseup={stopDrag}
                          on:touchend={stopDrag} node={node}>
         <slot/>
     </StandardNodeContent>
-
     <div class="ml-6 my-4">
         <div use:dndzone="{dndOptions}"
              on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-            {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
+            {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node, i (new_node.uuid)}
                 <div animate:flip="{{duration: 100}}">
                     {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
                         <div class="h-[50px]">
                         </div>
                     {:else}
-                        <svelte:component parent={node.uuid}
+                        <svelte:component node_path={node_path + "/" + i} parent={node.uuid}
                                           this={standardNodeTypeMap.get(new_node.node_type.data.type)}
                                           {...{
                                               node: new_node,
@@ -99,4 +100,5 @@
             {/each}
         </div>
     </div>
+    <div><button on:click={() => {$isExpandedMap.set(node.uuid, false); console.log($isExpandedMap); flipExpandChange()}}>close</button></div>
 </div>

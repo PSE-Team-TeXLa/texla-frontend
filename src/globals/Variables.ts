@@ -16,11 +16,18 @@ export const scrollMap = new Map<number, HTMLElement>();
 
 export const latexMap = new Map<string, string>();
 
+export const isExpandedMap = writable(new Map<API.Uuid, boolean>());
+export const expandChange = writable(true);
+export const test = writable(0);
+export function flipExpandChange() {
+    expandChange.update((o) => !o);
+}
+
 export const modal = writable();
 
 
 export const isFrozen = writable(false);
 export const isDragged = writable(false);
 
-export const lastDovenIn = writable(0);
+export const lastNodeTouched = writable(0);
 

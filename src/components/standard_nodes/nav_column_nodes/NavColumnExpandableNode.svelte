@@ -1,12 +1,13 @@
 <script lang="ts">
     import type API from "../../../globals/socket.api";
-    import {currentLayer} from "../../../globals/Variables";
+    import {currentLayer, expandChange, isExpandedMap} from "../../../globals/Variables";
     import type {ComponentType} from "svelte";
     import NavColumnEnvironmentNode from "./NavColumnEnvironmentNode.svelte";
     import NavColumnSegmentNode from "./NavColumnSegmentNode.svelte";
     import NavColumnDocumentNode from "./NavColumnDocumentNode.svelte";
     import NavColumnFileNode from "./NavColumnFileNode.svelte";
 
+    export let node_path: string;
     export let node: API.Ast.Node;
     export let layerShown: number;
 
@@ -25,18 +26,21 @@
 
 </script>
 
+    {#key $expandChange}
+        {#if $isExpandedMap.get(node.uuid) }
 <div class="flex flex-col">
     <slot/>
-    {#if layerShown < $currentLayer - 1 }
-        <div class="flex flex-col ml-12">
-            {#each children as new_node}
-                {#if (new_node.node_type.type === "Expandable") }
-                    <div>
-                        <svelte:component this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
-                                          {...{node: new_node, layerShown: layerShown + 1}}/>
-                    </div>
-                {/if}
-            {/each}
-        </div>
-    {/if}
+            <div class="flex flex-col ml-12">
+                {#each children as new_node, i}
+                    {#if (new_node.node_type.type === "Expandable") }
+                        <div>
+                            <svelte:component node_path={node_path + "/" + i}
+                                              this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
+                                              {...{node: new_node, layerShown: layerShown + 1}}/>
+                        </div>
+                    {/if}
+                {/each}
+            </div>
 </div>
+        {/if}
+    {/key}

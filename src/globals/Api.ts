@@ -2,7 +2,7 @@ import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
 import {backendUrl} from "./Constants";
 import type API from "./socket.api";
-import {isEditorActive, isFrozen, json_ast, remoteUrl, scrollMap} from "./Variables";
+import {isEditorActive, isExpandedMap, isFrozen, json_ast, lastNodeTouched, remoteUrl, scrollMap} from "./Variables";
 
 import {modal} from "./Variables";
 import {bind} from "svelte-simple-modal";
@@ -39,6 +39,18 @@ socket.on("remote_url", (url: string | null) => {
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     json_ast.set(new_ast);
+    isExpandedMap.set(new Map<API.Uuid, boolean>());
+    restoreExpandableMapWithNewUuid(new_ast.root);
+
+    lastNodeTouched.update((n) => {
+        console.log(n);
+        return n;
+    })
+
+    let map;
+    isExpandedMap.update((o) => {map = o; return o;});
+    console.log(map)
+
     console.info("new_ast: ", new_ast);
     isFrozen.set(false);
     console.timeEnd("roundtrip");
@@ -66,6 +78,8 @@ socket.on("error", (error: API.Error) => {
 // outgoing
 
 export function addNode(destination: API.Operation.Position, raw_latex: string) {
+    lastNodeTouched.set(destination.after_sibling === null ? destination.parent : destination.after_sibling);
+
     sendOperation({
         type: "AddNode",
         arguments: {
@@ -76,6 +90,8 @@ export function addNode(destination: API.Operation.Position, raw_latex: string) 
 }
 
 export function editNode(target: number, raw_latex: string) {
+    lastNodeTouched.set(target);
+
     sendOperation({
         type: "EditNode",
         arguments: {
@@ -86,6 +102,12 @@ export function editNode(target: number, raw_latex: string) {
 }
 
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
+    lastNodeTouched.set(destination.after_sibling === null ? destination.parent : destination.after_sibling);
+
+    json_ast.update((n) => {
+        console.log(n);
+        return n
+    });
     sendOperation({
         type: "MoveNode",
         arguments: {
@@ -96,6 +118,8 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
 }
 
 export function deleteNode(target: API.Uuid) {
+    lastNodeTouched.set(target);
+
     sendOperation({
         type: "DeleteNode",
         arguments: {
@@ -105,6 +129,8 @@ export function deleteNode(target: API.Uuid) {
 }
 
 export function mergeNodes(second_node: API.Uuid) {
+    lastNodeTouched.set(second_node);
+
     sendOperation({
         type: "MergeNodes",
         arguments: {
@@ -113,8 +139,66 @@ export function mergeNodes(second_node: API.Uuid) {
     })
 }
 
+const expandableMapBackup = new Map<string, boolean>();
+let lastTouchedBackup: string;
+
+function saveExpandableMap(currentNode: API.Ast.Node, currentPath = "0") {
+    let lastNodeTouchedL;
+    lastNodeTouched.update((n) => {
+        lastNodeTouchedL = n;
+        return n;
+    })
+    if (currentNode.uuid === lastNodeTouchedL) {
+        lastTouchedBackup = currentPath;
+    }
+
+    if (currentNode.node_type.type === "Expandable") {
+        let isExpanded = false;
+        isExpandedMap.update((n) => {
+            isExpanded = n.get(currentNode.uuid);
+            return n;
+        })
+
+        expandableMapBackup.set(currentPath, isExpanded);
+
+        currentNode.node_type.children.forEach((child, index) => {
+            saveExpandableMap(child, currentPath + "/" + index);
+        });
+    }
+}
+
+
+function restoreExpandableMapWithNewUuid(currentNode: API.Ast.Node, currentPath = "0") {
+    if (lastTouchedBackup === currentPath) {
+        lastNodeTouched.set(currentNode.uuid);
+    }
+
+    if (currentNode.node_type.type === "Expandable") {
+        if (expandableMapBackup.has(currentPath)) {
+            isExpandedMap.update((n) => {
+                n.set(currentNode.uuid, expandableMapBackup.get(currentPath) as boolean);
+                return n;
+            });
+        }
+        currentNode.node_type.children.forEach((child, index) => {
+            restoreExpandableMapWithNewUuid(child, currentPath + "/" + index);
+        });
+    }
+}
+
 function sendOperation(operation: API.Operation.Operation) {
-    let frozen: boolean = false;
+
+    let ast: API.Ast.Ast;
+    json_ast.update((n) => {
+        ast = n as API.Ast.Ast;
+        return n;
+    });
+    // @ts-ignore
+    saveExpandableMap(ast.root);
+    console.log(expandableMapBackup);
+
+
+    let frozen = false;
     isFrozen.update(x => {
         frozen = x;
         return x;
