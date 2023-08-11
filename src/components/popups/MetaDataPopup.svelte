@@ -8,6 +8,7 @@
     function addMetaData() {
         ;
     }
+    //TODO Popup mit api verbinden, input für Notizen // write Feld mit aktuellen verkürzungen.
 </script>
 
 <StandardPopup title="Metadata">

@@ -14,6 +14,7 @@ export const isGraphActive = writable(false);
 
 export const scrollMap = new Map<number, HTMLElement>();
 
+export const latexMap = new Map<string, string>();
 
 export const modal = writable();
 
