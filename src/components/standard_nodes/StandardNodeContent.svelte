@@ -78,7 +78,7 @@
     }
 
     function handleMetaEdit() {
-        modal.set(bind(MetaDataPopup, {meta_data: node.meta_data}))
+        modal.set(bind(MetaDataPopup, {uuid: node.uuid, meta_data: node.meta_data}))
     }
 
     function handleMergeNodes() {

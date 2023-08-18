@@ -9,6 +9,7 @@ import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
 import type {Writable} from "svelte/store";
 import {writable} from "svelte/store";
+import Metadata = API.Metadata;
 
 const socket = io("ws://localhost:13814/");
 // useful for debugging in the browser console
@@ -16,7 +17,7 @@ const socket = io("ws://localhost:13814/");
 globalThis.socket = socket;
 
 socket.on("connect", () => {
-    console.info("connect");
+    console.info("connect " + socket.id);
 });
 socket.on("disconnect", (reason, description) => {
     console.info("disconnect", reason, description);
@@ -40,6 +41,7 @@ socket.on("remote_url", (url: string | null) => {
 });
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
+    console.log("new_ast: ", new_ast);
     json_ast.set(new_ast);
     isExpandedMap.set(new Map<API.Uuid, Writable<boolean>>());
     restoreExpandableMapWithNewUuid(new_ast.root);
@@ -129,6 +131,18 @@ export function mergeNodes(second_node: API.Uuid) {
         type: "MergeNodes",
         arguments: {
             second_node
+        }
+    })
+}
+
+export function editMetadata(target: API.Uuid, new_meta: Metadata) {
+    lastNodeTouched.set(target);
+
+    sendOperation({
+        type: "EditMetadata",
+        arguments: {
+            target: target,
+            new: new_meta
         }
     })
 }
