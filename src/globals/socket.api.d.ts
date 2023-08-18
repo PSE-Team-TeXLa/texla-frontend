@@ -5,8 +5,6 @@ namespace API {
     interface Metadata {
         short_form?: string;
         note?: string;
-
-        [key: string]: string;
     }
 
     export namespace Ast {

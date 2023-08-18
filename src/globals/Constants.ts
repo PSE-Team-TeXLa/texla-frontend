@@ -46,6 +46,8 @@ export const standardNodeTypeMap = new Map<string, ComponentType>(
         ["Comment", StandardCommentNode]
     ]);
 
+export const meta_data_items: string[] = ["short_form", "note"];
+
 export const scrollToNode = (node: API.Uuid) => {
     scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
 }
