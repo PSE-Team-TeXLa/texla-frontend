@@ -3,6 +3,8 @@
 
     let dispatch = createEventDispatcher();
 
+    export let expColor;
+
     function handleMouseDown() {
         dispatch("mousedown", {})
     }
@@ -22,6 +24,6 @@
 
 <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart} on:mouseup={handleMouseUp}
      on:touchend={handleTouchEnd}
-     class="p-2 mx-4 w-[150px] flex justify-center items-center border-4 border-darkcyan rounded-3xl">
+     class="p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
     <span><slot/></span>
 </div>

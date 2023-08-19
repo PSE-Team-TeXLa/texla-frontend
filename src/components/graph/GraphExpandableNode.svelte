@@ -7,8 +7,17 @@
 
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
+    import {isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+    import Icon from "../rendering/Icon.svelte";
+    import resolveConfig from 'tailwindcss/resolveConfig'
+    import tailwindConfig from './../../../tailwind.config.js'
+
 
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
+
+    const fullConfig = resolveConfig(tailwindConfig)
+    let expColor = fullConfig.theme.colors[node.node_type.data.type.toLowerCase()];
 
     let children: API.Ast.Node[];
     $: children = node.node_type.children;
@@ -73,31 +82,52 @@
         isDragged = false;
     }
 
+    $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
+
 </script>
 
 <div class="my-2 py-4 flex flex-row items-center">
     <div class="flex-none">
-        <GraphNode on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
+        <GraphNode expColor={expColor} on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
                    on:touchend={stopDrag}>
             {compactForm(node)}
         </GraphNode>
     </div>
-    <div use:dndzone="{dndOptions}"
-         class="flex flex-col gap-1 ml-2 border-lightpurple border-l-2 min-w-[300px]"
-         on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-        {#each node.node_type.children.filter(child => child.uuid.toString() !== SHADOW_PLACEHOLDER_ITEM_ID) as child
-            (child.uuid)}
-            <div animate:flip="{{duration: 300}}">
-                {#if child[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-                    <div class="h-[50px]"></div>
-                {:else}
-                    {#if child.node_type.type === "Expandable"}
-                        <svelte:self node={child}></svelte:self>
-                    {:else}
-                        <svelte:component this={graphNodeTypeMap.get(child.node_type.data.type)} {...{node: child}}/>
-                    {/if}
-                {/if}
-            </div>
-        {/each}
+    <div on:click={() =>{
+            $expandChangeCurrent = !$expandChangeCurrent;
+            console.log($expandChangeCurrent + " " + $lastNodeTouched);
+            lastNodeTouched.set(node.uuid);
+            }} class="flex justify-center items-center mx-2">
+        {#if !$expandChangeCurrent}
+            <Icon icon={faArrowRight} color={expColor} scale={1.4}/>
+        {:else}
+            {#if node.node_type.data.type !== "Document"}
+                <Icon icon={faArrowLeft} color={expColor} scale={1.4}/>
+            {/if}
+        {/if}
     </div>
+    {#key $expandChangeCurrent}
+        {#if $expandChangeCurrent}
+            <div use:dndzone="{dndOptions}"
+                 class="flex flex-col gap-1 ml-2 border-l-4 min-w-[300px]" style="border-color: {expColor}"
+                 on:consider="{handleConsider}" on:finalize="{handleFinalize}">
+                {#each node.node_type.children.filter(child => child.uuid.toString() !== SHADOW_PLACEHOLDER_ITEM_ID) as child
+                    (child.uuid)}
+                    <div animate:flip="{{duration: 300}}">
+                        {#if child[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+                            <div class="h-[50px]"></div>
+                        {:else}
+                            {#if child.node_type.type === "Expandable"}
+                                <svelte:self node={child}></svelte:self>
+                            {:else}
+                                <svelte:component this={graphNodeTypeMap.get(child.node_type.data.type)}
+                                                  {...{node: child}}/>
+                            {/if}
+                        {/if}
+                    </div>
+                {/each}
+            </div>
+        {/if}
+    {/key}
+
 </div>
