@@ -20,6 +20,12 @@
     import back from "$lib/assets/icons/Back.svg"
     import graph from "$lib/assets/icons/graph.svg"
 
+    import {faFileExport} from '@fortawesome/free-solid-svg-icons'
+    import {faSync} from '@fortawesome/free-solid-svg-icons'
+    import {faProjectDiagram} from "@fortawesome/free-solid-svg-icons";
+    import {faArrowAltCircleLeft} from "@fortawesome/free-solid-svg-icons";
+    import {faDoorOpen} from "@fortawesome/free-solid-svg-icons";
+
     function enterGraphMode() {
         goto('/graph_view');
     }
@@ -54,30 +60,30 @@
 <div class="p-3 w-16 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0">
     <SidebarContentWrapper>
         <SidebarSlot>
-            <SidebarImage on:click={leaveGraphMode} image="{logo}"/>
+            <SidebarImage on:click={leaveGraphMode} image="{logo}" isBigger={true}/>
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon on:click={startExport} icon={export_icon}/>
+            <SidebarIcon on:click={startExport} icon={faFileExport}/>
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon on:click={openOverleaf} icon={overleaf_icon}/>
+            <SidebarImage on:click={openOverleaf} image={overleaf_icon}/>
         </SidebarSlot>
     </SidebarContentWrapper>
     <SidebarContentWrapper>
         {#if $isFrozen}
             <SidebarSlot spin={true}>
-                <SidebarIcon icon={spinner}/>
+                <SidebarIcon icon={faSync}/>
             </SidebarSlot>
         {/if}
         <SidebarSlot>
             {#if !$isGraphActive}
-                <SidebarIcon on:click={enterGraphMode} icon={graph}/>
+                <SidebarIcon on:click={enterGraphMode} icon={faProjectDiagram}/>
             {:else}
-                <SidebarIcon on:click={leaveGraphMode} icon={back}/>
+                <SidebarIcon on:click={leaveGraphMode} icon={faArrowAltCircleLeft}/>
             {/if}
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon on:click={quitTexla} icon={quit}/>
+            <SidebarIcon on:click={quitTexla} icon={faDoorOpen}/>
         </SidebarSlot>
     </SidebarContentWrapper>
 </div>

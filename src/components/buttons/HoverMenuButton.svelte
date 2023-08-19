@@ -11,7 +11,7 @@
 <div class="w-fit">
     <Button>
         <div on:click={enterEdit}
-             class="cursor-pointer p-1 opacity-50 hover:opacity-100 mb-1 border-4 red-button border-red w-8 h-8 flex justify-center items-center text-red font-bold">
+             class="cursor-pointer p-1 opacity-50 hover:opacity-100 mb-1 border-4 border-targetElement w-8 h-8 flex justify-center items-center text-targetElement font-bold">
             <slot/>
         </div>
     </Button>

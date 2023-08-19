@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Button from "../buttons/Button.svelte";
     import {createEventDispatcher} from "svelte";
 
     export let image;
+    export let isBigger = false;
 
     let dispatcher = createEventDispatcher();
 
@@ -12,6 +12,9 @@
 
 </script>
 
-
-<img on:click={dispatch} src={image} alt="SidebarImage" class="cursor-pointer "/>
+{#if isBigger}
+    <img on:click={dispatch} src={image} alt="SidebarImage" class="cursor-pointer"/>
+{:else}
+    <img on:click={dispatch} src={image} alt="SidebarImage" class="px-1 cursor-pointer"/>
+{/if}
 

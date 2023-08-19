@@ -38,9 +38,9 @@
 {#if !isEditorOpen}
     <div bind:this={editor} id="bar-container" class="h-3 w-[90%] items-center">
         <div class="w-full hidden flex-row items-center justify-center">
-            <div class="w-full mr-2 border-b-2 border-red border-dashed border-opacity-50"></div>
+            <div class="w-full mr-2 border-b-2 border-targetElement border-dashed border-opacity-50"></div>
             <CreateElementButton on:click={createElement}></CreateElementButton>
-            <div class="w-full ml-2 border-b-2 border-red border-opacity-50 border-dashed"></div>
+            <div class="w-full ml-2 border-b-2 border-targetElement border-opacity-50 border-dashed"></div>
         </div>
     </div>
 {:else}

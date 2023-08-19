@@ -47,7 +47,7 @@
     }
 </script>
 
-<div class="relative">
+<div class="relative cursor-default">
     {#if html}
         <iframe loading="lazy" class="inline-block w-full" title="latex-snippet" sandbox="allow-same-origin allow-scripts"
                 srcdoc="{html}"

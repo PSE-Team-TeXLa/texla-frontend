@@ -1,6 +1,10 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
+    import resolveConfig from 'tailwindcss/resolveConfig'
+    import tailwindConfig from './../../../tailwind.config.js'
+
+    const fullConfig = resolveConfig(tailwindConfig)
 
     export let parent;
     export let node_path: string;
@@ -9,7 +13,8 @@
 
 </script>
 
-<StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}>
+<StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
+                        expCol={fullConfig.theme.colors.environment}>
     <div class="w-[70%]">
         <h1 class="font-bold mt-2 mb-2">{node.node_type.data.name}</h1>
         <div class="w-full border-b-8 border-solid border-environment mb-1"></div>

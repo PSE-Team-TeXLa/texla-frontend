@@ -14,6 +14,18 @@
     import edit_icon from "$lib/assets/icons/edit.svg";
     import meta_icon from "$lib/assets/icons/metaedit.svg";
 
+    import {faEdit} from "@fortawesome/free-solid-svg-icons";
+    import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+    import {faBars} from "@fortawesome/free-solid-svg-icons";
+    import {faCheck} from "@fortawesome/free-solid-svg-icons";
+    import Icon from "../rendering/Icon.svelte";
+
+    import resolveConfig from 'tailwindcss/resolveConfig'
+    import tailwindConfig from './../../../tailwind.config.js'
+
+    const fullConfig = resolveConfig(tailwindConfig)
+    const targetElementColor = fullConfig.theme.colors.targetElement;
+
     export let node: API.Ast.Node;
     export let parent;
     let isEditorOpen: boolean;
@@ -96,7 +108,7 @@
         <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
         <div on:mouseenter={mouseEnter}
-             on:mouseleave={mouseLeave} class="text-container flex flex-col relative">
+             on:mouseleave={mouseLeave} class="text-container flex flex-col relative cursor-default">
             <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
                  on:touchend={handleTouchEnd} class="px-2 pb-1">
@@ -106,13 +118,13 @@
                 {#if isHovered}
                     <div class="w-[60px] h-fit">
                         <HoverMenuButton on:click={enterEditMode}>
-                            <img src={edit_icon} alt="E"/>
+                            <Icon icon={faEdit} color={targetElementColor}/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleDelete}>
-                            <img src={trash_icon} alt="X"/>
+                            <Icon icon={faTrashAlt} color={targetElementColor}/>
                         </HoverMenuButton>
                         <HoverMenuButton on:click={handleMetaEdit}>
-                            <img src={meta_icon} alt="X"/>
+                            <Icon icon={faBars} color={targetElementColor}/>
                         </HoverMenuButton>
                     </div>
                 {/if}
@@ -125,7 +137,7 @@
 
 <style>
     .text-container:hover {
-        outline: 3px dashed theme('colors.red');
+        outline: 3px dashed theme('colors.targetElement');
         outline-offset: 0;
     }
 </style>

@@ -8,7 +8,7 @@ export default {
             'darkcyan': '#45CFDD',
             'lightcyan': '#A7EDE7',
             'white': '#fff',
-            'red': '#B33951',
+            'targetElement': '#B33951',
             'green': '#7A9B76',
             'comment': '#EEE',
             'file': '#9FB798',

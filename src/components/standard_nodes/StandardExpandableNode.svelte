@@ -1,10 +1,6 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
-    import {
-        isEditorActive,
-        isExpandedMap,
-        lastNodeTouched
-    } from "../../globals/Variables";
+    import {isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode, sendActive} from "../../globals/Api";
     import {flip} from "svelte/animate";
@@ -14,8 +10,11 @@
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {onMount} from "svelte";
     import {writable} from "svelte/store";
+    import Icon from "../rendering/Icon.svelte";
+    import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
 
     export let node_path: string;
+    export let expCol: string;
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
@@ -85,30 +84,28 @@
 
     let dropout_icon;
 
-    function toggleDrop() {
-        if ($expandChangeCurrent)
-            dropout_icon.style.transform = "rotate(90deg)";
-        else
-            dropout_icon.style.transform = "none";
-
-        console.log(dropout_icon.classList);
-    }
-
-
     // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
     // TODO fix navcolumn logic (navsegment buttons)
 </script>
 
 <div class="flex flex-col">
     <div class="cursor-pointer flex flex-row gap-12">
-        <div bind:this={dropout_icon} class="flex justify-center items-center font-bold text-3xl origin-center" on:click={() => {
+        <div bind:this={dropout_icon} class="flex justify-center items-center font-bold text-3xl origin-center"
+             on:click={() => {
             $expandChangeCurrent = !$expandChangeCurrent;
-            toggleDrop();
+
             console.log($expandChangeCurrent + " " + $lastNodeTouched);
             lastNodeTouched.set(node.uuid);
             scrollToNode(node.uuid)
         }}>
-            >
+            <div class="w-4">
+                {#if $expandChangeCurrent}
+                    <Icon icon={faCaretDown} color={expCol} scale={1.3}/>
+                {:else}
+                    <Icon icon={faCaretRight} color={expCol} scale={1.3}/>
+                {/if}
+            </div>
+
         </div>
         <StandardNodeContent node_path={node_path} parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
                              on:mouseup={stopDrag}
@@ -118,24 +115,29 @@
     </div>
     {#key $expandChangeCurrent}
         {#if $expandChangeCurrent}
-            <div class="ml-6 my-4">
-                <div use:dndzone="{dndOptions}"
-                     on:consider="{handleConsider}" on:finalize="{handleFinalize}" class="mb-4">
-                    {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node, i (new_node.uuid)}
-                        <div animate:flip="{{duration: 100}}">
-                            {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-                                <div class="h-[50px]">
-                                </div>
-                            {:else}
-                                <svelte:component node_path={node_path + "/" + i} parent={node.uuid}
-                                                  this={standardNodeTypeMap.get(new_node.node_type.data.type)}
-                                                  {...{
-                                                      node: new_node,
-                                                      layerShown: layerShown + 1,
-                                                  }}/>
-                            {/if}
-                        </div>
-                    {/each}
+            <div class="flex flex-row w-full">
+                <div class="ml-2 border-l-4 border-dashed" style="border-color: {expCol}">
+
+                </div>
+                <div class="ml-6 w-full">
+                    <div use:dndzone="{dndOptions}"
+                         on:consider="{handleConsider}" on:finalize="{handleFinalize}">
+                        {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node, i (new_node.uuid)}
+                            <div animate:flip="{{duration: 100}}">
+                                {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+                                    <div class="h-[50px]">
+                                    </div>
+                                {:else}
+                                    <svelte:component node_path={node_path + "/" + i} parent={node.uuid}
+                                                      this={standardNodeTypeMap.get(new_node.node_type.data.type)}
+                                                      {...{
+                                                          node: new_node,
+                                                          layerShown: layerShown + 1,
+                                                      }}/>
+                                {/if}
+                            </div>
+                        {/each}
+                    </div>
                 </div>
             </div>
         {/if}
