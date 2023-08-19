@@ -1,13 +1,13 @@
 <script lang="ts">
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
-    import {moveNode, sendActive} from "../../globals/Api";
+    import {moveNode} from "../../globals/Api";
 
     import {graphNodeTypeMap} from "../../globals/Constants";
 
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
-    import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
@@ -80,7 +80,7 @@
             <span>{compactForm(node)}</span>
         </GraphNode>
     </div>
-    <div on:click={() =>{
+    <div on:keypress role="button" tabindex="0" on:click={() =>{
             $expandChangeCurrent = !$expandChangeCurrent;
             console.log($expandChangeCurrent + " " + $lastNodeTouched);
             lastNodeTouched.set(node.uuid);

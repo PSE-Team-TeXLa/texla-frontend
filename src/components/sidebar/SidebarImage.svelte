@@ -13,8 +13,12 @@
 </script>
 
 {#if isBigger}
-    <img on:click={dispatch} src={image} alt="SidebarImage" class="cursor-pointer"/>
+    <div on:keypress role="button" tabindex="0" on:click={dispatch}>
+        <img src={image} alt="SidebarImage" class="cursor-pointer"/>
+    </div>
 {:else}
-    <img on:click={dispatch} src={image} alt="SidebarImage" class="px-1 cursor-pointer"/>
+    <div on:keypress role="button" tabindex="0" on:click={dispatch}>
+        <img src={image} alt="SidebarImage" class="px-1 cursor-pointer"/>
+    </div>
 {/if}
 

@@ -11,7 +11,8 @@
 </script>
 
 <Button>
-    <div on:click={scrollTo} class="cursor-pointer flex justify-start items-center mb-2">
+    <div on:keypress role="button" tabindex="0" on:click={scrollTo}
+         class="cursor-pointer flex justify-start items-center mb-2">
         <slot/>
     </div>
 </Button>

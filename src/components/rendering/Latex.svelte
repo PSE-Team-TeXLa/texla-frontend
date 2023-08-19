@@ -2,9 +2,9 @@
     import "$lib/latex";
     import {latexMap} from "../../globals/Variables";
 
-    declare const latexjs: any;
+    declare const latexjs;
 
-    export let latex: string = "";
+    export let latex = "";
 
     // error handling strategy:
     // try rendering it
@@ -31,10 +31,11 @@
                 html = doc.children[0].outerHTML;
                 latexMap.set(latex, html);
             } catch (e) {
+                console.error(e)
             }
         }
     } else {
-        html = latexMap.get(latex);
+        html = latexMap.get(latex) as string;
     }
 
     // iframe takes 150px even if the content is much smaller -> we have to resize it to fit content

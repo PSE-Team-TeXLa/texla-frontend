@@ -3,23 +3,13 @@
     import SidebarSlot from "./SidebarSlot.svelte";
     import SidebarImage from "./SidebarImage.svelte";
     import SidebarIcon from "./SidebarIcon.svelte";
-
     import ExportPopup from "../popups/ExportPopup.svelte";
-    import ErrorPopup from "../popups/ErrorPopup.svelte";
-
     import {isFrozen, isGraphActive, remoteUrl} from "../../globals/Variables";
     import {modal} from "../../globals/Variables.ts";
     import {bind} from "svelte-simple-modal";
     import {goto} from "$app/navigation";
-
     import logo from "$lib/assets/logo/logo.svg"
-    import export_icon from "$lib/assets/icons/Export.svg"
     import overleaf_icon from "$lib/assets/icons/Overleaflogo.svg"
-    import spinner from "$lib/assets/icons/spinner.svg"
-    import quit from "$lib/assets/icons/Quit.svg"
-    import back from "$lib/assets/icons/Back.svg"
-    import graph from "$lib/assets/icons/graph.svg"
-
     import {faFileExport} from '@fortawesome/free-solid-svg-icons'
     import {faSync} from '@fortawesome/free-solid-svg-icons'
     import {faProjectDiagram} from "@fortawesome/free-solid-svg-icons";

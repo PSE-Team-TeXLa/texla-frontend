@@ -13,7 +13,7 @@
 
     function createElement() {
         if (!$isEditorActive) {
-            isEditorActive.set(true);
+            $isEditorActive = true;
             isEditorOpen = true;
             console.log("Start Create");
 

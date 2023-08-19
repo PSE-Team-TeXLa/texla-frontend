@@ -13,7 +13,7 @@
 
 <div class="w-fit">
     <Button>
-        <div on:click={handleClick}
+        <div on:keypress role="button" tabindex="0" on:click={handleClick}
              class="cursor-pointer opacity-50 hover:opacity-100 border-2 border-targetElement w-4 h-4 flex justify-center items-center">
             <img src={plus_icon} alt="+"/>
         </div>

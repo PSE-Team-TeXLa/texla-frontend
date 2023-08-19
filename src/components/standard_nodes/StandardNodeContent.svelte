@@ -121,9 +121,9 @@
     {#if isEditorOpen}
         <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
-        <div on:mouseenter={mouseEnter}
+        <div on:keypress role="button" tabindex="0" on:mouseenter={mouseEnter}
              on:mouseleave={mouseLeave} class="text-container flex flex-col relative cursor-default">
-            <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
+            <div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
                  on:touchend={handleTouchEnd} class="px-2 pb-1">
                 <slot/>

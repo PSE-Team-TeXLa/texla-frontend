@@ -35,7 +35,8 @@
     }
 </script>
 
-<div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart} on:mouseup={handleMouseUp}
+<div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
+     on:mouseup={handleMouseUp}
      on:touchend={handleTouchEnd}>
     <slot/>
 </div>

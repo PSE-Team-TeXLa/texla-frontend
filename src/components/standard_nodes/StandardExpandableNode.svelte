@@ -2,7 +2,7 @@
     import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
     import {isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
-    import {moveNode, sendActive} from "../../globals/Api";
+    import {moveNode} from "../../globals/Api";
     import {flip} from "svelte/animate";
 
     import type API from "../../globals/socket.api.d.ts";
@@ -74,7 +74,7 @@
 
 <div class="flex flex-col">
     <div class="cursor-pointer flex flex-row gap-12">
-        <div bind:this={dropout_icon} class="flex justify-center items-center font-bold text-3xl origin-center"
+        <div on:keypress role="button" tabindex="0" bind:this={dropout_icon} class="flex justify-center items-center font-bold text-3xl origin-center"
              on:click={() => {
             $expandChangeCurrent = !$expandChangeCurrent;
 
@@ -125,9 +125,3 @@
         {/if}
     {/key}
 </div>
-
-<style>
-    .icon_rotate_90 {
-        transform: rotate(90deg);
-    }
-</style>
