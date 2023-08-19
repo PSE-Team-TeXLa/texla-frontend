@@ -45,12 +45,16 @@
         console.log("QUIT");
     }
 
+    function reloadPage() {
+        window.location.replace(".");
+    }
+
 </script>
 
 <div class="p-3 w-16 h-full bg-darkpurple flex flex-col items-center justify-between shrink-0">
     <SidebarContentWrapper>
         <SidebarSlot>
-            <SidebarImage on:click={leaveGraphMode} image="{logo}" isBigger={true}/>
+            <SidebarImage on:click={reloadPage} image="{logo}" isBigger={true}/>
         </SidebarSlot>
         <SidebarSlot>
             <SidebarIcon on:click={startExport} icon={faFileExport}/>
