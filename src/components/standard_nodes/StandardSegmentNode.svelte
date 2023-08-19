@@ -14,7 +14,9 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.segment}>
+
     <h1 class="text-xl font-bold">{node.node_type.data.heading}</h1>
     <div class="w-full border-b-8 border-solid border-segment mb-1"></div>
+
 </StandardExpandableNode>
 

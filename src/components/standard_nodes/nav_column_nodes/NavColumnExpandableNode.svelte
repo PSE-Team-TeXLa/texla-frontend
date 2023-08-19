@@ -28,14 +28,14 @@
 
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col flex-wrap">
     <slot/>
     {#key $expandChangeCurrent}
         {#if $expandChangeCurrent }
             <div class="flex flex-col ml-12">
                 {#each children as new_node, i}
                     {#if (new_node.node_type.type === "Expandable") }
-                        <div>
+                        <div class="w-full">
                             <svelte:component node_path={node_path + "/" + i}
                                               this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
                                               {...{node: new_node, layerShown: layerShown + 1}}/>

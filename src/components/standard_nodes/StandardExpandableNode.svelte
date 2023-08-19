@@ -43,10 +43,10 @@
         dragDisabled: $isEditorActive,
         items: children,
         dropTargetStyle: {
-            'border-left': '6px solid #2196F3',
+            //'border-left': '6px solid #2196F3',
             'background-color': '#ddffff',
-            'padding-top': '8px',
-            'padding-bottom': '8px'
+            //'padding-top': '8px',
+            //'padding-bottom': '8px'
         },
         flipDurationMs: 100
     }
@@ -96,7 +96,7 @@
 
             console.log($expandChangeCurrent + " " + $lastNodeTouched);
             lastNodeTouched.set(node.uuid);
-            scrollToNode(node.uuid)
+            //scrollToNode(node.uuid);
         }}>
             <div class="w-4">
                 {#if $expandChangeCurrent}

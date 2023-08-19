@@ -11,7 +11,7 @@
 </script>
 
 <Button>
-    <div on:click={scrollTo} class="cursor-pointer flex justify-start items-center w-[500px] max-w-[80%] mb-2">
+    <div on:click={scrollTo} class="cursor-pointer flex justify-start items-center mb-2">
         <slot/>
     </div>
 </Button>

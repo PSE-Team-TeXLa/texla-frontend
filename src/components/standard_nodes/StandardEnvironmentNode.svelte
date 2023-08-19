@@ -15,8 +15,8 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.environment}>
-    <div class="w-[70%]">
-        <h1 class="font-bold mt-2 mb-2">{node.node_type.data.name}</h1>
-        <div class="w-full border-b-8 border-solid border-environment mb-1"></div>
-    </div>
+
+    <h1 class="font-bold mt-2 mb-2">{node.node_type.data.name}</h1>
+    <div class="w-full border-b-8 border-solid border-environment mb-1"></div>
+
 </StandardExpandableNode>
