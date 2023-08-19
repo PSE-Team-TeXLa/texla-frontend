@@ -9,7 +9,6 @@ import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
 import type {Writable} from "svelte/store";
 import {writable} from "svelte/store";
-import Metadata = API.Metadata;
 
 const socket = io("ws://localhost:13814/");
 // useful for debugging in the browser console
@@ -42,9 +41,22 @@ socket.on("remote_url", (url: string | null) => {
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.log("new_ast: ", new_ast);
+
+    let ast: API.Ast.Ast;
+    json_ast.update((n) => {
+        ast = n as API.Ast.Ast;
+        return n;
+    });
+    // @ts-ignore
+    if (ast !== undefined)
+        saveExpandableMap(ast.root);
+    console.log(expandableMapBackup);
+
     json_ast.set(new_ast);
     isExpandedMap.set(new Map<API.Uuid, Writable<boolean>>());
-    restoreExpandableMapWithNewUuid(new_ast.root);
+    // @ts-ignore
+    if (ast !== undefined)
+        restoreExpandableMapWithNewUuid(new_ast.root);
     lastNodeTouched.update(o => {
         console.log(o);
         return o;
@@ -135,7 +147,7 @@ export function mergeNodes(second_node: API.Uuid) {
     })
 }
 
-export function editMetadata(target: API.Uuid, new_meta: Metadata) {
+export function editMetadata(target: API.Uuid, new_meta: API.Metadata) {
     lastNodeTouched.set(target);
 
     sendOperation({
@@ -202,17 +214,6 @@ function restoreExpandableMapWithNewUuid(currentNode: API.Ast.Node, currentPath 
 }
 
 function sendOperation(operation: API.Operation.Operation) {
-
-    let ast: API.Ast.Ast;
-    json_ast.update((n) => {
-        ast = n as API.Ast.Ast;
-        return n;
-    });
-    // @ts-ignore
-    saveExpandableMap(ast.root);
-    console.log(expandableMapBackup);
-
-
     let frozen = false;
     isFrozen.update(x => {
         frozen = x;
