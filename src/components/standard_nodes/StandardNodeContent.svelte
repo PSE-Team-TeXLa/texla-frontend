@@ -1,9 +1,8 @@
 <script lang="ts">
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
     import {isDragged, isEditorActive, modal, scrollMap} from "../../globals/Variables";
-    import {onMount} from "svelte";
+    import {createEventDispatcher, onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes, sendActive} from "../../globals/Api";
-    import {createEventDispatcher} from "svelte";
     import CreateElementSpacer from "./CreateElementSpacer.svelte";
     import MiniEditor from "./MiniEditor.svelte";
     import {bind} from "svelte-simple-modal";
@@ -11,9 +10,7 @@
     import type API from "../../globals/socket.api";
     import {scrollToNode} from "../../globals/Constants";
 
-    import {faEdit} from "@fortawesome/free-solid-svg-icons";
-    import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-    import {faBars} from "@fortawesome/free-solid-svg-icons";
+    import {faBars, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
     import Icon from "../rendering/Icon.svelte";
 
@@ -120,12 +117,12 @@
              on:mouseleave={mouseLeave} class="text-container flex flex-col relative cursor-default">
             <div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
-                 on:touchend={handleTouchEnd} class="px-2 pb-1">
+                 on:touchend={handleTouchEnd} class="z-0 px-2 pb-1">
                 <slot/>
             </div>
             <div class="absolute left-[-40px] top-[-4px]">
                 {#if isHovered}
-                    <div class="w-[60px] h-fit">
+                    <div class="relative max-z w-[60px] h-fit">
                         <HoverMenuButton on:click={enterEditMode}>
                             <Icon icon={faEdit} color={targetElementColor}/>
                         </HoverMenuButton>
@@ -149,4 +146,9 @@
         outline: 3px dashed theme('colors.targetElement');
         outline-offset: 0;
     }
+
+    .max-z {
+        z-index: 7000 !important;
+    }
+
 </style>

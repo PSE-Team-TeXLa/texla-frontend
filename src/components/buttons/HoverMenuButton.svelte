@@ -16,6 +16,3 @@
         </div>
     </Button>
 </div>
-
-<style>
-</style>

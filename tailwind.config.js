@@ -22,7 +22,11 @@ export default {
         fontFamily: {
             'sans': ['Arial', 'Helvetica', 'serif'],
         },
-        extend: {},
+        extend: {
+            zIndex: {
+                '5000': '5000',
+            }
+        },
     },
     plugins: [],
 }

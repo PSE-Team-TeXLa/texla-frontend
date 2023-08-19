@@ -12,6 +12,7 @@
     import {writable} from "svelte/store";
     import Icon from "../rendering/Icon.svelte";
     import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
+    import CreateElementSpacer from "./CreateElementSpacer.svelte";
 
     export let node_path: string;
     export let expCol: string;
@@ -125,4 +126,7 @@
             </div>
         {/if}
     {/key}
+    {#if node.node_type.data.type === "Environment" || node.node_type.data.type === "File"}
+        <CreateElementSpacer parent={parent} after_sibling={node.uuid}/>
+    {/if}
 </div>
