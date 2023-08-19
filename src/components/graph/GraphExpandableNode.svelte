@@ -7,7 +7,7 @@
 
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
-    import {isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
@@ -70,27 +70,14 @@
         moveNode(targetId, position)
     }
 
-    let isDragged = false;
-
-    // TODO: this is never called
-    function startDrag() {
-        sendActive();
-        isDragged = true;
-    }
-
-    function stopDrag() {
-        isDragged = false;
-    }
-
     $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
 
 </script>
 
 <div class="my-2 py-4 flex flex-row items-center">
-    <div class="flex-none">
-        <GraphNode expColor={expColor} on:mousedown={startDrag} on:touchstart={startDrag} on:mouseup={stopDrag}
-                   on:touchend={stopDrag}>
-            {compactForm(node)}
+    <div class="flex-none p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
+        <GraphNode>
+            <span>{compactForm(node)}</span>
         </GraphNode>
     </div>
     <div on:click={() =>{

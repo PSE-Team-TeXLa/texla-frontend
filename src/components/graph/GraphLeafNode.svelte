@@ -1,6 +1,9 @@
 <script lang="ts">
+    import GraphNode from "./GraphNode.svelte";
 </script>
 
 <div class=" p-2 ml-2 w-fit">
-    <slot/>
+    <GraphNode>
+        <slot/>
+    </GraphNode>
 </div>

@@ -2,7 +2,7 @@
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
     import {isDragged, isEditorActive, modal, scrollMap} from "../../globals/Variables";
     import {onMount} from "svelte";
-    import {deleteNode, editNode, mergeNodes} from "../../globals/Api";
+    import {deleteNode, editNode, mergeNodes, sendActive} from "../../globals/Api";
     import {createEventDispatcher} from "svelte";
     import CreateElementSpacer from "./CreateElementSpacer.svelte";
     import MiniEditor from "./MiniEditor.svelte";
@@ -10,14 +10,11 @@
     import MetaDataPopup from "../popups/MetaDataPopup.svelte";
     import type API from "../../globals/socket.api";
     import {scrollToNode} from "../../globals/Constants";
-    import trash_icon from "$lib/assets/icons/trash.svg";
-    import edit_icon from "$lib/assets/icons/edit.svg";
-    import meta_icon from "$lib/assets/icons/metaedit.svg";
 
     import {faEdit} from "@fortawesome/free-solid-svg-icons";
     import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
     import {faBars} from "@fortawesome/free-solid-svg-icons";
-    import {faCheck} from "@fortawesome/free-solid-svg-icons";
+
     import Icon from "../rendering/Icon.svelte";
 
     import resolveConfig from 'tailwindcss/resolveConfig'
@@ -62,17 +59,21 @@
 
     function handleMouseDown() {
         dispatch("mousedown", {})
+        startDrag();
     }
 
     function handleTouchStart() {
+        startDrag();
         dispatch("touchstart", {})
     }
 
     function handleMouseUp() {
+        stopDrag()
         dispatch("mouseup", {})
     }
 
     function handleTouchEnd() {
+        stopDrag()
         dispatch("touchend", {})
     }
 
@@ -99,6 +100,19 @@
         let elementHeight = scrollMap.get(node.uuid).offsetHeight;
         mergeNodes(node.uuid);
         window.scrollBy(0, elementHeight);
+    }
+
+    // TODO: this is never called
+    function startDrag() {
+        sendActive();
+        // TODO: is this if necessary?
+        if (!$isEditorActive) {
+            $isDragged = true;
+        }
+    }
+
+    function stopDrag() {
+        $isDragged = false;
     }
 </script>
 

@@ -51,22 +51,6 @@
         flipDurationMs: 100
     }
 
-    let isDragged = false;
-
-    // TODO: this is never called
-    function startDrag() {
-        sendActive();
-        // TODO: is this if necessary?
-        if (!$isEditorActive) {
-            isDragged = true;
-        }
-    }
-
-    function stopDrag() {
-        isDragged = false;
-    }
-
-
     $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
 
     onMount(() => {
@@ -107,9 +91,7 @@
             </div>
 
         </div>
-        <StandardNodeContent node_path={node_path} parent={parent} on:mousedown={startDrag} on:touchstart={startDrag}
-                             on:mouseup={stopDrag}
-                             on:touchend={stopDrag} node={node}>
+        <StandardNodeContent node_path={node_path} parent={parent} node={node}>
             <slot/>
         </StandardNodeContent>
     </div>

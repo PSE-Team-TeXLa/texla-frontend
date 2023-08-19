@@ -1,29 +1,41 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
+    import {sendActive} from "../../globals/Api";
+    import {isDragged} from "../../globals/Variables";
 
     let dispatch = createEventDispatcher();
 
-    export let expColor;
-
     function handleMouseDown() {
+        startDrag();
         dispatch("mousedown", {})
     }
 
     function handleTouchStart() {
+        startDrag();
         dispatch("touchstart", {})
     }
 
     function handleMouseUp() {
+        stopDrag()
         dispatch("mouseup", {})
     }
 
     function handleTouchEnd() {
+        stopDrag()
         dispatch("touchend", {})
+    }
+
+    function startDrag() {
+        sendActive();
+        $isDragged = true;
+    }
+
+    function stopDrag() {
+        $isDragged = false;
     }
 </script>
 
 <div on:mousedown={handleMouseDown} on:touchstart={handleTouchStart} on:mouseup={handleMouseUp}
-     on:touchend={handleTouchEnd}
-     class="p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
-    <span><slot/></span>
+     on:touchend={handleTouchEnd}>
+    <slot/>
 </div>
