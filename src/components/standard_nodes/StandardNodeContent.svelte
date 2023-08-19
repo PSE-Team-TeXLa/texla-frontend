@@ -58,8 +58,8 @@
     let dispatch = createEventDispatcher();
 
     function handleMouseDown() {
-        dispatch("mousedown", {})
         startDrag();
+        dispatch("mousedown", {})
     }
 
     function handleTouchStart() {
@@ -86,8 +86,7 @@
         mouseLeave();
         isEditorActive.set(false);
         isEditorOpen = false;
-        if (evt.detail.new_latex !== node.raw_latex)
-            editNode(node.uuid, evt.detail.new_latex);
+        editNode(node.uuid, evt.detail.new_latex);
     }
 
     function handleMetaEdit() {
@@ -102,13 +101,9 @@
         window.scrollBy(0, elementHeight);
     }
 
-    // TODO: this is never called
     function startDrag() {
         sendActive();
-        // TODO: is this if necessary?
-        if (!$isEditorActive) {
-            $isDragged = true;
-        }
+        $isDragged = true;
     }
 
     function stopDrag() {

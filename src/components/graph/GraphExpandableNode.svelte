@@ -7,7 +7,7 @@
 
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
-    import {isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
@@ -67,6 +67,7 @@
             parent: node.uuid,
             after_sibling: previousChildIndex === -1 ? null : node.node_type.children[previousChildIndex].uuid
         }
+        $isDragged = false;
         moveNode(targetId, position)
     }
 
