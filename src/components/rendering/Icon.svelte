@@ -6,4 +6,4 @@
     export let scale = 1.0;
 </script>
 
-<Fa icon={icon} color={color} scale={scale}/>
+<Fa icon={icon} color={color} scale={scale} class="{$$props.class}"/>

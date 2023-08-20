@@ -40,8 +40,6 @@ socket.on("remote_url", (url: string | null) => {
 });
 
 socket.on("new_ast", (new_ast: API.Ast.Ast) => {
-    console.log("new_ast: ", new_ast);
-
     let ast: API.Ast.Ast;
     json_ast.update((n) => {
         ast = n as API.Ast.Ast;
