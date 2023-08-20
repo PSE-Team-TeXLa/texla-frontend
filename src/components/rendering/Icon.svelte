@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Fa} from "svelte-fa";
+    import Fa from "svelte-fa";
 
     export let icon;
     export let color = "#abcdef";

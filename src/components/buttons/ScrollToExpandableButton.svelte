@@ -12,7 +12,7 @@
 
 <Button>
     <div on:keypress role="button" tabindex="0" on:click={scrollTo}
-         class="cursor-pointer flex justify-start items-center mb-2">
+         class="cursor-pointer flex justify-start items-center">
         <slot/>
     </div>
 </Button>

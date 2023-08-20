@@ -16,3 +16,4 @@ export const isFrozen = writable(false);
 export const isDragged = writable(false);
 export const lastNodeTouched = writable(0);
 
+export const inViewMap = writable(new Map<API.Uuid, Writable<boolean>>());

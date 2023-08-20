@@ -2,9 +2,17 @@ import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
 import {backendUrl} from "./Constants";
 import type API from "./socket.api";
-import {isEditorActive, isExpandedMap, isFrozen, json_ast, lastNodeTouched, remoteUrl, scrollMap} from "./Variables";
-
-import {modal} from "./Variables";
+import {
+    inViewMap,
+    isEditorActive,
+    isExpandedMap,
+    isFrozen,
+    json_ast,
+    lastNodeTouched,
+    modal,
+    remoteUrl,
+    scrollMap
+} from "./Variables";
 import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
 import type {Writable} from "svelte/store";
@@ -64,6 +72,10 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     isFrozen.set(false);
     console.timeEnd("roundtrip");
     scrollMap.clear();
+    inViewMap.update((n) => {
+        n.clear();
+        return n;
+    });
     isEditorActive.set(false);
 });
 

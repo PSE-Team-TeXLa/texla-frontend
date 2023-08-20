@@ -29,7 +29,9 @@
 </script>
 
 <div class="flex flex-col flex-wrap">
-    <slot/>
+    <div class="mb-2">
+        <slot/>
+    </div>
     {#key $expandChangeCurrent}
         {#if $expandChangeCurrent }
             <div class="flex flex-col ml-12">

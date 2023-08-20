@@ -9,11 +9,8 @@
     import MetaDataPopup from "../popups/MetaDataPopup.svelte";
     import type API from "../../globals/socket.api";
     import {scrollToNode} from "../../globals/Constants";
-
     import {faBars, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-
     import Icon from "../rendering/Icon.svelte";
-
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from './../../../tailwind.config.js'
 
@@ -22,6 +19,7 @@
 
     export let node: API.Ast.Node;
     export let parent;
+
     let isEditorOpen: boolean;
 
     function enterEditMode() {
@@ -114,7 +112,6 @@
 </script>
 
 <div class="flex w-[90%] flex-col" bind:this={new_node_html}>
-
     {#if isEditorOpen}
         <MiniEditor on:confirm={handleEditConfirm} on:mergeincoming={handleMergeNodes} raw_latex={node.raw_latex}/>
     {:else}
@@ -122,7 +119,8 @@
              on:mouseleave={mouseLeave} class="text-container flex flex-col relative cursor-default">
             <div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
-                 on:touchend={handleTouchEnd} class="z-0 px-2 pb-1">
+                 on:touchend={handleTouchEnd}
+                 class="z-0 px-2 pb-1">
                 <slot/>
             </div>
             <div class="absolute left-[-40px] top-[-4px]">
@@ -155,5 +153,6 @@
     .max-z {
         z-index: 7000 !important;
     }
+
 
 </style>

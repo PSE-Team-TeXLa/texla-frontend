@@ -1,12 +1,11 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
-    import {isDragged, isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {inViewMap, isDragged, isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
     import {flip} from "svelte/animate";
-
+    import {inview} from "svelte-inview";
     import type API from "../../globals/socket.api.d.ts";
-
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {onMount} from "svelte";
     import {writable} from "svelte/store";
@@ -18,12 +17,10 @@
     export let expCol: string;
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
-
+    export let layerShown: number;
 
     let children: API.Ast.Node[];
     $: children = node.node_type.children;
-
-    export let layerShown: number;
 
     const handleConsider = (evt) => {
         node.node_type.children = evt.detail.items;
@@ -54,6 +51,7 @@
     }
 
     $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
+    $: isVisibleInRead = $inViewMap.get(node.uuid);
 
     onMount(() => {
         if (!$isExpandedMap.has(node.uuid)) {
@@ -62,6 +60,7 @@
                 $isExpandedMap.set(node.uuid, writable(true));
             }
         }
+        $inViewMap.set(node.uuid, writable(false))
     });
 
     let dropout_icon;
@@ -70,9 +69,11 @@
     // TODO fix navcolumn logic (navsegment buttons)
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col" use:inview={{}}
+     on:inview_change={(evt) => {$isVisibleInRead = evt.detail.inView; console.log(evt.detail.inView + " on " + node.raw_latex)}}>
     <div class="cursor-pointer flex flex-row gap-12">
-        <div on:keypress role="button" tabindex="0" bind:this={dropout_icon} class="flex justify-center items-center font-bold text-3xl origin-center"
+        <div on:keypress role="button" tabindex="0" bind:this={dropout_icon}
+             class="flex justify-center items-center font-bold text-3xl origin-center"
              on:click={() => {
             $expandChangeCurrent = !$expandChangeCurrent;
 
