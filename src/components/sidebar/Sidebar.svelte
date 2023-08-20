@@ -15,6 +15,7 @@
     import {faProjectDiagram} from "@fortawesome/free-solid-svg-icons";
     import {faArrowAltCircleLeft} from "@fortawesome/free-solid-svg-icons";
     import {faDoorOpen} from "@fortawesome/free-solid-svg-icons";
+    import {sendQuit} from "../../globals/Api.ts"
 
     function enterGraphMode() {
         goto('/graph_view');
@@ -37,12 +38,6 @@
     function startExport() {
         modal.set(bind(ExportPopup, {}));
         console.log("Export");
-    }
-
-    function quitTexla() {
-        close();
-        //TODO remove error popup testing
-        console.log("QUIT");
     }
 
     function reloadPage() {
@@ -77,7 +72,7 @@
             {/if}
         </SidebarSlot>
         <SidebarSlot>
-            <SidebarIcon on:click={quitTexla} icon={faDoorOpen}/>
+            <SidebarIcon on:click={sendQuit} icon={faDoorOpen}/>
         </SidebarSlot>
     </SidebarContentWrapper>
 </div>

@@ -28,6 +28,7 @@ socket.on("connect", () => {
 });
 socket.on("disconnect", (reason, description) => {
     console.info("disconnect", reason, description);
+    if (window.location.href.includes("close")) return;
     modal.set(bind(ErrorPopup, {message: "Backend disconnected"}));
 });
 
@@ -87,6 +88,7 @@ socket.on("export_ready", (url: string) => {
 
 socket.on("quit", () => {
     console.info("quit");
+    close();
     goto("/close");
 });
 
@@ -248,6 +250,11 @@ export function sendPrepareExport(options: API.StringificationOptions) {
 
 export function sendActive() {
     socket.emit("active", "{}");
+}
+
+export function sendQuit() {
+    console.log("quitting...");
+    socket.emit("quit", "{}");
 }
 
 function downloadFile(url: string) {
