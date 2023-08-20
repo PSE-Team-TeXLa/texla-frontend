@@ -2,7 +2,6 @@
 
     import StandardLeafNode from "./StandardLeafNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
-    import label_icon from "$lib/assets/icons/label.svg";
     import {faTag} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../rendering/Icon.svelte";
 

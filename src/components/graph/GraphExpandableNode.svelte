@@ -17,10 +17,10 @@
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
     const fullConfig = resolveConfig(tailwindConfig)
-    let expColor = fullConfig.theme.colors[node.node_type.data.type.toLowerCase()];
+    let expColor = fullConfig.theme.colors[node?.node_type.data.type.toLowerCase()];
 
     let children: API.Ast.Node[];
-    $: children = node.node_type.children;
+    $: children = node?.node_type.children;
 
     // see https://svelte.dev/repl/fe8c9eca04f9417a94a8b6041df77139?version=3.59.2
     $: dndOptions = {
@@ -72,7 +72,7 @@
         moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
 
-    $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
+    $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as number);
 
 </script>
 
