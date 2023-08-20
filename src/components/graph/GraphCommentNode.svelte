@@ -5,8 +5,8 @@
 
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Comment>>;
 </script>
-<GraphLeafNode>
-    <div class="flex justify-center items-center opacity-50">
+<GraphLeafNode uuid={node.uuid}>
+    <div class="flex justify-center items-center opacity-50" title={node.raw_latex}>
         {firstXChars(node.node_type.data.comment, 50)}
     </div>
 </GraphLeafNode>

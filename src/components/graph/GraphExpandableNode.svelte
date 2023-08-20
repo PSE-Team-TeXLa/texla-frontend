@@ -57,18 +57,19 @@
         node.node_type.children = evt.detail.items;
     }
 
+    function findPosition(targetId): API.Operation.Position{
+        let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
+        return {
+            parent: node.uuid,
+            after_sibling: previousChildIndex === -1 ? null : node.node_type.children[previousChildIndex].uuid
+        };
+    }
+
     const handleFinalize = (evt) => {
         node.node_type.children = evt.detail.items;
 
-        // TODO MAKE method for getting position
-        let targetId: API.Uuid = evt.detail.info.id;
-        let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
-        let position: API.Operation.Position = {
-            parent: node.uuid,
-            after_sibling: previousChildIndex === -1 ? null : node.node_type.children[previousChildIndex].uuid
-        }
         $isDragged = false;
-        moveNode(targetId, position)
+        moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
 
     $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
@@ -77,8 +78,8 @@
 
 <div class="my-2 py-4 flex flex-row items-center">
     <div class="flex-none p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
-        <GraphNode>
-            <span>{compactForm(node)}</span>
+        <GraphNode uuid={node.uuid}>
+            <span title={node.raw_latex}>{compactForm(node)}</span>
         </GraphNode>
     </div>
     <div on:keypress role="button" tabindex="0" on:click={() =>{
