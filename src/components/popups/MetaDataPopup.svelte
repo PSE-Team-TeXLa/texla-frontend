@@ -4,7 +4,7 @@
     import {editMetadata} from "../../globals/Api";
     import {meta_data_items} from "../../globals/Constants";
     import {modal} from "../../globals/Variables";
-    import PopUpConfirm from "../buttons/PopUpConfirm.svelte";
+    import PopUpButtonPositive from "../buttons/PopUpButtonPositive.svelte";
 
     export let meta_data: API.Metadata;
     export let uuid: API.Uuid;
@@ -25,5 +25,5 @@
                    placeholder={key}/>
         {/each}
     </div>
-    <PopUpConfirm on:click={onConfirm}>Confirm</PopUpConfirm>
+    <PopUpButtonPositive on:click={onConfirm}>Confirm</PopUpButtonPositive>
 </StandardPopup>

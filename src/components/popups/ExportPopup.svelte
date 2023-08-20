@@ -1,9 +1,10 @@
 <script lang="ts">
     import StandardPopup from "./StandardPopup.svelte";
     import {sendPrepareExport} from "../../globals/Api";
-    //import Sidebar, {quitPopup} from '../sidebar/Sidebar.svelte'
     import {modal} from "../../globals/Variables.ts";
     import type API from "../../globals/socket.api.d.ts";
+    import PopUpButtonNegative from "../buttons/PopUpButtonNegative.svelte";
+    import PopUpButtonPositive from "../buttons/PopUpButtonPositive.svelte";
 
 
     let includeComments = false;
@@ -28,21 +29,24 @@
 </script>
 
 <StandardPopup title="Export">
+    <p class="mb-4 text-xl">Choose your export settings:</p>
 
-    <p class="mb-4">Choose your export settings</p>
 
-    <label class="items-center mb-3 flex">
-        <input type="checkbox" bind:checked={includeComments} class="mr-2 form-checkbox"/>
-        <span>Include comments</span>
-    </label>
-    <label class="items-center mb-4 flex">
-        <input type="checkbox" bind:checked={includeMetadata} class="mr-2 form-checkbox"/>
-        <span>Include metadata</span>
-    </label>
+    <div>
+
+        <label class="items-center mb-3 flex cursor-pointer select-none">
+            <input type="checkbox" bind:checked={includeComments} class=" mr-2 form-checkbox"/>
+            <span class="text-lg  ">Include comments</span>
+        </label>
+        <label class="items-center mb-4 flex cursor-pointer select-none">
+            <input type="checkbox" bind:checked={includeMetadata} class=" mr-2 form-checkbox"/>
+            <span class="text-lg ">Include metadata</span>
+        </label>
+    </div>
 
     <div class="flex justify-end">
-        <button on:click={handleExport} class="bg-green px-4 py-2 rounded">Export</button>
+        <PopUpButtonPositive on:click={handleExport} class="mr-4">Export</PopUpButtonPositive>
         <!-- TODO FiX THIS-->
-        <button on:click={handleClose} class="bg-red text-white ml-4 px-4 py-2 rounded mr-2">Cancel</button>
+        <PopUpButtonNegative on:click={handleClose}>Cancel</PopUpButtonNegative>
     </div>
 </StandardPopup>

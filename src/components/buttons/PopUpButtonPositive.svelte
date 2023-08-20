@@ -1,4 +1,5 @@
-<script lang="ts">
+<script>
+    import PopUpButton from "./PopUpButton.svelte";
     import {createEventDispatcher} from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -8,6 +9,6 @@
     }
 </script>
 
-<button on:click={handleClick} class="bg-green px-4 py-2 rounded">
+<PopUpButton on:click={handleClick} class="{$$props.class} bg-green">
     <slot/>
-</button>
+</PopUpButton>
