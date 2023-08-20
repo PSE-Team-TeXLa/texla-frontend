@@ -11,7 +11,7 @@ import {
     lastNodeTouched,
     modal,
     remoteUrl,
-    scrollMap
+    scrollMap, scrollMapNav
 } from "./Variables";
 import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
@@ -72,6 +72,7 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     isFrozen.set(false);
     console.timeEnd("roundtrip");
     scrollMap.clear();
+    scrollMapNav.clear()
     inViewMap.update((n) => {
         n.clear();
         return n;

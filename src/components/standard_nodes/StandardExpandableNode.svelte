@@ -1,6 +1,13 @@
 <script lang="ts">
-    import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
-    import {inViewMap, isDragged, isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
+    import {scrollToNode, scrollToNodeNav, standardNodeTypeMap} from "../../globals/Constants";
+    import {
+        inViewMap,
+        isDragged,
+        isEditorActive,
+        isExpandedMap, lastNodeInView,
+        lastNodeTouched,
+        scrollOnRead
+    } from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
     import {flip} from "svelte/animate";
@@ -63,6 +70,14 @@
         $inViewMap.set(node.uuid, writable(false))
     });
 
+    function handleInViewChange(evt) {
+        $isVisibleInRead = evt.detail.inView;
+        console.log(evt.detail.inView + " on " + node.raw_latex)
+        if ($isVisibleInRead) {
+            $lastNodeInView = node.uuid;
+        }
+    }
+
     let dropout_icon;
 
     // TODO Fix Component Hierarchie Standard Nodes nach ganz außen und Content-Component hinzufügen
@@ -70,7 +85,7 @@
 </script>
 
 <div class="flex flex-col" use:inview={{}}
-     on:inview_change={(evt) => {$isVisibleInRead = evt.detail.inView; console.log(evt.detail.inView + " on " + node.raw_latex)}}>
+     on:inview_change={handleInViewChange}>
     <div class="cursor-pointer flex flex-row gap-12">
         <div on:keypress role="button" tabindex="0" bind:this={dropout_icon}
              class="flex justify-center items-center font-bold text-3xl origin-center"

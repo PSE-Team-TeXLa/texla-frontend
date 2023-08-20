@@ -1,15 +1,22 @@
 <script lang="ts">
     import type API from "../../../globals/socket.api";
-    import {isExpandedMap} from "../../../globals/Variables";
+    import {isExpandedMap, scrollMapNav} from "../../../globals/Variables";
     import type {ComponentType} from "svelte";
     import NavColumnEnvironmentNode from "./NavColumnEnvironmentNode.svelte";
     import NavColumnSegmentNode from "./NavColumnSegmentNode.svelte";
     import NavColumnDocumentNode from "./NavColumnDocumentNode.svelte";
     import NavColumnFileNode from "./NavColumnFileNode.svelte";
+    import {onMount} from "svelte";
 
     export let node_path: string;
     export let node: API.Ast.Node;
     export let layerShown: number;
+
+
+    let thisNode: HTMLElement;
+    onMount(() => {
+        scrollMapNav.set(node.uuid, thisNode);
+    });
 
     export const navColumnNodeTypeMap = new Map<string, ComponentType>(
         [["Document", NavColumnDocumentNode],
@@ -29,7 +36,7 @@
 </script>
 
 <div class="flex flex-col flex-wrap">
-    <div class="mb-2">
+    <div bind:this={thisNode} class="mb-2">
         <slot/>
     </div>
     {#key $expandChangeCurrent}

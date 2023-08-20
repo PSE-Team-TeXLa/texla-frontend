@@ -10,7 +10,7 @@ import StandardMathNode from "../components/standard_nodes/StandardMathNode.svel
 import StandardSegmentNode from "../components/standard_nodes/StandardSegmentNode.svelte";
 import StandardTextNode from "../components/standard_nodes/StandardTextNode.svelte";
 import type API from "./socket.api";
-import {scrollMap} from "./Variables";
+import {scrollMap, scrollMapNav} from "./Variables";
 import GraphMathNode from "../components/graph/GraphMathNode.svelte";
 import GraphImageNode from "../components/graph/GraphImageNode.svelte";
 import GraphLabelNode from "../components/graph/GraphLabelNode.svelte";
@@ -50,6 +50,9 @@ export const meta_data_items: string[] = ["short_form", "note"];
 
 export const scrollToNode = (node: API.Uuid) => {
     scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
+}
+export const scrollToNodeNav = (node: API.Uuid) => {
+    scrollMapNav.get(node)?.scrollIntoView({behavior: "smooth", block: "center"});
 }
 
 export function firstXChars(text: string, x: number) {

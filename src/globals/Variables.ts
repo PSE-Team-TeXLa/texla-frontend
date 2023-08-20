@@ -8,6 +8,7 @@ export const currentLayer = writable(2);
 export const isEditorActive = writable(false);
 export const isGraphActive = writable(false);
 export const scrollMap = new Map<number, HTMLElement>();
+export const scrollMapNav = new Map<number, HTMLElement>();
 export const latexMap = new Map<string, string>();
 export const isExpandedMap = writable(new Map<API.Uuid, Writable<boolean>>());
 export const test = writable(0);
@@ -17,3 +18,5 @@ export const isDragged = writable(false);
 export const lastNodeTouched = writable(0);
 
 export const inViewMap = writable(new Map<API.Uuid, Writable<boolean>>());
+export const lastNodeInView = writable(0);
+export const scrollOnRead = writable(true);
