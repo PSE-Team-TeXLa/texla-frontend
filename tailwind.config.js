@@ -9,6 +9,7 @@ export default {
             'lightcyan': '#A7EDE7',
             'white': '#fff',
             'targetElement': '#B33951',
+            'red': '#B33951',
             'green': '#7A9B76',
             'comment': '#EEE',
             'file': '#9FB798',
@@ -22,11 +23,7 @@ export default {
         fontFamily: {
             'sans': ['Arial', 'Helvetica', 'serif'],
         },
-        extend: {
-            zIndex: {
-                '5000': '5000',
-            }
-        },
+        extend: {},
     },
     plugins: [],
 }

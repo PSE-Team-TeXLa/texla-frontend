@@ -42,6 +42,7 @@
 
     <div class="flex justify-end">
         <button on:click={handleExport} class="bg-green px-4 py-2 rounded">Export</button>
+        <!-- TODO FiX THIS-->
         <button on:click={handleClose} class="bg-red text-white ml-4 px-4 py-2 rounded mr-2">Cancel</button>
     </div>
 </StandardPopup>
