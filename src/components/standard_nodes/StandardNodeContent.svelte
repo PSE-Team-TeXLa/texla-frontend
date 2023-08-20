@@ -1,6 +1,6 @@
 <script lang="ts">
     import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
-    import {isDragged, isEditorActive, modal, scrollMap} from "../../globals/Variables";
+    import {isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../globals/Variables";
     import {createEventDispatcher, onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes, sendActive} from "../../globals/Api";
     import CreateElementSpacer from "./CreateElementSpacer.svelte";
@@ -50,6 +50,11 @@
     let new_node_html;
     onMount(async () => {
         scrollMap.set(node.uuid, new_node_html);
+        if ($lastNodeTouched === node.uuid) {
+            console.log("scrolling to node", node.uuid);
+            console.log(scrollMap.get(node.uuid));
+            //scrollToNode(node.uuid);
+        }
     })
 
     let dispatch = createEventDispatcher();

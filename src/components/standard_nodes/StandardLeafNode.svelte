@@ -3,17 +3,12 @@
 
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {onMount} from "svelte";
-    import {lastNodeTouched} from "../../globals/Variables";
-    import {scrollToNode} from "../../globals/Constants";
-
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType>;
 
     onMount(() => {
-        if ($lastNodeTouched === node.uuid) {
-            scrollToNode(node.uuid);
-        }
+
     })
 
 </script>

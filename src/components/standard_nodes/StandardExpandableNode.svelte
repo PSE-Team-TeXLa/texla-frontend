@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
+    import {standardNodeTypeMap} from "../../globals/Constants";
     import {isDragged, isEditorActive, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {moveNode} from "../../globals/Api";
@@ -56,10 +56,6 @@
     $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
 
     onMount(() => {
-        if ($lastNodeTouched === node.uuid) {
-            scrollToNode(node.uuid);
-        }
-
         if (!$isExpandedMap.has(node.uuid)) {
             $isExpandedMap.set(node.uuid, writable(false));
             if (node.node_type.data.type === "Document") {
