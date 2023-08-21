@@ -5,7 +5,9 @@
     import {scrollToNodeNav} from "../../globals/Constants.ts";
 
     function handleScroll() {
+        // is being scolled in readcolumn
         $scrollOnRead = true;
+        // every time the scroll stops jump to current node
         scrollToNodeNav($lastNodeInView);
     }
 </script>

@@ -4,6 +4,7 @@
     import {json_ast, scrollOnRead} from "../../globals/Variables.ts";
 
     function handleScroll() {
+        // is being scrolled in navcolumn
         $scrollOnRead = false;
     }
 </script>
