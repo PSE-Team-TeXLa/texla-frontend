@@ -4,6 +4,9 @@
 
     const dispatch = createEventDispatcher();
 
+    /**
+     * Handle the click event
+     */
     function handleClick() {
         dispatch("click");
     }
