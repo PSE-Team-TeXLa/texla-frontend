@@ -20,6 +20,6 @@
 <div class="w-fit">
     <div on:keypress role="button" tabindex="0" on:click={handleClick}
          class="cursor-pointer opacity-50 hover:opacity-100 border-2 border-targetElement w-4 h-4 flex justify-center items-center">
-        <Icon icon={faPlus} color={fullConfig.theme.colors.red} />
+        <Icon icon={faPlus} color={fullConfig.theme.colors.red} scale={0.7} />
     </div>
 </div>
