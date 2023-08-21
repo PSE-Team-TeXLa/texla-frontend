@@ -6,14 +6,14 @@
     import {scrollToNodeNav} from "../../../globals/Constants";
 
     export let node_path: string;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.File>>;
     export let layerShown: number;
 
-    $: isVisibleInRead = $inViewMap.get(node.uuid);
+    $: isVisibleInRead = $inViewMap.get(node?.uuid as API.Uuid);
 
     $ : {
         if ($isVisibleInRead && $scrollOnRead) {
-            scrollToNodeNav(node.uuid);
+            scrollToNodeNav(node?.uuid as API.Uuid);
         }
     }
 </script>

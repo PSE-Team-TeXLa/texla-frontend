@@ -2,11 +2,10 @@
     import type API from "../../../globals/socket.api";
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
-    import {inViewMap, scrollOnRead} from "../../../globals/Variables";
-    import {scrollToNodeNav} from "../../../globals/Constants";
+    import {inViewMap} from "../../../globals/Variables";
 
     export let node_path: string;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
     export let layerShown: number;
 
     $: isVisibleInRead = $inViewMap.get(node.uuid);

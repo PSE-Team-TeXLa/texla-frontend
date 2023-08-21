@@ -12,12 +12,6 @@
     export let node: API.Ast.Node;
     export let layerShown: number;
 
-
-    let thisNode: HTMLElement;
-    onMount(() => {
-        scrollMapNav.set(node.uuid, thisNode);
-    });
-
     export const navColumnNodeTypeMap = new Map<string, ComponentType>(
         [["Document", NavColumnDocumentNode],
             ["Segment", NavColumnSegmentNode],
@@ -26,13 +20,18 @@
         ]
     );
 
+    let thisNode: HTMLElement;
     let children: API.Ast.Node[];
-    $: if (node.node_type.type === "Expandable") {
-        children = node.node_type.children;
+
+    $: if (node?.node_type.type === "Expandable") {
+        children = node?.node_type.children;
     }
 
-    $: expandChangeCurrent = $isExpandedMap.get(node.uuid);
+    $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as API.Uuid);
 
+    onMount(() => {
+        scrollMapNav.set(node.uuid, thisNode);
+    });
 </script>
 
 <div class="flex flex-col flex-wrap">

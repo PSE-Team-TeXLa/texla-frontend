@@ -6,14 +6,12 @@
     import {scrollToNodeNav} from "../../../globals/Constants";
 
     export let node_path: string;
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Environment>>;
     export let layerShown: number;
 
-    let text: string;
-    if (node.node_type.data.type === "Environment")
-        text = node.node_type.data.name;
+    let text: string = node?.node_type.data.name as string;
 
-    $: isVisibleInRead = $inViewMap.get(node.uuid);
+    $: isVisibleInRead = $inViewMap.get(node?.uuid as API.Uuid);
 
     $ : {
         if ($isVisibleInRead && $scrollOnRead) {

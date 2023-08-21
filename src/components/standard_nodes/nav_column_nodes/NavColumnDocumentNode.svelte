@@ -3,9 +3,8 @@
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
 
-    export let node: API.Ast.Node;
+    export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Document>>;
     export let layerShown: number;
-
 </script>
 
 {#key node.uuid}
