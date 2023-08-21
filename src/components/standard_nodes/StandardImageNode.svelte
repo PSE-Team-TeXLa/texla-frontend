@@ -10,7 +10,6 @@
     const src = `${backendUrl}/user-assets/${node.node_type.data.path}`;
 </script>
 
-
 <StandardLeafNode parent={parent} bind:node>
     <div class="my-4 flex flex-col items-center">
         <img alt={node.node_type.data.path} {src} class="max-h-20 w-auto"/>

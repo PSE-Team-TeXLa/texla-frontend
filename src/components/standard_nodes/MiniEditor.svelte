@@ -12,7 +12,7 @@
 
     export let raw_latex: string;
 
-
+    let dispatcher = createEventDispatcher();
     let divEl: HTMLDivElement;
     let editor: monaco.editor.IStandaloneCodeEditor;
     let Monaco;
@@ -65,19 +65,18 @@
             }
         });
 
+        // Merge Nodes
         editor.addCommand(Monaco.KeyCode.Backspace,
             (e) => {
-                console.log("merge");
                 editor.dispose();
                 dispatcher('mergeincoming', {});
             }, 'isCursorAtFront');
 
+        // Confirm with ctrl+enter
         editor.addCommand(Monaco.KeyMod.CtrlCmd | Monaco.KeyCode.Enter,
             (e) => {
-                console.log("confirm");
                 handleConfirm()
             });
-
 
         return () => {
             editor.dispose();
@@ -85,8 +84,9 @@
         };
     });
 
-    let dispatcher = createEventDispatcher();
-
+    /**
+     * Confirm the edit
+     */
     function handleConfirm() {
         let new_latex = editor.getValue();
         editor.dispose();
@@ -94,14 +94,12 @@
             new_latex
         });
     }
-
 </script>
-
 
 <div class="flex flex-col items-start w-full h-[300px] gap-4">
     <!--<textarea bind:value={node.raw_latex} class="p-2 w-full resize-none min-h-[200px] border-lightcyan border-solid border-4"/>-->
     <div class="p-1 flex w-full h-full mt-4 border-editor border-8 border-opacity-60">
-        <div bind:this={divEl} class="flex w-full h-full"/>
+        <div bind:this={divEl} class="flex w-full h-full"></div>
     </div>
     <div class="flex flex-row justify-end w-full">
         <EditConfirmButton on:click={handleConfirm}>

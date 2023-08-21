@@ -4,10 +4,10 @@
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from './../../../tailwind.config.js'
 
-    const fullConfig = resolveConfig(tailwindConfig)
-
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Document>>;
     export let layerShown: number;
+
+    const fullConfig = resolveConfig(tailwindConfig)
 
 </script>
 

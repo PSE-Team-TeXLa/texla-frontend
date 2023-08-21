@@ -11,16 +11,21 @@
     let isEditorOpen = false;
     let editor;
 
+    /**
+     * Opens editor and scrolls the editor into view and sets the editor to active.
+     */
     function createElement() {
         if (!$isEditorActive) {
             $isEditorActive = true;
             isEditorOpen = true;
-            console.log("Start Create");
 
             editor.scrollIntoView({behavior: "smooth"});
         }
     }
 
+    /**
+     * Handles the confirm event of the editor and adds the node to the tree.
+     */
     function handleConfirm(evt) {
         isEditorActive.set(false);
         isEditorOpen = false;
@@ -30,7 +35,6 @@
             parent: parent,
             after_sibling: after_sibling
         }
-
         addNode(destination, raw_latex);
     }
 </script>

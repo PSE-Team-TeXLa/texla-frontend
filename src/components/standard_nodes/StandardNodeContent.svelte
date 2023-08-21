@@ -14,74 +14,98 @@
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from './../../../tailwind.config.js'
 
-    const fullConfig = resolveConfig(tailwindConfig)
-    const targetElementColor = fullConfig.theme.colors.targetElement;
-
     export let node: API.Ast.Node;
     export let parent;
 
-    let isEditorOpen: boolean;
+    const fullConfig = resolveConfig(tailwindConfig)
+    const targetElementColor = fullConfig.theme.colors.targetElement;
 
+    let isEditorOpen: boolean;
+    let isHovered = false;
+    let new_node_html;
+    let dispatch = createEventDispatcher();
+
+    /**
+     * Enter edit mode for this node
+     */
     function enterEditMode() {
         if ($isEditorActive) {
+            // NO PopUp
             console.error("Editor already open");
         } else {
             $isEditorActive = true;
             isEditorOpen = true;
             scrollToNode(node.uuid);
         }
-
     }
 
-    let isHovered = false;
-
+    /**
+     * Handle mouse enter
+     */
     function mouseEnter() {
         if (!$isDragged)
             isHovered = true;
     }
 
+    /**
+     * Handle mouse leave
+     */
     function mouseLeave() {
         isHovered = false;
     }
 
 
-    let new_node_html;
     onMount(async () => {
+        // Insert node into scrollMap
         scrollMap.set(node.uuid, new_node_html);
         if ($lastNodeTouched === node.uuid) {
-            console.log("scrolling to node", node.uuid);
-            console.log(scrollMap.get(node.uuid));
             //scrollToNode(node.uuid);
         }
     })
 
-    let dispatch = createEventDispatcher();
-
+    /**
+     * Handle mouse down
+     */
     function handleMouseDown() {
         startDrag();
         dispatch("mousedown", {})
     }
 
+    /**
+     * Handle touch start
+     */
     function handleTouchStart() {
         startDrag();
         dispatch("touchstart", {})
     }
 
+    /**
+     * Handle mouse up
+     */
     function handleMouseUp() {
         stopDrag()
         dispatch("mouseup", {})
     }
 
+    /**
+     * Handle touch end
+     */
     function handleTouchEnd() {
         stopDrag()
         dispatch("touchend", {})
     }
 
-
+    /**
+     * Handle delete
+     */
     function handleDelete() {
         deleteNode(node.uuid);
     }
 
+    /**
+     * Handle edit confirm
+     * @param evt
+     */
     function handleEditConfirm(evt) {
         mouseLeave();
         isEditorActive.set(false);
@@ -89,10 +113,16 @@
         editNode(node.uuid, evt.detail.new_latex);
     }
 
+    /**
+     * Handle meta edit
+     */
     function handleMetaEdit() {
         modal.set(bind(MetaDataPopup, {uuid: node.uuid, meta_data: node.meta_data}))
     }
 
+    /**
+     * Handle merge nodes
+     */
     function handleMergeNodes() {
         isEditorActive.set(false);
         isEditorOpen = false;
@@ -101,11 +131,17 @@
         window.scrollBy(0, elementHeight);
     }
 
+    /**
+     * Handle start drag
+     */
     function startDrag() {
         sendActive();
         $isDragged = true;
     }
 
+    /**
+     * Handle stop drag
+     */
     function stopDrag() {
         $isDragged = false;
     }
@@ -153,6 +189,4 @@
     .max-z {
         z-index: 7000 !important;
     }
-
-
 </style>

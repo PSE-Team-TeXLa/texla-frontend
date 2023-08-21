@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import StandardLeafNode from "./StandardLeafNode.svelte";
     import type API from "../../globals/socket.api.d.ts";
     import {faGraduationCap} from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +7,7 @@
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Caption>>;
 
-    //TODO test after Tutorium (change div placeholder), change input Latex File in backend.
 </script>
-
 
 <StandardLeafNode parent={parent} bind:node>
     <div class="flex mt-2 flex-row items-center bg-caption opacity-50 text-opacity-60">
