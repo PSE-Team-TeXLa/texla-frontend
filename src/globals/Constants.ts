@@ -17,9 +17,10 @@ import GraphLabelNode from "../components/graph/GraphLabelNode.svelte";
 import GraphCaptionNode from "../components/graph/GraphCaptionNode.svelte";
 import GraphCommentNode from "../components/graph/GraphCommentNode.svelte";
 
+
 export const backendUrl = "http://localhost:13814";
-export const editorStandardNavSize = 20;
-export const nonEditorStandardReadSize = 40;
+export const readColumnSize = 70;
+export const navColumnSize = 100 - readColumnSize;
 
 export const graphNodeTypeMap = new Map<string, ComponentType>(
     [
@@ -48,13 +49,27 @@ export const standardNodeTypeMap = new Map<string, ComponentType>(
 
 export const meta_data_items: string[] = ["short_form", "note"];
 
+/**
+ * Scroll to a node in the read column
+ * @param node
+ */
 export const scrollToNode = (node: API.Uuid) => {
     scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
 }
+
+/**
+ * Scroll to a node in the nav column
+ * @param node
+ */
 export const scrollToNodeNav = (node: API.Uuid) => {
     scrollMapNav.get(node)?.scrollIntoView({behavior: "smooth", block: "center"});
 }
 
+/**
+ * Returns the first x characters of a string
+ * @param text
+ * @param x
+ */
 export function firstXChars(text: string, x: number) {
     if (text.length <= x) return text;
     text = text.slice(0, x);

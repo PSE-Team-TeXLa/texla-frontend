@@ -15,7 +15,7 @@
 
     $ : {
         if ($isVisibleInRead && $scrollOnRead) {
-            scrollToNodeNav(node.uuid);
+            scrollToNodeNav(node?.uuid as API.Uuid);
         }
     }
 </script>
@@ -33,6 +33,8 @@
 </NavColumnExpandableNode>
 
 <style>
+    /* TODO PUT THIS IN App.css
+    */
     .isVisibleInRead {
         padding-left: 10px;
         border-left: 7px solid theme('colors.red');

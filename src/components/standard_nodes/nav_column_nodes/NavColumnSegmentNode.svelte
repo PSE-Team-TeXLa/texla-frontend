@@ -8,7 +8,7 @@
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
     export let layerShown: number;
 
-    $: isVisibleInRead = $inViewMap.get(node.uuid);
+    $: isVisibleInRead = $inViewMap.get(node?.uuid as API.Uuid);
 
 </script>
 

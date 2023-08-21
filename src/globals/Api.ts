@@ -23,6 +23,8 @@ const socket = io("ws://localhost:13814/");
 // @ts-ignore
 globalThis.socket = socket;
 
+// ------------ SOCKET CONNECTION ------------
+
 socket.on("connect", () => {
     console.info("connect " + socket.id);
 });
@@ -32,7 +34,7 @@ socket.on("disconnect", (reason, description) => {
     modal.set(bind(ErrorPopup, {message: "Backend disconnected"}));
 });
 
-// incoming
+// ------------- INCOMING MESSAGES -------------
 
 socket.on("remote_url", (url: string | null) => {
     console.info("remote_url: ", url);
@@ -54,31 +56,31 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
         ast = n as API.Ast.Ast;
         return n;
     });
+
+    // Save old ast as path representation
     // @ts-ignore
     if (ast !== undefined)
         saveExpandableMap(ast.root);
-    console.log(expandableMapBackup);
 
     json_ast.set(new_ast);
     isExpandedMap.set(new Map<API.Uuid, Writable<boolean>>());
+
+    // Load new ast from path representation
     // @ts-ignore
     if (ast !== undefined)
         restoreExpandableMapWithNewUuid(new_ast.root);
-    lastNodeTouched.update(o => {
-        console.log(o);
-        return o;
-    });
 
     console.info("new_ast: ", new_ast);
-    isFrozen.set(false);
     console.timeEnd("roundtrip");
+
+    isEditorActive.set(false);
+    isFrozen.set(false);
     scrollMap.clear();
     scrollMapNav.clear()
     inViewMap.update((n) => {
         n.clear();
         return n;
     });
-    isEditorActive.set(false);
 });
 
 socket.on("export_ready", (url: string) => {
@@ -99,8 +101,13 @@ socket.on("error", (error: API.Error) => {
 });
 
 
-// outgoing
+// ----------- OUTGOING MESSAGES ------------
 
+/**
+ * Sends the add node operation to the backend.
+ * @param destination
+ * @param raw_latex
+ */
 export function addNode(destination: API.Operation.Position, raw_latex: string) {
     lastNodeTouched.set(destination.after_sibling === null ? destination.parent : destination.after_sibling);
 
@@ -113,6 +120,11 @@ export function addNode(destination: API.Operation.Position, raw_latex: string) 
     });
 }
 
+/**
+ * Sends the edit node operation to the backend.
+ * @param target
+ * @param raw_latex
+ */
 export function editNode(target: number, raw_latex: string) {
     lastNodeTouched.set(target);
 
@@ -125,9 +137,13 @@ export function editNode(target: number, raw_latex: string) {
     });
 }
 
+/**
+ * Sends the move node operation to the backend.
+ * @param target
+ * @param destination
+ */
 export function moveNode(target: API.Uuid, destination: API.Operation.Position) {
     lastNodeTouched.set(target);
-    console.log(destination)
 
     sendOperation({
         type: "MoveNode",
@@ -138,6 +154,10 @@ export function moveNode(target: API.Uuid, destination: API.Operation.Position) 
     });
 }
 
+/**
+ * Sends the delete node operation to the backend.
+ * @param target
+ */
 export function deleteNode(target: API.Uuid) {
     lastNodeTouched.set(target);
 
@@ -149,6 +169,10 @@ export function deleteNode(target: API.Uuid) {
     })
 }
 
+/**
+ * Sends the merge nodes operation to the backend.
+ * @param second_node
+ */
 export function mergeNodes(second_node: API.Uuid) {
     lastNodeTouched.set(second_node);
 
@@ -160,6 +184,11 @@ export function mergeNodes(second_node: API.Uuid) {
     })
 }
 
+/**
+ * Sends the edit metadata operation to the backend.
+ * @param target
+ * @param new_meta
+ */
 export function editMetadata(target: API.Uuid, new_meta: API.Metadata) {
     lastNodeTouched.set(target);
 
@@ -172,9 +201,15 @@ export function editMetadata(target: API.Uuid, new_meta: API.Metadata) {
     })
 }
 
+// the path representation of the ast with the last node touched as path
 const expandableMapBackup = new Map<string, boolean>();
 let lastTouchedBackup: string;
 
+/**
+ * Converts the ast into a path representation and saves it in expandableMapBackup.
+ * @param currentNode
+ * @param currentPath
+ */
 function saveExpandableMap(currentNode: API.Ast.Node, currentPath = "0") {
     let lastNodeTouchedUuid;
     lastNodeTouched.update((n) => {
@@ -198,7 +233,6 @@ function saveExpandableMap(currentNode: API.Ast.Node, currentPath = "0") {
             return n;
         });
 
-
         expandableMapBackup.set(currentPath, isExpanded);
 
         currentNode.node_type.children.forEach((child, index) => {
@@ -207,7 +241,11 @@ function saveExpandableMap(currentNode: API.Ast.Node, currentPath = "0") {
     }
 }
 
-
+/**
+ * Restores the expandableMap with the new uuids from the new ast.
+ * @param currentNode
+ * @param currentPath
+ */
 function restoreExpandableMapWithNewUuid(currentNode: API.Ast.Node, currentPath = "0") {
     if (lastTouchedBackup === currentPath) {
         lastNodeTouched.set(currentNode.uuid);
@@ -226,7 +264,12 @@ function restoreExpandableMapWithNewUuid(currentNode: API.Ast.Node, currentPath 
     }
 }
 
+/**
+ * Sends the given operation to the backend.
+ * @param operation
+ */
 function sendOperation(operation: API.Operation.Operation) {
+    // Dont send operation if frontend is frozen
     let frozen = false;
     isFrozen.update(x => {
         frozen = x;
@@ -236,6 +279,7 @@ function sendOperation(operation: API.Operation.Operation) {
         // TODO: implement some overlay
         console.log("Ignoring operation, because frontend is still frozen");
     }
+
     // volatile -> message is not buffered (it would contain wrong UUIDs anyway)
     socket.volatile.emit("operation", JSON.stringify(operation));
     console.info("[sid=%s] operation sent: ", socket.id, operation);
@@ -243,20 +287,34 @@ function sendOperation(operation: API.Operation.Operation) {
     console.time("roundtrip");
 }
 
+/**
+ * Sends the prepare_export message to the backend.
+ * @param options
+ */
 export function sendPrepareExport(options: API.StringificationOptions) {
     socket.emit("prepare_export", JSON.stringify(options));
     console.info("[sid=%s] prepare_export sent: ", socket.id, options);
 }
 
+/**
+ * Sends the active message to the backend.
+ */
 export function sendActive() {
     socket.emit("active", "{}");
 }
 
+/**
+ * Sends the quit message to the backend.
+ */
 export function sendQuit() {
     console.log("quitting...");
     socket.emit("quit", "{}");
 }
 
+/**
+ * Downloads the file from the given url.
+ * @param url
+ */
 function downloadFile(url: string) {
     console.log("Downloading", url)
     const link = document.createElement("a");
