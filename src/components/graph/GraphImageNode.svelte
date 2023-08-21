@@ -7,6 +7,7 @@
 
     const src = `${backendUrl}/user-assets/${node?.node_type.data.path}`;
 </script>
+
 <GraphLeafNode uuid={node.uuid}>
     <div class="flex justify-center items-center" title={node.raw_latex}>
         <img {src} alt={node.node_type.data.path} class="max-h-20 h-auto"/>

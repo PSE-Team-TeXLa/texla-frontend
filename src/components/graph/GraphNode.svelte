@@ -2,18 +2,11 @@
     import {createEventDispatcher} from "svelte";
     import {sendActive} from "../../globals/Api";
     import {isDragged} from "../../globals/Variables";
-    import {goto} from "$app/navigation";
-    import {scrollToNode} from "../../globals/Constants";
+    import type API from "../../globals/socket.api";
 
-    export let uuid: number;
+    export let uuid: API.Uuid;
 
     let dispatch = createEventDispatcher();
-
-    function handleClick() {
-        //goto('/standard_view')
-        //console.log("click", uuid)
-        //scrollToNode(uuid)
-    }
 
     function handleMouseDown() {
         startDrag();
@@ -45,7 +38,7 @@
     }
 </script>
 
-<div on:keypress role="button" tabindex="0" on:click={handleClick} on:mousedown={handleMouseDown}
+<div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown}
      on:touchstart={handleTouchStart}
      on:mouseup={handleMouseUp}
      on:touchend={handleTouchEnd}>

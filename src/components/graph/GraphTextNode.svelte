@@ -5,6 +5,7 @@
 
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Text>>;
 </script>
+
 <GraphLeafNode uuid={node.uuid}>
     <div id="text" class="flex justify-center items-center" title={node.raw_latex}>
         {firstXChars(node.node_type.data.text, 50)}

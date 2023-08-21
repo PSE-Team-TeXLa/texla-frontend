@@ -2,9 +2,7 @@
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
     import {moveNode} from "../../globals/Api";
-
     import {graphNodeTypeMap} from "../../globals/Constants";
-
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
     import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
@@ -13,19 +11,20 @@
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from './../../../tailwind.config.js'
 
-
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
     const fullConfig = resolveConfig(tailwindConfig)
+    /**
+     * color of the expandable from tailwind config
+     */
     let expColor = fullConfig.theme.colors[node?.node_type.data.type.toLowerCase()];
-
     let children: API.Ast.Node[];
-    $: children = node?.node_type.children;
+
+    $: children = node?.node_type.children as API.Ast.Node[];
 
     // see https://svelte.dev/repl/fe8c9eca04f9417a94a8b6041df77139?version=3.59.2
     $: dndOptions = {
         items: children,
-        // centreDraggedOnCursor: true,
         flipDurationMs: 300,
         dropTargetStyle: {
             'outline-offset': '2px',
@@ -40,6 +39,13 @@
         }
     }
 
+    $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as number);
+
+    /**
+     * Get expandable content (not raw_latex)
+     *
+     * @param node
+     */
     function compactForm(node: API.Ast.Node<API.Ast.ExpandableType>) {
         const data = node.node_type.data;
         if (data.type === "Document") {
@@ -53,10 +59,18 @@
         }
     }
 
+    /**
+     * Handle change of items in dropzone while dragging
+     * @param evt
+     */
     const handleConsider = (evt) => {
         node.node_type.children = evt.detail.items;
     }
 
+    /**
+     * Find position of node in parent
+     * @param targetId
+     */
     function findPosition(targetId): API.Operation.Position{
         let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
         return {
@@ -65,15 +79,16 @@
         };
     }
 
+    /**
+     * Handle change of items in dropzone after dragging
+     * @param evt
+     */
     const handleFinalize = (evt) => {
         node.node_type.children = evt.detail.items;
 
         $isDragged = false;
         moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
-
-    $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as number);
-
 </script>
 
 <div class="my-2 py-4 flex flex-row items-center">
