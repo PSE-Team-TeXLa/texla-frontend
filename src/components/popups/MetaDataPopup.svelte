@@ -9,7 +9,10 @@
     export let meta_data: API.Metadata;
     export let uuid: API.Uuid;
 
-    function onConfirm() {
+    /**
+     * Handles the confirm button click and send the edited metadata to the server
+     */
+    function handleConfirm() {
         editMetadata(uuid, meta_data);
         modal.set(null);
     }
@@ -18,12 +21,11 @@
 
 <StandardPopup title="Metadata">
     <div class="grid grid-cols-2 gap-4 p-4 center" style="grid-template-columns: min-content auto">
-
         {#each meta_data_items as key}
             <span class="font-bold text-lg my-auto">{key}</span>
             <input class="ml-4 border-lightpurple border-2 p-2 w-full" type="text" bind:value={meta_data[key]}
                    placeholder={key}/>
         {/each}
     </div>
-    <PopUpButtonPositive on:click={onConfirm}>Confirm</PopUpButtonPositive>
+    <PopUpButtonPositive on:click={handleConfirm}>Confirm</PopUpButtonPositive>
 </StandardPopup>
