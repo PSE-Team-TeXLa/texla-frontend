@@ -17,14 +17,23 @@
     import {faDoorOpen} from "@fortawesome/free-solid-svg-icons";
     import {sendQuit} from "../../globals/Api.ts"
 
+    /**
+     * Enter the graph mode
+     */
     function enterGraphMode() {
         goto('/graph_view');
     }
 
+    /**
+     * Leave the graph mode
+     */
     function leaveGraphMode() {
         goto('/standard_view')
     }
 
+    /**
+     * Open the remote repository in a new tab
+     */
     function openOverleaf() {
         console.log("Overleaf");
         const url = $remoteUrl;
@@ -35,11 +44,17 @@
         }
     }
 
+    /**
+     * Open the export Popup
+     */
     function startExport() {
         modal.set(bind(ExportPopup, {}));
         console.log("Export");
     }
 
+    /**
+     * Reload the page
+     */
     function reloadPage() {
         window.location.replace(".");
     }
