@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type API from "../../globals/socket.api.d.ts";
+    import type API from "../../../globals/socket.api.d.ts";
     import StandardNodeContent from "./StandardNodeContent.svelte";
 
     export let parent;

@@ -1,8 +1,8 @@
 <script lang="ts">
     import StandardExpandableNode from "./StandardExpandableNode.svelte";
-    import type API from "../../globals/socket.api.d.ts";
+    import type API from "../../../globals/socket.api.d.ts";
     import resolveConfig from 'tailwindcss/resolveConfig'
-    import tailwindConfig from './../../../tailwind.config.js'
+    import tailwindConfig from '../../../../tailwind.config.js'
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.File>>;

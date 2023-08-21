@@ -1,8 +1,8 @@
 <script lang="ts">
     import StandardLeafNode from "./StandardLeafNode.svelte";
-    import type API from "../../globals/socket.api.d.ts";
+    import type API from "../../../globals/socket.api.d.ts";
     import {faTag} from "@fortawesome/free-solid-svg-icons";
-    import Icon from "../rendering/Icon.svelte";
+    import Icon from "../../rendering/Icon.svelte";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Label>>;

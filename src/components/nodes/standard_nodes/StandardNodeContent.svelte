@@ -1,18 +1,18 @@
 <script lang="ts">
-    import HoverMenuButton from "../buttons/HoverMenuButton.svelte";
-    import {isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../globals/Variables";
+    import HoverMenuButton from "../../buttons/HoverMenuButton.svelte";
+    import {isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../../globals/Variables";
     import {createEventDispatcher, onMount} from "svelte";
-    import {deleteNode, editNode, mergeNodes, sendActive} from "../../globals/Api";
-    import CreateElementSpacer from "./CreateElementSpacer.svelte";
-    import MiniEditor from "./MiniEditor.svelte";
+    import {deleteNode, editNode, mergeNodes, sendActive} from "../../../globals/Api";
+    import CreateElementSpacer from "../CreateElementSpacer.svelte";
+    import MiniEditor from "../MiniEditor.svelte";
     import {bind} from "svelte-simple-modal";
-    import MetaDataPopup from "../popups/MetaDataPopup.svelte";
-    import type API from "../../globals/socket.api";
-    import {scrollToNode} from "../../globals/Constants";
+    import MetaDataPopup from "../../popups/MetaDataPopup.svelte";
+    import type API from "../../../globals/socket.api";
+    import {scrollToNode} from "../../../globals/Constants";
     import {faBars, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-    import Icon from "../rendering/Icon.svelte";
+    import Icon from "../../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
-    import tailwindConfig from './../../../tailwind.config.js'
+    import tailwindConfig from '../../../../tailwind.config.js'
 
     export let node: API.Ast.Node;
     export let parent;

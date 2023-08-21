@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {backendUrl} from "../../globals/Constants";
+    import {backendUrl} from "../../../globals/Constants";
     import StandardLeafNode from "./StandardLeafNode.svelte";
-    import type API from "../../globals/socket.api.d.ts";
+    import type API from "../../../globals/socket.api.d.ts";
 
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Image>>;
     export let parent;

@@ -1,6 +1,6 @@
 <script>
     import StandardTreeContainer from "./StandardTreeContainer.svelte";
-    import NavColumnDocumentNode from "../standard_nodes/nav_column_nodes/NavColumnDocumentNode.svelte";
+    import NavColumnDocumentNode from "../nodes/nav_column_nodes/NavColumnDocumentNode.svelte";
     import {json_ast, scrollOnRead} from "../../globals/Variables.ts";
     import {navColumnSize} from "../../globals/Constants";
 

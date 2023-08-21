@@ -1,23 +1,23 @@
 <script lang="ts">
-    import {scrollToNode, standardNodeTypeMap} from "../../globals/Constants";
+    import {scrollToNode, standardNodeTypeMap} from "../../../globals/Constants";
     import {
         inViewMap,
         isDragged,
         isEditorActive,
         isExpandedMap, lastNodeInView,
         lastNodeTouched,
-    } from "../../globals/Variables";
+    } from "../../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
-    import {moveNode} from "../../globals/Api";
+    import {moveNode} from "../../../globals/Api";
     import {flip} from "svelte/animate";
     import {inview} from "svelte-inview";
-    import type API from "../../globals/socket.api.d.ts";
+    import type API from "../../../globals/socket.api.d.ts";
     import StandardNodeContent from "./StandardNodeContent.svelte";
     import {onMount} from "svelte";
     import {writable} from "svelte/store";
-    import Icon from "../rendering/Icon.svelte";
+    import Icon from "../../rendering/Icon.svelte";
     import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
-    import CreateElementSpacer from "./CreateElementSpacer.svelte";
+    import CreateElementSpacer from "../CreateElementSpacer.svelte";
 
     export let node_path: string;
     export let expCol: string;
