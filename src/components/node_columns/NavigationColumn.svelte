@@ -2,7 +2,7 @@
     import StandardTreeContainer from "./StandardTreeContainer.svelte";
     import NavColumnDocumentNode from "../standard_nodes/nav_column_nodes/NavColumnDocumentNode.svelte";
     import {json_ast, scrollOnRead} from "../../globals/Variables.ts";
-    import {navColumnSize} from "../../globals/Constants.js";
+    import {navColumnSize} from "../../globals/Constants";
 
     function handleScroll() {
         // is being scrolled in navcolumn

@@ -5,7 +5,7 @@
     const dispatch = createEventDispatcher();
 
     function handleScroll() {
-        dispatch('scroll')
+        dispatch('scrollend')
     }
 </script>
 

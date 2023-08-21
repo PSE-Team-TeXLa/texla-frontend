@@ -12,3 +12,8 @@ html {
         font-family: Arial, system-ui, serif;
     }
 }
+
+.isVisibleInRead {
+    padding-left: 10px;
+    border-left: 7px solid theme('colors.red');
+}

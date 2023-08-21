@@ -2,10 +2,10 @@
     import StandardTreeContainer from "./StandardTreeContainer.svelte";
     import StandardDocumentNode from "../standard_nodes/StandardDocumentNode.svelte";
     import {json_ast, lastNodeInView, scrollOnRead} from "../../globals/Variables.ts";
-    import {readColumnSize, scrollToNodeNav} from "../../globals/Constants.ts";
+    import {readColumnSize, scrollToNodeNav} from "../../globals/Constants";
 
     function handleScroll() {
-        // is being scolled in readcolumn
+        // is being scrolled in read column
         $scrollOnRead = true;
         // every time the scroll stops jump to current node
         scrollToNodeNav($lastNodeInView);

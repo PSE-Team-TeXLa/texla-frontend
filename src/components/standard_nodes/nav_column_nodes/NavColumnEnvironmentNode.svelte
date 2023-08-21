@@ -23,20 +23,9 @@
 <NavColumnExpandableNode node_path={node_path} bind:node layerShown={layerShown}>
     {#key $isVisibleInRead}
         <div class="{$isVisibleInRead ? 'isVisibleInRead' : ''}">
-            <ScrollToExpandableButton uuid={node.uuid}>
-                <div class="flex w-full max-w-[400px] h-full p-2 pl-8 bg-environment">
+            <ScrollToExpandableButton uuid={node.uuid} class="bg-environment">
                     {text}
-                </div>
             </ScrollToExpandableButton>
         </div>
     {/key}
 </NavColumnExpandableNode>
-
-<style>
-    /* TODO PUT THIS IN App.css
-    */
-    .isVisibleInRead {
-        padding-left: 10px;
-        border-left: 7px solid theme('colors.red');
-    }
-</style>
