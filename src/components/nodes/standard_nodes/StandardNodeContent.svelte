@@ -117,6 +117,7 @@
      * Handle meta edit
      */
     function handleMetaEdit() {
+        isHovered = false;
         modal.set(bind(MetaDataPopup, {uuid: node.uuid, meta_data: node.meta_data}))
     }
 
