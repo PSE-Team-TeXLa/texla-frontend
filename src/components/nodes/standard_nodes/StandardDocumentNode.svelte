@@ -8,7 +8,6 @@
     export let layerShown: number;
 
     const fullConfig = resolveConfig(tailwindConfig)
-
 </script>
 
 <!-- rerender entire tree when there is a new root -->
