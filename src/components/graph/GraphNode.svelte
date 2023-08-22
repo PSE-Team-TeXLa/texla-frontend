@@ -4,7 +4,8 @@
     import {isDragged} from "../../globals/Variables";
     import type API from "../../globals/socket.api";
 
-    export let uuid: API.Uuid;
+    // uuid to jump to standardviewnode
+    export const uuid: API.Uuid = 0;
 
     let dispatch = createEventDispatcher();
 
