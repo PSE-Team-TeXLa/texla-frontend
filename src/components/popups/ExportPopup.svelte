@@ -34,15 +34,15 @@
 </script>
 
 <StandardPopup title="Export">
-    <p class="mb-4 text-xl">Choose your export settings:</p>
+    <p class="mb-4 text-2xl font-bold">Choose your export settings:</p>
     <div>
-        <label class="items-center mb-3 flex cursor-pointer select-none">
-            <input type="checkbox" bind:checked={includeComments} class=" mr-2 form-checkbox"/>
-            <span class="text-lg  ">Include comments</span>
+        <label class="items-center mb-3 ml-4 flex cursor-pointer select-none font-bold">
+            <input type="checkbox" bind:checked={includeComments} class="mr-2 form-checkbox"/>
+            <span class="text-xl  ">Include comments</span>
         </label>
-        <label class="items-center mb-4 flex cursor-pointer select-none">
+        <label class="items-center mb-4 ml-4 flex cursor-pointer select-none font-bold">
             <input type="checkbox" bind:checked={includeMetadata} class=" mr-2 form-checkbox"/>
-            <span class="text-lg ">Include metadata</span>
+            <span class="text-xl ">Include metadata</span>
         </label>
     </div>
     <div class="flex justify-end">
