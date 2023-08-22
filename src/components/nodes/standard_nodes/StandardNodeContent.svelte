@@ -156,7 +156,8 @@
             <div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
                  on:mouseup={handleMouseUp}
                  on:touchend={handleTouchEnd}
-                 class="z-0 px-2 pb-1">
+                 class="z-0 px-2 pb-1"
+                 title={node.raw_latex}>
                 <slot/>
             </div>
             <div class="absolute left-[-40px] top-[-4px]">
