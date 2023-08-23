@@ -15,6 +15,6 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.file}>
-    <h1 class="text-xl font-bold mt-2 mb-2">{firstXChars(node.node_type.data.path, 70)}</h1>
+    <h1 class="text-xl overflow-hidden font-bold mt-2 mb-2">{firstXChars(node.node_type.data.path, 70)}</h1>
     <div class="w-full border-b-8 border-solid border-file mb-1"></div>
 </StandardExpandableNode>
