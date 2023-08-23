@@ -109,7 +109,8 @@ namespace API {
          */
         interface Math {
             type: "Math";
-            content: string
+            content: string;
+            kind: string;
         }
 
         /**
