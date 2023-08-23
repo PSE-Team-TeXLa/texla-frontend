@@ -3,6 +3,7 @@
     import type API from "../../../globals/socket.api.d.ts";
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from '../../../../tailwind.config.js'
+    import {firstXChars} from "../../../globals/Constants";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
@@ -14,7 +15,7 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.segment}>
-    <h1 class="text-xl font-bold">{node.node_type.data.heading}</h1>
+    <h1 class="text-xl font-bold">{firstXChars(node.node_type.data.heading, 70)}</h1>
     <div class="w-full border-b-8 border-solid border-segment mb-1"></div>
 </StandardExpandableNode>
 

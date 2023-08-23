@@ -3,6 +3,7 @@
     import type API from "../../../globals/socket.api.d.ts";
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from '../../../../tailwind.config.js'
+    import {firstXChars} from "../../../globals/Constants";
 
     export let parent;
     export let node_path: string;
@@ -15,6 +16,6 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.environment}>
-    <h1 class="font-bold mt-2 mb-2">{node.node_type.data.name}</h1>
+    <h1 class="font-bold mt-2 mb-2">{firstXChars(node.node_type.data.name, 70)}</h1>
     <div class="w-full border-b-8 border-solid border-environment mb-1"></div>
 </StandardExpandableNode>

@@ -73,6 +73,6 @@ export const scrollToNodeNav = (node: API.Uuid) => {
 export function firstXChars(text: string, x: number) {
     if (text.length <= x) return text;
     text = text.slice(0, x);
-    if (text[20] !== " ") text = text.split(" ").slice(0, -1).join(" ");
+    //if (text[20] !== " ") text = text.split(" ").slice(0, -1).join(" ");
     return text + "...";
 }

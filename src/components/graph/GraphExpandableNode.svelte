@@ -2,7 +2,7 @@
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
     import {moveNode} from "../../globals/Api";
-    import {graphNodeTypeMap} from "../../globals/Constants";
+    import {firstXChars, graphNodeTypeMap} from "../../globals/Constants";
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
     import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
@@ -94,7 +94,7 @@
 <div class="my-2 py-4 flex flex-row items-center">
     <div class="flex-none p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
         <GraphNode uuid={node.uuid}>
-            <span title={node.raw_latex}>{compactForm(node)}</span>
+            <span title={node.raw_latex}>{firstXChars(compactForm(node), 40)}</span>
         </GraphNode>
     </div>
     <div on:keypress role="button" tabindex="0" on:click={() =>{

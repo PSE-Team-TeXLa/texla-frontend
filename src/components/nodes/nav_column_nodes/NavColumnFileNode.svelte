@@ -3,7 +3,7 @@
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
     import {inViewMap, scrollOnRead} from "../../../globals/Variables";
-    import {scrollToNodeNav} from "../../../globals/Constants";
+    import {firstXChars, scrollToNodeNav} from "../../../globals/Constants";
 
     export let node_path: string;
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.File>>;
@@ -21,7 +21,7 @@
     {#key $isVisibleInRead}
         <div class="{$isVisibleInRead ? 'isVisibleInRead' : ''}">
             <ScrollToExpandableButton uuid={node.uuid} class="bg-file">
-                {node.node_type.data.path}
+                {firstXChars(node.node_type.data.path, 40)}
             </ScrollToExpandableButton>
         </div>
     {/key}

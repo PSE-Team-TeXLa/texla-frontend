@@ -120,7 +120,7 @@
 
 <div class="flex flex-col" use:inview={{}}
      on:inview_change={handleInViewChange}>
-    <div class="cursor-pointer flex flex-row gap-12">
+    <div class="cursor-pointer flex flex-row gap-12 max-w-full">
         <div on:keypress role="button" tabindex="0"
              class="flex justify-center items-center font-bold text-3xl origin-center"
              on:click={handleExpandChange}>
