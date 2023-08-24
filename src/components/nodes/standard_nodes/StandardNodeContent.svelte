@@ -162,7 +162,7 @@
                 <slot/>
             </div>
             <div class="absolute left-[-40px] top-[-4px]">
-                {#if isHovered}
+                {#if isHovered && node.node_type.data.type !== "Document"}
                     <div class="relative max-z w-[60px] h-fit">
                         <HoverMenuButton on:click={enterEditMode}>
                             <Icon icon={faEdit} color={targetElementColor}/>
