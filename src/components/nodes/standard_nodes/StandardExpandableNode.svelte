@@ -64,7 +64,7 @@
      *
      * @param targetId
      */
-    function findPosition(targetId): API.Operation.Position{
+    function findPosition(targetId): API.Operation.Position {
         let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
         return {
             parent: node.uuid,
@@ -112,9 +112,11 @@
      * Handles a change of the node's expand state.
      */
     function handleExpandChange() {
-        $expandChangeCurrent = !$expandChangeCurrent;
-        lastNodeTouched.set(node.uuid);
-        scrollToNode(node.uuid);
+        if (!$isEditorActive) {
+            $expandChangeCurrent = !$expandChangeCurrent;
+            lastNodeTouched.set(node.uuid);
+            scrollToNode(node.uuid);
+        }
     }
 </script>
 
