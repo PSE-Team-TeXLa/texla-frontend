@@ -101,7 +101,7 @@
     <div class="p-1 flex w-full h-full mt-4 border-editor border-8 border-opacity-60">
         <div bind:this={divEl} class="flex w-full h-full"></div>
     </div>
-    <div class="flex flex-row justify-end w-full">
+    <div class="flex flex-row justify-end w-full mb-2">
         <EditConfirmButton on:click={handleConfirm}>
             <img src={check_icon} alt="C"/>
         </EditConfirmButton>
