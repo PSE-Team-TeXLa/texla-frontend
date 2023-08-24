@@ -10,6 +10,8 @@
     import Icon from "../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from './../../../tailwind.config.js'
+    import {onMount} from "svelte";
+    import {writable} from "svelte/store";
 
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
@@ -40,6 +42,23 @@
     }
 
     $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as number);
+
+    onMount(() => {
+        // Initialize isExpandedMap
+        if (!$isExpandedMap.has(node.uuid)) {
+            console.log("init " + node.uuid + "in graph");
+            isExpandedMap.update((o) => {
+                o.set(node.uuid, writable(false));
+                return o;
+            });
+            if (node.node_type.data.type === "Document") {
+                isExpandedMap.update((o) => {
+                    o.set(node.uuid, writable(true));
+                    return o;
+                });
+            }
+        }
+    })
 
     /**
      * Get expandable content (not raw_latex)
@@ -98,6 +117,7 @@
         </GraphNode>
     </div>
     <div on:keypress role="button" tabindex="0" on:click={() =>{
+        console.log($expandChangeCurrent)
             $expandChangeCurrent = !$expandChangeCurrent;
             console.log($expandChangeCurrent + " " + $lastNodeTouched);
             lastNodeTouched.set(node.uuid);
