@@ -3,6 +3,7 @@
     import type API from "../../../globals/socket.api.d.ts";
     import {faGraduationCap} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../../rendering/Icon.svelte";
+    import {getContentFromNode} from "../../../globals/Constants";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Caption>>;
@@ -13,7 +14,7 @@
     <div class="flex mt-2 flex-row items-center bg-caption opacity-50 text-opacity-60">
         <Icon icon={faGraduationCap} color="#000" class=" p-1 px-4 max-h-8" scale={2.4}/>
         <div class="flex flex-col cursor-default my-2 pl-2">
-            <span class="whitespace-pre-wrap text-lg">{node.node_type.data.caption}</span>
+            <span class="whitespace-pre-wrap text-lg">{getContentFromNode(node, 0, true)}</span>
         </div>
     </div>
 </StandardLeafNode>

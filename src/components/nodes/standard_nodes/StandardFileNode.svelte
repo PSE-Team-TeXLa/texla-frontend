@@ -3,7 +3,7 @@
     import type API from "../../../globals/socket.api.d.ts";
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from '../../../../tailwind.config.js'
-    import {firstXChars} from "../../../globals/Constants";
+    import {getContentFromNode} from "../../../globals/Constants";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.File>>;
@@ -15,6 +15,6 @@
 
 <StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.file}>
-    <h1 class="text-xl overflow-hidden font-bold mt-2 mb-2">{firstXChars(node.node_type.data.path, 70)}</h1>
+    <h1 class="text-xl overflow-hidden font-bold mt-2 mb-2">{getContentFromNode(node, 70, true)}</h1>
     <div class="w-full border-b-8 border-solid border-file mb-1"></div>
 </StandardExpandableNode>

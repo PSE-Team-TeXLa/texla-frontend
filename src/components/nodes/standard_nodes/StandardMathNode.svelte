@@ -2,13 +2,14 @@
     import StandardLeafNode from "./StandardLeafNode.svelte";
     import type API from "../../../globals/socket.api.d.ts";
     import Latex from "../../rendering/Latex.svelte";
+    import {getContentFromNode} from "../../../globals/Constants";
 
     export let parent;
     export let node: API.Ast.Node<API.Ast.LeafType<API.Ast.Math>>;
 
     // latex.js can only render $...$ and $$...$$ math, but no other math-environments
     // -> we convert from them to $$...$$
-    let latex = node.node_type.data.content;
+    let latex = getContentFromNode(node, 0, true);
     latex = latex.replaceAll("&", "");
     latex = `$$${latex}$$`;
 </script>

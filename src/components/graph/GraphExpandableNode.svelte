@@ -2,7 +2,7 @@
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
     import {flip} from "svelte/animate";
     import {moveNode} from "../../globals/Api";
-    import {firstXChars, graphNodeTypeMap} from "../../globals/Constants";
+    import {getContentFromNode, graphNodeTypeMap} from "../../globals/Constants";
     import type API from "../../globals/socket.api.d.ts";
     import GraphNode from "./GraphNode.svelte";
     import {isDragged, isExpandedMap, lastNodeTouched} from "../../globals/Variables";
@@ -61,24 +61,6 @@
     })
 
     /**
-     * Get expandable content (not raw_latex)
-     *
-     * @param node
-     */
-    function compactForm(node: API.Ast.Node<API.Ast.ExpandableType>) {
-        const data = node.node_type.data;
-        if (data.type === "Document") {
-            return "Document";
-        } else if (data.type === "Segment") {
-            return data.heading;
-        } else if (data.type === "Environment") {
-            return data.name;
-        } else if (data.type === "File") {
-            return data.path;
-        }
-    }
-
-    /**
      * Handle change of items in dropzone while dragging
      * @param evt
      */
@@ -113,7 +95,7 @@
 <div class="my-2 py-4 flex flex-row items-center">
     <div class="flex-none p-2 mx-4 flex justify-center items-center border-4 rounded-3xl" style="border-color: {expColor};">
         <GraphNode uuid={node.uuid}>
-            <span title={node.raw_latex}>{firstXChars(compactForm(node), 40)}</span>
+            <span title={node.raw_latex}>{getContentFromNode(node, 50, true)}</span>
         </GraphNode>
     </div>
     <div on:keypress role="button" tabindex="0" on:click={() =>{

@@ -3,7 +3,7 @@
     import NavColumnExpandableNode from "./NavColumnExpandableNode.svelte";
     import ScrollToExpandableButton from "../../buttons/ScrollToExpandableButton.svelte";
     import {inViewMap} from "../../../globals/Variables";
-    import {firstXChars} from "../../../globals/Constants";
+    import {getContentFromNode} from "../../../globals/Constants";
 
     export let node_path: string;
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
@@ -16,7 +16,7 @@
     {#key $isVisibleInRead}
         <div class="{$isVisibleInRead ? 'isVisibleInRead' : ''}">
             <ScrollToExpandableButton uuid={node.uuid} class="bg-segment">
-                {firstXChars(node.node_type.data.heading, 40)}
+                {getContentFromNode(node, 40, true)}
             </ScrollToExpandableButton>
         </div>
     {/key}

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {firstXChars} from "../../globals/Constants";
+    import {getContentFromNode} from "../../globals/Constants";
     import type API from "../../globals/socket.api";
     import GraphLeafNode from "./GraphLeafNode.svelte";
 
@@ -7,6 +7,6 @@
 </script>
 <GraphLeafNode uuid={node.uuid}>
     <div class="flex justify-center items-center" title={node.raw_latex}>
-        {firstXChars(node.node_type.data.caption, 50)}
+        {getContentFromNode(node, 50, true)}
     </div>
 </GraphLeafNode>
