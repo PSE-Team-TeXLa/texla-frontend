@@ -88,7 +88,7 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
 
     // reset graph or standard scroll position
     if (!active) {
-        let lastNode: number;
+        /*let lastNode: number;
         lastNodeTouched.update((o) => {
             lastNode = o;
             return o;
@@ -99,7 +99,7 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
                 console.log("scroll with timer to node" + lastNode);
             }, 300);
             return o;
-        });
+        });*/
     } else {
         let graphX: number;
         graphScrollX.update((o) => {
