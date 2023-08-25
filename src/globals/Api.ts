@@ -8,7 +8,7 @@ import {
     isExpandedMap,
     isFrozen,
     json_ast,
-    lastNodeTouched,
+    lastNodeTouched, latexMap,
     modal,
     remoteUrl,
     scrollMap, scrollMapNav
@@ -73,6 +73,8 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.info("new_ast: ", new_ast);
     console.timeEnd("roundtrip");
 
+    if (latexMap.size > 1000)
+        latexMap.clear();
     isEditorActive.set(false);
     isFrozen.set(false);
     scrollMap.clear();
