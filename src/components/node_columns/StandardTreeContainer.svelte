@@ -37,7 +37,7 @@
 
 </script>
 
-<div on:scrollend on:mousemove={debouncedAutoScroll} bind:this={scrollContainer}
+<div on:keypress role="button" tabindex="0" on:scrollend on:mousemove={debouncedAutoScroll} bind:this={scrollContainer}
      class="snap-proximity snap-y h-full w-full p-4 overflow-scroll overflow-x-hidden">
     {#if $json_ast !== undefined}
         <slot/>
