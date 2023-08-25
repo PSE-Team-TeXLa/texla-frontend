@@ -34,7 +34,7 @@
     });
 </script>
 
-<div class="flex flex-col flex-wrap">
+<div class="flex flex-col">
     <div bind:this={thisNode} class="mb-2">
         <slot/>
     </div>
