@@ -125,7 +125,7 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
                     o.scrollLeft = graphX;
                     return o;
                 });
-            }, 500);
+            }, 200);
             return o;
         });
     }
