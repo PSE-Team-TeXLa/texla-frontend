@@ -9,16 +9,18 @@
     import MetaDataPopup from "../../popups/MetaDataPopup.svelte";
     import type API from "../../../globals/socket.api";
     import {scrollToNode} from "../../../globals/Constants";
-    import {faBars, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+    import {faBars, faEdit, faExclamation, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
     import Icon from "../../rendering/Icon.svelte";
     import resolveConfig from 'tailwindcss/resolveConfig'
     import tailwindConfig from '../../../../tailwind.config.js'
+    import ShortformAlertBox from "../../rendering/ShortformAlertBox.svelte";
 
     export let node: API.Ast.Node;
     export let parent;
 
     const fullConfig = resolveConfig(tailwindConfig)
     const targetElementColor = fullConfig.theme.colors.targetElement;
+    const shortformAlertColor = fullConfig.theme.colors.green;
 
     let isEditorOpen: boolean;
     let isHovered = false;
@@ -173,6 +175,11 @@
                         <HoverMenuButton on:click={handleMetaEdit}>
                             <Icon icon={faBars} color={targetElementColor}/>
                         </HoverMenuButton>
+                        {#if node?.meta_data.short_form}
+                            <ShortformAlertBox>
+                                <Icon icon={faExclamation} color={shortformAlertColor}/>
+                            </ShortformAlertBox>
+                        {/if}
                     </div>
                 {/if}
             </div>
