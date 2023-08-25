@@ -39,7 +39,7 @@
             'background-color': '#ddffff',
         },
         flipDurationMs: 100,
-        transformDraggedElement: (element, data, index) => {
+        transformDraggedElement: (element, _data, _index) => {
             element.style.pointerEvents = 'none';
         }
     }
