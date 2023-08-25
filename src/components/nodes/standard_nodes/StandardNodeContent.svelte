@@ -1,6 +1,6 @@
 <script lang="ts">
     import HoverMenuButton from "../../buttons/HoverMenuButton.svelte";
-    import {isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../../globals/Variables";
+    import {dragging, isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../../globals/Variables";
     import {createEventDispatcher, onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes, sendActive} from "../../../globals/Api";
     import CreateElementSpacer from "../CreateElementSpacer.svelte";
@@ -82,22 +82,6 @@
     }
 
     /**
-     * Handle mouse up
-     */
-    function handleMouseUp() {
-        stopDrag()
-        dispatch("mouseup", {})
-    }
-
-    /**
-     * Handle touch end
-     */
-    function handleTouchEnd() {
-        stopDrag()
-        dispatch("touchend", {})
-    }
-
-    /**
      * Handle delete
      */
     function handleDelete() {
@@ -140,13 +124,7 @@
     function startDrag() {
         sendActive();
         $isDragged = true;
-    }
-
-    /**
-     * Handle stop drag
-     */
-    function stopDrag() {
-        $isDragged = false;
+        $dragging = true;
     }
 </script>
 
@@ -157,8 +135,8 @@
         <div on:keypress role="button" tabindex="0" on:mouseenter={mouseEnter}
              on:mouseleave={mouseLeave} class="text-container flex flex-col relative cursor-default">
             <div on:keypress role="button" tabindex="0" on:mousedown={handleMouseDown} on:touchstart={handleTouchStart}
-                 on:mouseup={handleMouseUp}
-                 on:touchend={handleTouchEnd}
+                 on:mouseup
+                 on:touchend
                  class="z-0 px-2 pb-1"
                  title={node.raw_latex}>
                 <slot/>

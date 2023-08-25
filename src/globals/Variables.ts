@@ -18,7 +18,7 @@ export const remoteUrl: Writable<string | null> = writable(null);
 //export const currentLayer = writable(2);
 
 /**
- * Stores wether the editor is active.
+ * Stores whether the editor is active.
  */
 export const isEditorActive = writable(false);
 
@@ -26,6 +26,11 @@ export const isEditorActive = writable(false);
  * Stores whether the graph is active.
  */
 export const isGraphActive = writable(false);
+
+/**
+ * Stores whether the user is currently holding an element in their hand.
+ */
+export const dragging = writable(false);
 
 /**
  * Allows one to get access to a html element by its uuid in the read column.

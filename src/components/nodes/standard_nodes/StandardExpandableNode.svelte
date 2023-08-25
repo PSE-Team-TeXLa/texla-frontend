@@ -1,6 +1,7 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../../globals/Constants";
     import {
+        dragging,
         inViewMap,
         isDragged,
         isEditorActive,
@@ -37,7 +38,10 @@
         dropTargetStyle: {
             'background-color': '#ddffff',
         },
-        flipDurationMs: 100
+        flipDurationMs: 100,
+        transformDraggedElement: (element, data, index) => {
+            element.style.pointerEvents = 'none';
+        }
     }
 
     /**
@@ -81,6 +85,7 @@
         node.node_type.children = evt.detail.items;
 
         $isDragged = false;
+        $dragging = false;
         moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
 

@@ -142,3 +142,45 @@ export function getContentFromNode(node: API.Ast.Node, firstX = 0, useShortForm 
 
     return content;
 }
+
+/**
+ * The size of the screen "edge" in pixels.
+ * This determines, how large the hover zone is that moves the page during dragging.
+ */
+export const scrollEdgeSize = 150;
+/**
+ * The maximum speed of the scrolling when hovering near screen edges in pixels per 30ms.
+ */
+export const scrollBaseIntensity = 70;
+/**
+ * The time between two scrolls on screen edge in ms.
+ */
+export const scrollFrequency = 20;
+
+export function debounceRepeated<T extends (..._: any[]) => any>(func: T, delay: number): T {
+    let instantAllowed = true;
+    let nextExecution: (() => void) | null = null;
+
+    function runDelayed() {
+        if (nextExecution) {
+            nextExecution();
+            nextExecution = null;
+            setTimeout(runDelayed, delay);
+        } else {
+            instantAllowed = true;
+        }
+    }
+
+    return function () {
+        const args = arguments;
+        if (instantAllowed) {
+            func(...args);
+            instantAllowed = false;
+            setTimeout(runDelayed, delay);
+        } else {
+            nextExecution = function () {
+                func(...args);
+            };
+        }
+    } as T;
+}
