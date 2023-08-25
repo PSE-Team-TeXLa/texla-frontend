@@ -86,3 +86,7 @@ export const lastNodeInView = writable(0);
  * Stores where the last scroll appeared, either in the read column or in the nav column. Read is true, nav is false.
  */
 export const scrollOnRead = writable(true);
+
+export const globalTimer: Writable<ReturnType<typeof setTimeout>> = writable(setTimeout(() => {
+    console.log("Timer init")
+}, 0))
