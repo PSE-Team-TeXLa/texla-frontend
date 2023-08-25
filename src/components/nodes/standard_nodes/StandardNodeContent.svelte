@@ -1,6 +1,6 @@
 <script lang="ts">
     import HoverMenuButton from "../../buttons/HoverMenuButton.svelte";
-    import {dragging, isDragged, isEditorActive, lastNodeTouched, modal, scrollMap} from "../../../globals/Variables";
+    import {dragging, isDragged, isEditorActive, lastNodeTouched, modal, scrollMap, isExpandedMap} from "../../../globals/Variables";
     import {createEventDispatcher, onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes, sendActive} from "../../../globals/Api";
     import CreateElementSpacer from "../CreateElementSpacer.svelte";
@@ -26,6 +26,11 @@
     let isHovered = false;
     let new_node_html;
     let dispatch = createEventDispatcher();
+
+    /**
+     * Is the node currently expanded?
+     */
+    $: expandChangeCurrent = $isExpandedMap.get(node?.uuid as API.Uuid);
 
     /**
      * Enter edit mode for this node
@@ -162,8 +167,10 @@
                 {/if}
             </div>
         </div>
-        <CreateElementSpacer parent={node.node_type.type === "Expandable" ? node.uuid : parent}
-                             after_sibling={node.node_type.type === "Expandable" ? null : node.uuid}/>
+        {#if !(node.node_type.type === "Expandable" && !$expandChangeCurrent)}
+            <CreateElementSpacer parent={node.node_type.type === "Expandable" ? node.uuid : parent}
+                                 after_sibling={node.node_type.type === "Expandable" ? null : node.uuid}/>
+        {/if}
     {/if}
 </div>
 
