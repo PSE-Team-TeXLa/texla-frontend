@@ -49,7 +49,7 @@
         $globalTimer = setTimeout(() => {
             scrollToNode(uuid)
             console.log("scroll with timer to node" + uuid);
-        }, 1300);
+        }, 900);
         goto('/standard_view');
     }
 </script>

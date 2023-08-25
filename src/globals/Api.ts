@@ -4,10 +4,14 @@ import {backendUrl, scrollToNode} from "./Constants";
 import type API from "./socket.api";
 import {
     globalTimer,
+    graphContainerStore,
+    graphScrollX,
+    graphScrollY,
     inViewMap,
     isEditorActive,
     isExpandedMap,
     isFrozen,
+    isGraphActive,
     json_ast,
     lastNodeTouched,
     latexMap,
@@ -76,18 +80,55 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
     console.info("new_ast: ", new_ast);
     console.timeEnd("roundtrip");
 
-    let lastNode: number;
-    lastNodeTouched.update((o) => {
-        lastNode = o;
+    let active;
+    isGraphActive.update((o) => {
+        active = o;
         return o;
     });
-    globalTimer.update((o) => {
-        o = setTimeout(() => {
-            scrollToNode(lastNode)
-            console.log("scroll with timer to node" + lastNode);
-        }, 300);
-        return o;
-    });
+
+    // reset graph or standard scroll position
+    if (!active) {
+        let lastNode: number;
+        lastNodeTouched.update((o) => {
+            lastNode = o;
+            return o;
+        });
+        globalTimer.update((o) => {
+            o = setTimeout(() => {
+                scrollToNode(lastNode)
+                console.log("scroll with timer to node" + lastNode);
+            }, 300);
+            return o;
+        });
+    } else {
+        let graphX: number;
+        graphScrollX.update((o) => {
+            graphX = o;
+            return o;
+        });
+        let graphY: number;
+        graphScrollY.update((o) => {
+            graphY = o;
+            return o;
+        });
+
+        graphContainerStore.update((o) => {
+            o.scrollTop = graphY;
+            o.scrollLeft = graphX;
+            return o;
+        });
+
+        globalTimer.update((o) => {
+            o = setTimeout(() => {
+                graphContainerStore.update((o) => {
+                    o.scrollTop = graphY;
+                    o.scrollLeft = graphX;
+                    return o;
+                });
+            }, 500);
+            return o;
+        });
+    }
 
     if (latexMap.size > 1000)
         latexMap.clear();
@@ -298,6 +339,24 @@ function sendOperation(operation: API.Operation.Operation) {
         console.log("Ignoring operation, because frontend is still frozen");
     }
 
+    let active;
+    isGraphActive.update((o) => {
+        active = o;
+        return o;
+    });
+
+    if (active) {
+        let div: HTMLDivElement;
+        graphContainerStore.update((o) => {
+            div = o;
+            return o;
+        });
+        // @ts-ignore
+        if (div !== undefined) {
+            graphScrollY.set(div.scrollTop);
+            graphScrollX.set(div.scrollLeft);
+        }
+    }
     // volatile -> message is not buffered (it would contain wrong UUIDs anyway)
     socket.volatile.emit("operation", JSON.stringify(operation));
     console.info("[sid=%s] operation sent: ", socket.id, operation);

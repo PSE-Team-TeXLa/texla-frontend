@@ -87,6 +87,11 @@ export const lastNodeInView = writable(0);
  */
 export const scrollOnRead = writable(true);
 
+export const graphContainerStore: Writable<HTMLDivElement> = writable();
+export const graphScrollX: Writable<number> = writable();
+export const graphScrollY: Writable<number> = writable()
+
 export const globalTimer: Writable<ReturnType<typeof setTimeout>> = writable(setTimeout(() => {
     console.log("Timer init")
 }, 0))
+
