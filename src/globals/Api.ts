@@ -1,6 +1,6 @@
 import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
-import {backendUrl, scrollToNode} from "./Constants";
+import {backendUrl} from "./Constants";
 import type API from "./socket.api";
 import {
     globalTimer,

@@ -1,7 +1,7 @@
 <script lang="ts">
     import {createEventDispatcher, onMount} from "svelte";
     import {sendActive} from "../../globals/Api";
-    import {globalTimer, isDragged, lastNodeTouched} from "../../globals/Variables";
+    import {globalTimer, isDragged} from "../../globals/Variables";
     import type API from "../../globals/socket.api";
     import {scrollToNode} from "../../globals/Constants";
     import {goto} from "$app/navigation";
