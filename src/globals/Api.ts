@@ -1,17 +1,20 @@
 import {goto} from "$app/navigation";
 import {io} from "socket.io-client";
-import {backendUrl} from "./Constants";
+import {backendUrl, scrollToNode} from "./Constants";
 import type API from "./socket.api";
 import {
+    globalTimer,
     inViewMap,
     isEditorActive,
     isExpandedMap,
     isFrozen,
     json_ast,
-    lastNodeTouched, latexMap,
+    lastNodeTouched,
+    latexMap,
     modal,
     remoteUrl,
-    scrollMap, scrollMapNav
+    scrollMap,
+    scrollMapNav
 } from "./Variables";
 import {bind} from "svelte-simple-modal";
 import ErrorPopup from "../components/popups/ErrorPopup.svelte";
@@ -72,6 +75,19 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
 
     console.info("new_ast: ", new_ast);
     console.timeEnd("roundtrip");
+
+    let lastNode: number;
+    lastNodeTouched.update((o) => {
+        lastNode = o;
+        return o;
+    });
+    globalTimer.update((o) => {
+        o = setTimeout(() => {
+            scrollToNode(lastNode)
+            console.log("scroll with timer to node" + lastNode);
+        }, 300);
+        return o;
+    });
 
     if (latexMap.size > 1000)
         latexMap.clear();

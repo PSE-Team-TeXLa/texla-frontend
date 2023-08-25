@@ -54,7 +54,7 @@ export const meta_data_items: string[] = ["short_form", "note"];
  * @param node
  */
 export const scrollToNode = (node: API.Uuid) => {
-    scrollMap.get(node)?.scrollIntoView({behavior: "smooth"});
+    scrollMap.get(node)?.scrollIntoView({behavior: "smooth", block: "center"});
 }
 
 /**
