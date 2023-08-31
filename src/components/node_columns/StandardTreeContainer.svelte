@@ -1,11 +1,11 @@
 <script lang="ts">
     import {debounceRepeated, scrollBaseIntensity, scrollEdgeSize, scrollFrequency} from "../../globals/Constants";
-    import {dragging, json_ast} from "../../globals/Variables";
+    import {isDragged, json_ast} from "../../globals/Variables";
 
     let scrollContainer;
 
     function autoScroll(event) {
-        if (!$dragging) return;
+        if (!$isDragged) return;
 
         const mouseY = event.clientY;
         const viewportH = document.documentElement.clientHeight;

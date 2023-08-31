@@ -1,7 +1,6 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../../globals/Constants";
     import {
-        dragging,
         inViewMap,
         isDragged,
         isEditorActive,
@@ -70,6 +69,7 @@
      * @param targetId
      */
     function findPosition(targetId): API.Operation.Position {
+        console.log("findPosition")
         let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
         return {
             parent: node.uuid,
@@ -83,10 +83,10 @@
      * @param evt
      */
     const handleFinalize = (evt) => {
+        console.log("finalize")
         node.node_type.children = evt.detail.items;
 
         $isDragged = false;
-        $dragging = false;
         if (node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === evt.detail.info.id) !== -1)
             moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }

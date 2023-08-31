@@ -28,11 +28,6 @@ export const isEditorActive = writable(false);
 export const isGraphActive = writable(false);
 
 /**
- * Stores whether the user is currently holding an element in their hand.
- */
-export const dragging = writable(false);
-
-/**
  * Allows one to get access to a html element by its uuid in the read column.
  */
 export const scrollMap = new Map<number, HTMLElement>();
