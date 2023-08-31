@@ -87,7 +87,8 @@
 
         $isDragged = false;
         $dragging = false;
-        moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
+        if (node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === evt.detail.info.id) !== -1)
+            moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
 
     onMount(() => {
