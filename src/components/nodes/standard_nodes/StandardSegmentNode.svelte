@@ -8,12 +8,11 @@
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Segment>>;
     export let layerShown: number;
-    export let node_path: string;
 
     const fullConfig = resolveConfig(tailwindConfig)
 </script>
 
-<StandardExpandableNode node_path={node_path} parent={parent} bind:node layerShown={layerShown}
+<StandardExpandableNode parent={parent} bind:node layerShown={layerShown}
                         expCol={fullConfig.theme.colors.segment}>
     <h1 class="text-xl font-bold overflow-hidden">{getContentFromNode(node, 70, true)}</h1>
     <div class="w-full border-b-8 border-solid border-segment mb-1"></div>

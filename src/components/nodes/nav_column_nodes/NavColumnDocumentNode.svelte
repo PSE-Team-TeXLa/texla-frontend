@@ -12,7 +12,7 @@
 </script>
 
 {#key node.uuid}
-    <NavColumnExpandableNode node_path={0} bind:node layerShown={layerShown}>
+    <NavColumnExpandableNode bind:node layerShown={layerShown}>
         {#key $isVisibleInRead}
             <ScrollToExpandableButton uuid={node.uuid} class="bg-document">
                 {getContentFromNode(node, 40, true)}

@@ -13,7 +13,7 @@
 
 <!-- rerender entire tree when there is a new root -->
 {#key node.uuid}
-    <StandardExpandableNode node_path="0" parent={node.uuid} bind:node layerShown={layerShown}
+    <StandardExpandableNode parent={node.uuid} bind:node layerShown={layerShown}
                             expCol={fullConfig.theme.colors.document}>
         <h1 class="text-4xl font-bold">{getContentFromNode(node, 70, true)}</h1>
         <div class="w-full border-b-8 border-solid border-document mb-1"></div>

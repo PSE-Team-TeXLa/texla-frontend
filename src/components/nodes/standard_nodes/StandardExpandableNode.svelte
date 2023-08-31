@@ -21,7 +21,6 @@
     import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
     import CreateElementSpacer from "../CreateElementSpacer.svelte";
 
-    export let node_path: string;
     export let expCol: string;
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
@@ -141,7 +140,8 @@
 
 <div class="flex flex-col" use:inview={{}}
      on:inview_change={handleInViewChange}>
-    <div on:keypress role="button" tabindex="0" class="cursor-pointer flex flex-row gap-12 max-w-full" on:mouseenter={handleMouseEnter}
+    <div on:keypress role="button" tabindex="0" class="cursor-pointer flex flex-row gap-12 max-w-full"
+         on:mouseenter={handleMouseEnter}
          on:mouseleave={handleMouseLeave}>
         <div on:keypress role="button" tabindex="0"
              class="flex justify-center items-center font-bold text-3xl origin-center"
@@ -155,7 +155,7 @@
             </div>
 
         </div>
-        <StandardNodeContent node_path={node_path} parent={parent} node={node}>
+        <StandardNodeContent parent={parent} node={node}>
             <slot/>
         </StandardNodeContent>
     </div>
@@ -168,13 +168,13 @@
                 <div class="ml-6 w-full">
                     <div use:dndzone="{dndOptions}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-                        {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node, i (new_node.uuid)}
+                        {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
                             <div animate:flip="{{duration: 100}}">
                                 {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
                                     <div class="h-[50px]">
                                     </div>
                                 {:else}
-                                    <svelte:component node_path={node_path + "/" + i} parent={node.uuid}
+                                    <svelte:component parent={node.uuid}
                                                       this={standardNodeTypeMap.get(new_node.node_type.data.type)}
                                                       {...{
                                                           node: new_node,

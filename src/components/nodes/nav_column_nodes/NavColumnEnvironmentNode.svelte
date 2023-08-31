@@ -5,7 +5,6 @@
     import {inViewMap, scrollOnRead} from "../../../globals/Variables";
     import {getContentFromNode, scrollToNodeNav} from "../../../globals/Constants";
 
-    export let node_path: string;
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Environment>>;
     export let layerShown: number;
 
@@ -18,11 +17,11 @@
     }
 </script>
 
-<NavColumnExpandableNode node_path={node_path} bind:node layerShown={layerShown}>
+<NavColumnExpandableNode bind:node layerShown={layerShown}>
     {#key $isVisibleInRead}
         <div class="{$isVisibleInRead ? 'isVisibleInRead' : ''}">
             <ScrollToExpandableButton uuid={node.uuid} class="bg-environment">
-                    {getContentFromNode(node, 40, true)}
+                {getContentFromNode(node, 40, true)}
             </ScrollToExpandableButton>
         </div>
     {/key}
