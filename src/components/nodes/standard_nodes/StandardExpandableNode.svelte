@@ -5,7 +5,8 @@
         inViewMap,
         isDragged,
         isEditorActive,
-        isExpandedMap, lastNodeInView,
+        isExpandedMap,
+        lastNodeInView,
         lastNodeTouched,
     } from "../../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
@@ -26,6 +27,7 @@
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
     let children: API.Ast.Node[];
+    let hoverExpandTimeout = null;
 
     $: children = node?.node_type.children as API.Ast.Node[];
 
@@ -123,11 +125,24 @@
             scrollToNode(node.uuid);
         }
     }
+
+    function handleMouseEnter() {
+        if ($isDragged && !$expandChangeCurrent) {
+            hoverExpandTimeout = setTimeout(() => {
+                handleExpandChange();
+            }, 3000);
+        }
+    }
+
+    function handleMouseLeave() {
+        clearTimeout(hoverExpandTimeout);
+    }
 </script>
 
 <div class="flex flex-col" use:inview={{}}
      on:inview_change={handleInViewChange}>
-    <div class="cursor-pointer flex flex-row gap-12 max-w-full">
+    <div on:keypress role="button" tabindex="0" class="cursor-pointer flex flex-row gap-12 max-w-full" on:mouseenter={handleMouseEnter}
+         on:mouseleave={handleMouseLeave}>
         <div on:keypress role="button" tabindex="0"
              class="flex justify-center items-center font-bold text-3xl origin-center"
              on:click={handleExpandChange}>
