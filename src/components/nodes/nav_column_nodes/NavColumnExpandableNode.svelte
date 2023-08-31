@@ -9,7 +9,6 @@
     import {onMount} from "svelte";
 
     export let node: API.Ast.Node;
-    export let layerShown: number;
 
     export const navColumnNodeTypeMap = new Map<string, ComponentType>(
         [["Document", NavColumnDocumentNode],
@@ -44,7 +43,7 @@
                     {#if (new_node.node_type.type === "Expandable") }
                         <div class="w-full">
                             <svelte:component this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
-                                              {...{node: new_node, layerShown: layerShown + 1}}/>
+                                              {...{node: new_node}}/>
                         </div>
                     {/if}
                 {/each}

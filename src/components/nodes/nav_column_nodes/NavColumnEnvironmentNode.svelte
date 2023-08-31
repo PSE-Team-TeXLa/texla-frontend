@@ -6,7 +6,6 @@
     import {getContentFromNode, scrollToNodeNav} from "../../../globals/Constants";
 
     export let node: API.Ast.Node<API.Ast.ExpandableType<API.Ast.Environment>>;
-    export let layerShown: number;
 
     $: isVisibleInRead = $inViewMap.get(node?.uuid as API.Uuid);
 
@@ -17,7 +16,7 @@
     }
 </script>
 
-<NavColumnExpandableNode bind:node layerShown={layerShown}>
+<NavColumnExpandableNode bind:node>
     {#key $isVisibleInRead}
         <div class="{$isVisibleInRead ? 'isVisibleInRead' : ''}">
             <ScrollToExpandableButton uuid={node.uuid} class="bg-environment">
