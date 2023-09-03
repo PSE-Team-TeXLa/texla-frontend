@@ -24,7 +24,7 @@ These are exclusive to the dev server and will not happen in production.
 
 ## Building
 
-To create a production version of TeXLa (as a SPA), run:
+To create a production version of TeXLa as an SPA (single-page application), run:
 
 ```bash
 npm run build
