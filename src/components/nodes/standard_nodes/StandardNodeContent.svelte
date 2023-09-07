@@ -1,6 +1,13 @@
 <script lang="ts">
     import HoverMenuButton from "../../buttons/HoverMenuButton.svelte";
-    import {dragging, isDragged, isEditorActive, lastNodeTouched, modal, scrollMap, isExpandedMap} from "../../../globals/Variables";
+    import {
+        isDragged,
+        isEditorActive,
+        lastNodeTouched,
+        modal,
+        scrollMap,
+        isExpandedMap
+    } from "../../../globals/Variables";
     import {createEventDispatcher, onMount} from "svelte";
     import {deleteNode, editNode, mergeNodes, sendActive} from "../../../globals/Api";
     import CreateElementSpacer from "../CreateElementSpacer.svelte";
@@ -129,7 +136,6 @@
     function startDrag() {
         sendActive();
         $isDragged = true;
-        $dragging = true;
     }
 </script>
 

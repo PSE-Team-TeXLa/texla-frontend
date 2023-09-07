@@ -143,6 +143,10 @@ socket.on("new_ast", (new_ast: API.Ast.Ast) => {
 });
 
 socket.on("export_ready", (url: string) => {
+    isFrozen.update((o) => {
+        o = false;
+        return o;
+    })
     console.info("export_ready: ", url);
     downloadFile(backendUrl + url);
 });
@@ -369,6 +373,10 @@ function sendOperation(operation: API.Operation.Operation) {
  * @param options
  */
 export function sendPrepareExport(options: API.StringificationOptions) {
+    isFrozen.update((o) => {
+        o = true;
+        return o;
+    })
     socket.emit("prepare_export", JSON.stringify(options));
     console.info("[sid=%s] prepare_export sent: ", socket.id, options);
 }

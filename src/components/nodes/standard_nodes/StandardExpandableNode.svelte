@@ -1,11 +1,11 @@
 <script lang="ts">
     import {scrollToNode, standardNodeTypeMap} from "../../../globals/Constants";
     import {
-        dragging,
         inViewMap,
         isDragged,
         isEditorActive,
-        isExpandedMap, lastNodeInView,
+        isExpandedMap,
+        lastNodeInView,
         lastNodeTouched,
     } from "../../../globals/Variables";
     import {dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, SHADOW_PLACEHOLDER_ITEM_ID} from "svelte-dnd-action";
@@ -20,12 +20,12 @@
     import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
     import CreateElementSpacer from "../CreateElementSpacer.svelte";
 
-    export let node_path: string;
     export let expCol: string;
     export let parent;
     export let node: API.Ast.Node<API.Ast.ExpandableType>;
 
     let children: API.Ast.Node[];
+    let hoverExpandTimeout = null;
 
     $: children = node?.node_type.children as API.Ast.Node[];
 
@@ -69,6 +69,7 @@
      * @param targetId
      */
     function findPosition(targetId): API.Operation.Position {
+        console.log("findPosition")
         let previousChildIndex = node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === targetId) - 1;
         return {
             parent: node.uuid,
@@ -82,11 +83,12 @@
      * @param evt
      */
     const handleFinalize = (evt) => {
+        console.log("finalize")
         node.node_type.children = evt.detail.items;
 
         $isDragged = false;
-        $dragging = false;
-        moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
+        if (node.node_type.children.findIndex((child: API.Ast.Node) => child.uuid === evt.detail.info.id) !== -1)
+            moveNode(evt.detail.info.id, findPosition(evt.detail.info.id))
     }
 
     onMount(() => {
@@ -123,11 +125,25 @@
             scrollToNode(node.uuid);
         }
     }
+
+    function handleMouseEnter() {
+        if ($isDragged && !$expandChangeCurrent) {
+            hoverExpandTimeout = setTimeout(() => {
+                handleExpandChange();
+            }, 3000);
+        }
+    }
+
+    function handleMouseLeave() {
+        clearTimeout(hoverExpandTimeout);
+    }
 </script>
 
 <div class="flex flex-col" use:inview={{}}
      on:inview_change={handleInViewChange}>
-    <div class="cursor-pointer flex flex-row gap-12 max-w-full">
+    <div on:keypress role="button" tabindex="0" class="cursor-pointer flex flex-row gap-12 max-w-full"
+         on:mouseenter={handleMouseEnter}
+         on:mouseleave={handleMouseLeave}>
         <div on:keypress role="button" tabindex="0"
              class="flex justify-center items-center font-bold text-3xl origin-center"
              on:click={handleExpandChange}>
@@ -140,7 +156,7 @@
             </div>
 
         </div>
-        <StandardNodeContent node_path={node_path} parent={parent} node={node}>
+        <StandardNodeContent parent={parent} node={node}>
             <slot/>
         </StandardNodeContent>
     </div>
@@ -153,13 +169,13 @@
                 <div class="ml-6 w-full">
                     <div use:dndzone="{dndOptions}"
                          on:consider="{handleConsider}" on:finalize="{handleFinalize}">
-                        {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node, i (new_node.uuid)}
+                        {#each children.filter(item => item.uuid !== SHADOW_PLACEHOLDER_ITEM_ID) as new_node (new_node.uuid)}
                             <div animate:flip="{{duration: 100}}">
                                 {#if new_node[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
                                     <div class="h-[50px]">
                                     </div>
                                 {:else}
-                                    <svelte:component node_path={node_path + "/" + i} parent={node.uuid}
+                                    <svelte:component parent={node.uuid}
                                                       this={standardNodeTypeMap.get(new_node.node_type.data.type)}
                                                       {...{
                                                           node: new_node,

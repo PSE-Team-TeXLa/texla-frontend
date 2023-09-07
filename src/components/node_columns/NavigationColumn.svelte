@@ -13,6 +13,6 @@
 
 <div class="flex flex-col min-h-screen h-full" style="width: {navColumnSize}%">
     <StandardTreeContainer on:scrollend={handleScroll}>
-        <NavColumnDocumentNode bind:node={$json_ast.root} layerShown={0}/>
+        <NavColumnDocumentNode bind:node={$json_ast.root} />
     </StandardTreeContainer>
 </div>

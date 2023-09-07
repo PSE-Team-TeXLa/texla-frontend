@@ -8,9 +8,7 @@
     import NavColumnFileNode from "./NavColumnFileNode.svelte";
     import {onMount} from "svelte";
 
-    export let node_path: string;
     export let node: API.Ast.Node;
-    export let layerShown: number;
 
     export const navColumnNodeTypeMap = new Map<string, ComponentType>(
         [["Document", NavColumnDocumentNode],
@@ -41,12 +39,11 @@
     {#key $expandChangeCurrent}
         {#if $expandChangeCurrent }
             <div class="flex flex-col ml-12">
-                {#each children as new_node, i}
+                {#each children as new_node}
                     {#if (new_node.node_type.type === "Expandable") }
                         <div class="w-full">
-                            <svelte:component node_path={node_path + "/" + i}
-                                              this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
-                                              {...{node: new_node, layerShown: layerShown + 1}}/>
+                            <svelte:component this={navColumnNodeTypeMap.get(new_node.node_type.data.type)}
+                                              {...{node: new_node}}/>
                         </div>
                     {/if}
                 {/each}

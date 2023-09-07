@@ -15,7 +15,7 @@
 <div class="flex flex-col min-h-screen" style="width: {readColumnSize}%">
     <StandardTreeContainer on:scrollend={handleScroll}>
         <div class="mb-20">
-            <StandardDocumentNode bind:node={$json_ast.root} layerShown={0}/>
+            <StandardDocumentNode bind:node={$json_ast.root}/>
         </div>
     </StandardTreeContainer>
 </div>
