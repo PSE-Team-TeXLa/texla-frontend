@@ -15,7 +15,7 @@
 
 <StandardPopup title="Error">
     <div class="text-red">
-        <p class="text-lg"> {message} </p>
+        <p class="text-lg"> {@html message.replaceAll("\n", "<br/>")} </p>
     </div>
     <div class="flex justify-end">
         <PopUpButtonNegative on:click={handleClose} class="bg-red">Understood</PopUpButtonNegative>
