@@ -18,7 +18,7 @@ import GraphCaptionNode from "../components/graph/GraphCaptionNode.svelte";
 import GraphCommentNode from "../components/graph/GraphCommentNode.svelte";
 
 
-export const backendUrl = "http://localhost:13814";
+export const backendUrl = window.location.origin;
 export const readColumnSize = 70;
 export const navColumnSize = 100 - readColumnSize;
 

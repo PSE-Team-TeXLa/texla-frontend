@@ -25,7 +25,7 @@ import ErrorPopup from "../components/popups/ErrorPopup.svelte";
 import type {Writable} from "svelte/store";
 import {writable} from "svelte/store";
 
-const socket = io("ws://localhost:13814/");
+const socket = io("ws://" + window.location.host);
 // useful for debugging in the browser console
 // @ts-ignore
 globalThis.socket = socket;
